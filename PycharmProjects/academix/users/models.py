@@ -17,3 +17,23 @@ class UserProfile(models.Model):
     address = models.CharField('address', max_length=100, blank=True, default='')
     image = models.ImageField(upload_to='images/%Y/%m', default='images/default.png', max_length=100,
                               verbose_name='photo')
+
+
+class EmailVerifyRecord(models.Model):
+    # email verification record
+    SEND_TYPE_CHOICES = (
+        ('register', 'register'),
+        ('forget', 'forget'),
+    )
+
+    code = models.CharField('Verification Code', max_length=20)
+    email = models.EmailField('Email Address', max_length=50)
+    send_type = models.CharField(choices=SEND_TYPE_CHOICES, max_length=10, default='register')
+    send_time = models.DateTimeField('time', auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'email verification code'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.code

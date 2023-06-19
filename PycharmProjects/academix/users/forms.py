@@ -46,3 +46,16 @@ class RegisterForm(forms.ModelForm):
         if password != password1:
             raise forms.ValidationError('password input does not match, please check again')
         return password
+
+
+class ForgetPasswordForm(forms.Form):
+    # forms getting email address in forget password page
+    email = forms.EmailField(label='Please Enter Your Email Address', min_length=4, widget=forms.EmailInput(attrs={
+        'class': 'input', 'placeholder': '用户名/邮箱'
+    }))
+
+
+class ResetPasswordForm(forms.Form):
+    # Change Password
+    password = forms.CharField(label='输入新密码', min_length=6, widget=forms.PasswordInput(
+        attrs={'class': 'input', 'placeholder': 'Input New Password'}))

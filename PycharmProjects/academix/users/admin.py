@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
 from .models import UserProfile
+from .models import EmailVerifyRecord
 
 # unregister User
 admin.site.unregister(User)
@@ -20,3 +21,10 @@ class UserProfileAdmin(UserAdmin):
 
 # register User again
 admin.site.register(User, UserProfileAdmin)
+
+
+@admin.register(EmailVerifyRecord)
+class EmailVerifyRecordAdmin(admin.ModelAdmin):
+    # Admin View for EmailVerifyRecord
+
+    list_display = ('code',)
