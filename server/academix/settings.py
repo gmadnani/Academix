@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-&9c!(4ulg(%b(%qh-vy-wg+os5+739sb4rhzmcn7tf@_i%%mvc
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
 
     # self added apps
     'users'
@@ -47,10 +48,11 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'academix.urls'
@@ -142,3 +144,6 @@ EMAIL_HOST_PASSWORD = "ekjdxpentfjxpcds"
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+CORS_ORIGIN_ALLOW_ALL = True
+CSRF_TRUSTED_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:8000/']

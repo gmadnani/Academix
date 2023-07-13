@@ -5,6 +5,8 @@ from .models import EmailVerifyRecord
 from django.contrib.auth.models import User
 from utils.email_send import send_register_email
 from django.contrib.auth.hashers import make_password
+# from django.views.decorators.csrf import csrf_exempt
+# from django.views.decorators.csrf import ensure_csrf_cookie
 
 
 def login_view(request):
@@ -26,7 +28,6 @@ def login_view(request):
     context = {'form': form}
     return render(request, 'users/login.html', context)
 
-
 def register(request):
     if request.method != 'POST':
         form = RegisterForm()
@@ -41,7 +42,6 @@ def register(request):
     context = {'form': form}
     return render(request, 'users/register.html', context)
 
-
 def activate_user(request, activate_code):
     # query the verification code
     all_records = EmailVerifyRecord.objects.filter(code=activate_code)
@@ -54,7 +54,6 @@ def activate_user(request, activate_code):
     else:
         return HttpResponse('Activation Page not Found')
     return redirect('users:login')
-
 
 def forget_password(request):
     # forget password, request a email
@@ -73,7 +72,6 @@ def forget_password(request):
                 return HttpResponse('This email address is not registered')
 
     return render(request, 'users/forget_password.html', {'form': form})
-
 
 def reset_password(request, activate_code):
     # reset password
