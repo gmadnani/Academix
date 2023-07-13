@@ -51,11 +51,11 @@ class RegisterForm(forms.ModelForm):
 class ForgetPasswordForm(forms.Form):
     # forms getting email address in forget password page
     email = forms.EmailField(label='Please Enter Your Email Address', min_length=4, widget=forms.EmailInput(attrs={
-        'class': 'input', 'placeholder': '用户名/邮箱'
+        'class': 'input', 'placeholder': 'username'
     }))
 
 
 class ResetPasswordForm(forms.Form):
     # Change Password
-    password = forms.CharField(label='输入新密码', min_length=6, widget=forms.PasswordInput(
+    password = forms.CharField(label='input new password', min_length=6, widget=forms.PasswordInput(
         attrs={'class': 'input', 'placeholder': 'Input New Password'}))

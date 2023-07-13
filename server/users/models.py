@@ -18,6 +18,9 @@ class UserProfile(models.Model):
     image = models.ImageField(upload_to='images/%Y/%m', default='images/default.png', max_length=100,
                               verbose_name='photo')
 
+    def __str__(self):
+        return self.owner.username
+
 
 class EmailVerifyRecord(models.Model):
     # email verification record
