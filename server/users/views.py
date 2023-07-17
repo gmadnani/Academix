@@ -3,8 +3,12 @@ from django.contrib.auth import authenticate, login
 from .forms import LoginForm, RegisterForm, ForgetPasswordForm, ResetPasswordForm
 from .models import EmailVerifyRecord
 from django.contrib.auth.models import User
+from rest_framework.decorators import api_view
 from utils.email_send import send_register_email
 from django.contrib.auth.hashers import make_password
+
+
+@api_view(["GET", "POST"])
 
 
 def login_view(request):
