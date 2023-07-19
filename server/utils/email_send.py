@@ -22,7 +22,7 @@ def send_register_email(email, send_type='register'):
     # sending code to the specified email address
     if send_type == 'register':
         email_title = 'Verification Code For Register From Academix'
-        email_body = 'Please use the following link to activate your code：http://127.0.0.1:8000/users/activate/{0}'.\
+        email_body = 'Please use the following link to activate your code: http://127.0.0.1:8000/users/activate/{0}'.\
             format(code)
 
         send_status = send_mail(email_title, email_body, 'academix673@gmail.com', [email])
@@ -30,7 +30,7 @@ def send_register_email(email, send_type='register'):
             pass
     elif send_type == 'forget':
         email_title = 'Verification Code For Resetting your password'
-        email_body = 'Please use the following link to reset password：http://127.0.0.1:8000/users/reset_password/{0}'.\
+        email_body = 'Please use the following link to reset password: http://127.0.0.1:8000/users/reset_password/{0}'.\
             format(code)
 
         send_status = send_mail(email_title, email_body, 'academix673@gmail.com', [email])
