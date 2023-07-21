@@ -40,6 +40,8 @@ urlpatterns = [
     path('dj-rest-auth/account-confirm-email/', VerifyEmailView.as_view(), name='account_email_verification_sent'),
     path('users/', include('users.urls')),
     path('courses/', include('courses.urls')),
+    path('api/', include('api.urls')),
+    
 ]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)  # Configure static file url
 
 # Configure user upload file url

@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     # self added apps
     'users',
     'courses',
+    'api',
 ]
 
 SITE_ID = 1
