@@ -21,7 +21,11 @@ from django.conf.urls.static import static
 from dj_rest_auth.registration.views import VerifyEmailView
 from dj_rest_auth.views import PasswordResetView, PasswordResetConfirmView
 from django.views.generic.base import TemplateView
+from rest_framework.documentation import include_docs_urls
 
+
+docs_urls = include_docs_urls(title='API documentation',
+                              description='This is the documentation for endpoints which are provided by backend')
 
 urlpatterns = [
     # re_path(r'^password-reset/confirm/$', TemplateView.as_view(), name='password-reset-confirm'),
@@ -40,6 +44,7 @@ urlpatterns = [
     path('dj-rest-auth/account-confirm-email/', VerifyEmailView.as_view(), name='account_email_verification_sent'),
     path('users/', include('users.urls')),
     path('courses/', include('courses.urls')),
+    path('docs/', docs_urls),
 ]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)  # Configure static file url
 
 # Configure user upload file url

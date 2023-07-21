@@ -7,10 +7,11 @@ export const authStart = () => {
   };
 };
 
-export const authSuccess = token => {
+export const authSuccess = (token, role) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
-    token: token
+    token: token,
+    role
   };
 };
 
@@ -24,6 +25,7 @@ export const authFail = error => {
 export const logout = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("expirationDate");
+  localStorage.removeItem('role');
   return {
     type: actionTypes.AUTH_LOGOUT
   };
@@ -43,6 +45,38 @@ axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 export const authLogin = (username, password) => {
   return dispatch => {
     dispatch(authStart());
+
+    // setTimeout(() => {
+    //   const users = [
+    //     {
+    //       role: 'student',
+    //       username: 'jack',
+    //       password: '123456'
+    //     },
+    //     {
+    //       role: 'student',
+    //       username: 'bob',
+    //       password: '123456'
+    //     },
+    //     {
+    //       role: 'teacher',
+    //       username: 'John',
+    //       password: '123456'
+    //     }
+    //   ];
+
+    //   const user = users.find(item => item.username === username && item.password === password);
+    //   if (!user) {
+    //     dispatch(authFail(new Error("Username or password is invalid!")));
+    //   } else {
+    //     localStorage.setItem("token", "token from be");
+    //     localStorage.setItem("expirationDate", new Date("2023-12-12"));
+    //     localStorage.setItem('role', user.role);
+    //     dispatch(authSuccess("token from be", user.role));
+    //     dispatch(checkAuthTimeout(3600));
+    //   }
+    // }, 1000)
+    
     axios
       .post("http://127.0.0.1:8000/dj-rest-auth/login/", {
         username: username,
@@ -89,6 +123,7 @@ export const authSignup = (username, email, password1, password2) => {
 export const authCheckState = () => {
   return dispatch => {
     const token = localStorage.getItem("token");
+    const role = localStorage.getItem('role');
     if (token === undefined) {
       dispatch(logout());
     } else {
@@ -96,7 +131,7 @@ export const authCheckState = () => {
       if (expirationDate <= new Date()) {
         dispatch(logout());
       } else {
-        dispatch(authSuccess(token));
+        dispatch(authSuccess(token, role));
         dispatch(
           checkAuthTimeout(
             (expirationDate.getTime() - new Date().getTime()) / 1000

@@ -130,5 +130,5 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-# pycharm files
+#pycharms
 *.pyc
