@@ -22,6 +22,12 @@ export const authFail = error => {
   };
 };
 
+export const registrationSuccess = () => {
+  return {
+    type: actionTypes.REGISTRATION_SUCCESS,
+  };
+};
+
 export const logout = () => {
   localStorage.removeItem("token");
   localStorage.removeItem("expirationDate");
@@ -45,7 +51,6 @@ axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 export const authLogin = (username, password) => {
   return dispatch => {
     dispatch(authStart());
-
     // setTimeout(() => {
     //   const users = [
     //     {
@@ -76,13 +81,13 @@ export const authLogin = (username, password) => {
     //     dispatch(checkAuthTimeout(3600));
     //   }
     // }, 1000)
-    
     axios
       .post("http://127.0.0.1:8000/dj-rest-auth/login/", {
         username: username,
         password: password
       })
       .then(res => {
+        console.log(res.data)
         const token = res.data.key;
         const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
         localStorage.setItem("token", token);
@@ -113,6 +118,7 @@ export const authSignup = (username, email, password1, password2) => {
         localStorage.setItem("expirationDate", expirationDate);
         dispatch(authSuccess(token));
         dispatch(checkAuthTimeout(3600));
+        dispatch(registrationSuccess());
       })
       .catch(err => {
         dispatch(authFail(err));
