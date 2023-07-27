@@ -85,17 +85,15 @@ const Home = (props) => {
                     Zoom Dashboard
                   </Button>
                 </List.Item>
-                {role === 'student' && (
-                  <List.Item>
-                    <Button
-                      onClick={() => {
-                        history.push('student')
-                      }}
-                      fluid basic color={'teal'}>
-                      Student link
-                    </Button>
-                  </List.Item>
-                )}
+                <List.Item>
+                  <Button
+                    onClick={() => {
+                      history.push('student')
+                    }}
+                    fluid basic color={'teal'}>
+                    Student link
+                  </Button>
+                </List.Item>
                 {role === 'teacher' && (
                   <List.Item>
                     <Button
