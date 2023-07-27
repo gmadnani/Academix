@@ -1,98 +1,42 @@
-from django.shortcuts import render, HttpResponse, redirect
-from django.contrib.auth import authenticate, login
-from .forms import LoginForm, RegisterForm, ForgetPasswordForm, ResetPasswordForm
-from .models import EmailVerifyRecord
+from rest_framework import status
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from django.db.models import Q
 from django.contrib.auth.models import User
-from rest_framework.decorators import api_view
-from utils.email_send import send_register_email
-from django.contrib.auth.hashers import make_password
 
 
-@api_view(["GET", "POST"])
+from .models import UserProfile
+from .serializers import UserProfileSerializer
 
 
-def login_view(request):
-    if request.method != 'POST':
-        form = LoginForm()
-    else:
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                # if login successful jump to new page
-                return HttpResponse('Login Successful')
-            else:
-                # authenticate unsuccessful
-                return HttpResponse("Username or Password Wrong!")
-    context = {'form': form}
-    return render(request, 'users/login.html', context)
-
-
-def register(request):
-    if request.method != 'POST':
-        form = RegisterForm()
-    else:
-        form = RegisterForm(request.POST)
-        if form.is_valid():
-            new_user = form.save(commit=False)
-            new_user.set_password(form.cleaned_data['password'])
-            new_user.save()
-            send_register_email(form.cleaned_data.get('email'), 'register')
-            return HttpResponse('Sign Up Successful')
-    context = {'form': form}
-    return render(request, 'users/register.html', context)
-
-
-def activate_user(request, activate_code):
-    # query the verification code
-    all_records = EmailVerifyRecord.objects.filter(code=activate_code)
-    if all_records:
-        for record in all_records:
-            email = record.email
-            user = User.objects.get(email=email)
-            user.is_staff = True
-            user.save()
-    else:
-        return HttpResponse('Activation Page not Found')
-    return redirect('users:login')
-
-
-def forget_password(request):
-    # forget password, request a email
-    if request.method == 'GET':
-        form = ForgetPasswordForm()
-    elif request.method == 'POST':
-        form = ForgetPasswordForm(request.POST)
-        if form.is_valid():
-            email = form.cleaned_data.get('email')
-            exists = User.objects.filter(email=email).exists()
-            if exists:
-                # Sending Email
-                send_register_email(email, 'forget')
-                return HttpResponse('A email has sent to your email address')
-            else:
-                return HttpResponse('This email address is not registered')
-
-    return render(request, 'users/forget_password.html', {'form': form})
-
-
-def reset_password(request, activate_code):
-    # reset password
-    if request.method != 'POST':
-        form = ResetPasswordForm()
-    else:
-        form = ResetPasswordForm(request.POST)
-        if form.is_valid():
-            record = EmailVerifyRecord.objects.get(code=activate_code)
-            email = record.email
-            user = User.objects.get(email=email)
-            user.password = make_password(form.cleaned_data.get('password'))
-            user.save()
-            return HttpResponse('Password Reset Successful')
-        else:
-            return HttpResponse('Password Reset Failed')
-
-    return render(request, 'users/reset_password.html', {'form': form})
+@api_view(["GET", "POST", "PUT"])
+@permission_classes((IsAuthenticated,))
+def get_profile(request):
+    if request.method == "GET":
+        try:
+            personal_profile = UserProfile.objects.get(owner=request.user)
+        except UserProfile.DoesNotExist:
+            return Response(data={'msg': "not found"}, status=status.HTTP_404_NOT_FOUND)
+        s = UserProfileSerializer(instance=personal_profile)
+        return Response(data=s.data, status=status.HTTP_200_OK)
+    if request.method == "POST":
+        try:
+            personal_profile = UserProfile.objects.get(owner=request.user)
+        except UserProfile.DoesNotExist:
+            s = UserProfileSerializer(data=request.data, partial=True)
+            if s.is_valid():
+                s.save(owner=request.user)
+                return Response(data=s.data, status=status.HTTP_200_OK)
+            return Response(data={'msg': "save profile failed"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(data={'msg': "profile already exists"}, status=status.HTTP_406_NOT_ACCEPTABLE)
+    if request.method == "PUT":
+        try:
+            personal_profile = UserProfile.objects.get(owner=request.user)
+        except UserProfile.DoesNotExist:
+            return Response(data={'msg': "not found"}, status=status.HTTP_404_NOT_FOUND)
+        s = UserProfileSerializer(instance=personal_profile, data=request.data)
+        if s.is_valid():
+            s.save()
+            return Response(data=s.data, status=status.HTTP_200_OK)
+        return Response(data=s.errors, status=status.HTTP_400_BAD_REQUEST)

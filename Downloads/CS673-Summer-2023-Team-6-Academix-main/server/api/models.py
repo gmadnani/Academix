@@ -1,18 +1,17 @@
 from django.db import models
 from django.conf import settings
-
-from courses.models import CourseList
-
+from .validators import validate_file_extension
+from courses.models import CoursesList
+from django.contrib.auth.models import User
 
 class Assignment(models.Model):
     title = models.CharField(max_length=50)
-    # teacher = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
-    courseId = models.ForeignKey(CourseList, on_delete=models.CASCADE)
+    courseId = models.ForeignKey(CoursesList, on_delete=models.CASCADE)
     due_date = models.DateTimeField(verbose_name="due date")
     full_grade = models.IntegerField()
-
+    assignment_files = models.FileField(upload_to='uploads/', validators=[validate_file_extension])
     def __str__(self):
-        return self.title
+        return self.title        
 
 
 class GradedAssignment(models.Model):
@@ -43,3 +42,16 @@ class Question(models.Model):
 
     def __str__(self):
         return self.question
+    
+class AssignmentSubmission(models.Model):
+    assignmentID = models.IntegerField()
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    courseID = models.CharField(max_length=20)
+    description = models.TextField()
+    file = models.FileField(upload_to='submissions/')
+    submission_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.title} by {self.student.username}"
+    
