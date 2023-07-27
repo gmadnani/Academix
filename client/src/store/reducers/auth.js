@@ -5,7 +5,8 @@ const initialState = {
   token: null,
   error: null,
   loading: false,
-  role: ''
+  role: '',
+  registrationSuccess: false
 };
 
 const authStart = (state, action) => {
@@ -31,6 +32,12 @@ const authFail = (state, action) => {
   });
 };
 
+const authSignupSuccess = (state, action) => {
+  return updateObject(state, {
+    registrationSuccess: true
+  });
+};
+
 const authLogout = (state, action) => {
   return updateObject(state, {
     token: null
@@ -47,6 +54,8 @@ const reducer = (state = initialState, action) => {
       return authFail(state, action);
     case actionTypes.AUTH_LOGOUT:
       return authLogout(state, action);
+    case actionTypes.REGISTRATION_SUCCESS: 
+      return authSignupSuccess(state, action);
     default:
       return state;
   }
