@@ -70,6 +70,7 @@ class SubmissionSerializer(serializers.ModelSerializer):
         data = request.data
         
         submission = AssignmentSubmission()
+        submission.assignmentID = data['assignmentID']
         submission.student = UserProfile.objects.get(username=data['student'])
         submission.title = data['title']
         submission.description = data['description']

@@ -10,6 +10,7 @@ from users.models import UserProfile
 from .forms import AssignmentForm
 from django.shortcuts import render, redirect
 from .forms import AssignmentSubmissionForm
+from rest_framework.generics import get_object_or_404
 
 
 @api_view(["GET"])
@@ -75,8 +76,9 @@ def assignment_detail(request, pk, pk2):
 @permission_classes((IsAuthenticated,))
 def assignment_submission_view(request, pk, pk2):
     if request.method == 'GET':
-        submissions = AssignmentSubmission.objects.get(courseID = pk, assignmentID=pk2, student=request.user)
-        s = SubmissionSerializer(instance = submissions)
+        submission = AssignmentSubmission.objects.all()
+        submission = submission.filter(courseID=pk, assignmentID=pk2, student=request.user)
+        s = SubmissionSerializer(instance = submission, many=True)
         return Response(data = s.data, status=status.HTTP_200_OK)
     
     elif request.method == 'POST':
