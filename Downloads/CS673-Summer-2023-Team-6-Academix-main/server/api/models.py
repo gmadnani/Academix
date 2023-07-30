@@ -54,4 +54,12 @@ class AssignmentSubmission(models.Model):
 
     def __str__(self):
         return f"{self.title} by {self.student.username}"
+
+class AssignmentGrading(models.Model):
+    assignmentID = models.IntegerField()
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    courseID = models.CharField(max_length=20)
+    grade = models.FloatField()
     
+    def str(self):
+        return self.grade

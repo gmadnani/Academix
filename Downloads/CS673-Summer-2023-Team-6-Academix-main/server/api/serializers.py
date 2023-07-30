@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from users.models import UserProfile
-from .models import Assignment, Question, Choice, GradedAssignment, AssignmentSubmission
+from .models import Assignment, Question, Choice, GradedAssignment, AssignmentSubmission, AssignmentGrading
 
 
 class StringSerializer(serializers.StringRelatedField):
@@ -78,3 +78,19 @@ class SubmissionSerializer(serializers.ModelSerializer):
         submission.submission_date = data['submission_date']
         submission.save()
         return submission
+
+class AssignmentGradingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AssignmentGrading
+        fields = '__all__'
+        
+    def create(self, request):
+        data = request.data
+        
+        grading = AssignmentGrading()
+        grading.assignmentID = data['assignmentID']
+        grading.student = UserProfile.objects.get(username = data['student'])
+        grading.courseID = data['courseID']
+        grading.grade = data['grade']
+        
+        return grading

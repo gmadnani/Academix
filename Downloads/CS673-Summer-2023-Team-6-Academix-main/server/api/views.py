@@ -3,14 +3,12 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.contrib.auth.models import User
-from .models import Assignment, AssignmentSubmission
+from .models import Assignment, AssignmentSubmission, AssignmentGrading 
 from courses.models import CoursesList, CourseRegistration
-from .serializers import AssignmentSerializer, SubmissionSerializer
+from .serializers import AssignmentSerializer, SubmissionSerializer, AssignmentGradingSerializer
 from users.models import UserProfile
-from .forms import AssignmentForm
-from django.shortcuts import render, redirect
-from .forms import AssignmentSubmissionForm
-from rest_framework.generics import get_object_or_404
+from .forms import AssignmentForm, AssignmentGradingForm, AssignmentSubmissionForm
+from django.shortcuts import render
 
 
 @api_view(["GET"])
@@ -108,6 +106,18 @@ def submissions_details(request, pk, pk2, pk3):
         submission = AssignmentSubmission.objects.filter(courseID=pk, assignmentID=pk2, student=student)
         s = SubmissionSerializer(instance = submission, many=True)
         return Response(data=s.data, status=status.HTTP_200_OK)
+    
+    if request.method == 'POST':
+        form = AssignmentGradingForm(request.POST)
+        if form.is_valid():
+            form.instance.student = User.objects.get(username=pk3)
+            form.instance.assignmentID = pk2
+            form.instance.courseID = pk
+            form.save()
+        else:
+            form = AssignmentGradingForm(request.POST)
+        return render(request, 'api/assignment_grading.html', {'form' : form})
+            
     
  
         
