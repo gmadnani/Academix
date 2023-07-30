@@ -91,3 +91,23 @@ def assignment_submission_view(request, pk, pk2):
         else:
             form = AssignmentSubmissionForm(request.POST, request.FILES) 
         return render(request, 'api/assignment_submission_form.html', {'form': form})
+
+@api_view(["GET", "POST"])
+@permission_classes((IsAuthenticated,))
+def teacher_submissions_view(request, pk, pk2):
+    if request.method == 'GET':
+        submission = AssignmentSubmission.objects.filter(courseID=pk, assignmentID=pk2)
+        s = SubmissionSerializer(instance = submission, many=True)
+        return Response(data=s.data, status=status.HTTP_200_OK)
+    
+@api_view(["GET", "POST"])
+@permission_classes((IsAuthenticated,))
+def submissions_details(request, pk, pk2, pk3):
+    if request.method == 'GET':
+        student = User.objects.get(username=pk3)
+        submission = AssignmentSubmission.objects.filter(courseID=pk, assignmentID=pk2, student=student)
+        s = SubmissionSerializer(instance = submission, many=True)
+        return Response(data=s.data, status=status.HTTP_200_OK)
+    
+ 
+        
