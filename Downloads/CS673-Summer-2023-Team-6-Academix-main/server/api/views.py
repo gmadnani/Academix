@@ -117,7 +117,16 @@ def submissions_details(request, pk, pk2, pk3):
         else:
             form = AssignmentGradingForm(request.POST)
         return render(request, 'api/assignment_grading.html', {'form' : form})
-            
+    
+@api_view(["GET"])
+@permission_classes((IsAuthenticated, ))
+def view_course_grades(request, pk, pk2):
+    if request.method == 'GET':
+        student = User.objects.get(username=pk2)
+        grading = AssignmentGrading.objects.filter(courseID = pk, student=student)
+        grades = AssignmentGradingSerializer(instance = grading, many=True)
+        return Response(data=grades.data, status=status.HTTP_200_OK)
+               
     
  
         
