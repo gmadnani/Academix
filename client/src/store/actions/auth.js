@@ -11,7 +11,7 @@ export const authSuccess = (token, role) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
     token: token,
-    role
+    role: role
   };
 };
 
@@ -44,6 +44,48 @@ export const checkAuthTimeout = expirationTime => {
     }, expirationTime * 1000);
   };
 };
+
+export const getUserRoleStart = () => {
+  return {
+    type: actionTypes.GET_USER_ROLE_START
+  }
+}
+
+export const getUserRoleSuccess = role => {
+  return {
+    type: actionTypes.GET_USER_ROLE_SUCCESS,
+    role: role
+  }
+}
+
+export const getUserRoleFail = error => {
+  return {
+    type: actionTypes.GET_USER_ROLE_FAIL,
+    error: error
+  }
+}
+
+export const getUserRole = () => {
+  return (dispatch, getState) => {
+    dispatch(getUserRoleStart());
+    axios
+      .get('http://127.0.0.1:8000/users/profile/', {
+        headers: {
+          'Authorization': `Token ${getState().auth.token}`
+        }
+      })
+      .then(res => {
+        dispatch(getUserRoleSuccess(res.data.role));
+        // Update the auth state with the fetched role
+        dispatch(authSuccess(getState().auth.token, res.data.role));
+      })
+      .catch(err => {
+        dispatch(getUserRoleFail(err));
+      });
+  }
+}
+
+
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
@@ -92,8 +134,9 @@ export const authLogin = (username, password) => {
         const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
         localStorage.setItem("token", token);
         localStorage.setItem("expirationDate", expirationDate);
-        dispatch(authSuccess(token));
+        dispatch(authSuccess(token, null));
         dispatch(checkAuthTimeout(3600));
+        dispatch(getUserRole());
       })
       .catch(err => {
         dispatch(authFail(err));
@@ -147,3 +190,4 @@ export const authCheckState = () => {
     }
   };
 };
+
