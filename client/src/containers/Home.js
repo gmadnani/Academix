@@ -38,9 +38,7 @@ const Home = (props) => {
 
     }
   ];
-  const { token, role } = props;
-  if (token) {
-  }
+  const { role } = props;
   return (
     <div>
       <Swiper
@@ -85,23 +83,25 @@ const Home = (props) => {
                     Zoom Dashboard
                   </Button>
                 </List.Item>
-                <List.Item>
-                  <Button
-                    onClick={() => {
-                      history.push('student')
-                    }}
-                    fluid basic color={'teal'}>
-                    Student link
-                  </Button>
-                </List.Item>
+                {role === 'student' && (
+                  <List.Item>
+                    <Button
+                      onClick={() => {
+                        history.push('student')
+                      }}
+                      fluid basic color={'teal'}>
+                      Student link
+                    </Button>
+                  </List.Item>
+                )}
                 {role === 'teacher' && (
                   <List.Item>
                     <Button
                       onClick={() => {
-                        history.push('facuity')
+                        history.push('teacher')
                       }}
                       fluid basic color={'teal'}>
-                      Facuity link
+                      Faculty link
                     </Button>
                   </List.Item>
                 )}
