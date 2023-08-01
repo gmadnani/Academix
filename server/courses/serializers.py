@@ -18,7 +18,7 @@ class CourseSerializer(serializers.ModelSerializer):
 
 
 class CourseRegistrationSerializer(serializers.ModelSerializer):
-    #userID = serializers.ReadOnlyField(source="userID.username")
+    userID = serializers.ReadOnlyField(source="userID.email")
 
     class Meta:
         model = CourseRegistration

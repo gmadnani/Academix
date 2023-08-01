@@ -10,10 +10,10 @@ class UserProfile(models.Model):
                       ('student', 'student'))
 
     owner = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='users')
-    nike_name = models.CharField('nickname', max_length=50, blank=True, default='')
-    birthday = models.DateField('birthday', null=True, blank=True)
+    full_name = models.CharField('nickname', max_length=50, blank=True, default='')
+    birthday = models.DateField('birthday', null=True, blank=True, default='2020-01-01')
     gender = models.CharField('gender', max_length=6, choices=USER_GENDER_TYPE, default='male')
-    role = models.CharField('role', max_length=7, choices=USER_ROLE_TYPE, default='teacher')
+    role = models.CharField('role', max_length=7, choices=USER_ROLE_TYPE, default='student')
     address = models.CharField('address', max_length=100, blank=True, default='')
     image = models.ImageField(upload_to='images/%Y/%m', default='images/default.png', max_length=100,
                               verbose_name='photo')

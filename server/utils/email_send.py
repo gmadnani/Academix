@@ -6,7 +6,7 @@ import string
 
 def random_str(random_length=6):
     # Generate from 0-9
-    chars = string.digits
+    chars = string.digits + string.ascii_letters
     str_code = ''.join(random.sample(chars, random_length))
     return str_code
 
@@ -36,4 +36,8 @@ def send_register_email(email, send_type='register'):
         send_status = send_mail(email_title, email_body, 'academix673@gmail.com', [email])
         if send_status:
             pass
+
+    elif send_type == 'attendance':
+        pass
+
 
