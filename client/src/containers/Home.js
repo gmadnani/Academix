@@ -1,18 +1,30 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { connect } from "react-redux";
 import { Grid, Segment, List , Header, Button,  } from 'semantic-ui-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import {useHistory} from 'react-router-dom';
 import { Autoplay } from 'swiper/modules';
+import { fetchUsers } from '../store/actions/user';
 
-const Home = (props) => {
+const Home = ({
+  role,
+  courses,
+  users,
+  loadingCourses,
+  loadingUsers,
+  errorCourses,
+  errorUsers,
+  // fetchCourses,
+  fetchUsers,
+  token,
+}) => {
   const history = useHistory();
-  console.log(props)
+
   const messages = [
-    {message: 'Message 1'},
-    {message: 'Message 2'},
-    {message: 'Message 3'},
+    { message: 'Message 1' },
+    { message: 'Message 2' },
+    { message: 'Message 3' },
     // etc
   ];
   const slides = [
@@ -38,7 +50,14 @@ const Home = (props) => {
 
     }
   ];
-  const { role } = props;
+  useEffect(() => {
+    if (role === 'student') {
+      // fetchCourses(token);
+      fetchUsers(token);
+    }
+  }, [role, fetchUsers, token]);
+
+  if (role !== 'student') {
   return (
     <div>
       <Swiper
@@ -130,22 +149,69 @@ const Home = (props) => {
       </div>
     </div>
   )
+} else {
+  return(
+    // <div>
+    // <div>
+    //     <Header as="h3" textAlign="center">
+    //       List of Courses
+    //     </Header>
+    //     <Segment>
+    //       <List>
+    //         {loadingCourses ? (
+    //           <p>Loading courses...</p>
+    //         ) : errorCourses ? (
+    //           <p>Error loading courses: {errorCourses.message}</p>
+    //         ) : (
+    //           courses.map((course) => (
+    //             <List.Item key={course.id}>
+    //               <p>{course.title}</p>
+    //             </List.Item>
+    //           ))
+    //         )}
+    //       </List>
+    //     </Segment>
+    //   </div>
+      
+      <div>
+        <Header as="h3" textAlign="center">
+          List of Users
+        </Header>
+        <Segment>
+          <List>
+            {loadingUsers ? (
+              <p>Loading users...</p>
+            ) : errorUsers ? (
+              <p>Error loading users: {errorUsers.message}</p>
+            ) : (
+              users.map((user) => (
+                <List.Item key={user.id}>
+                  <p>{user.owner}</p>
+                  <p>{user.email}</p>
+                </List.Item>
+              ))
+            )}
+            console.log(users);
+          </List>
+        </Segment>
+      </div>  
+  );
+}
 }
 
 
 const mapStateToProps = state => {
   return {
-    loading: state.auth.loading,
-    error: state.auth.error,
+    loadingUsers: state.user.loading,
+    errorUsers: state.user.error,
+    users: state.user.users,
     token: state.auth.token,
     role: state.auth.role
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    // login: (username, password) => dispatch(authLogin(username, password))
-  };
+const mapDispatchToProps = {
+  fetchUsers,
 };
 
 export default connect(
