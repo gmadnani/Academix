@@ -79,9 +79,9 @@ class LoginForm extends React.Component {
                 </Button>
               </Segment>
             </Form>
-            <Message>
+            {/* <Message>
               New to us? <NavLink to="/signup">Sign Up</NavLink>
-            </Message>
+            </Message> */}
           </React.Fragment>
         </Grid.Column>
       </Grid>

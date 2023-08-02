@@ -195,14 +195,25 @@ const Home = ({
       //     </List>
       //   </Segment>
       // </div>  
-      <Link to ="/courseRegisteration"><Button
-        color="teal"
-        fluid
-        size="large"
-      >
-        Course Registeration
-      </Button>
-      </Link>
+      <div className="p5">
+        <Link to ="/signup"><Button
+          color="red"
+          fluid
+          size="large"
+        >
+          User Registeration
+        </Button>
+        </Link>
+
+        <Link to ="/courseRegisteration"><Button
+          color="teal"
+          fluid
+          size="large"
+        >
+          Course Registeration
+        </Button>
+        </Link>
+      </div>
   );
 }
 }

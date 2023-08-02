@@ -33,9 +33,6 @@ class RegistrationForm extends React.Component {
   render() {
     const { username, email, password1, password2 } = this.state;
     const { error, loading, token, registrationSuccess } = this.props;
-    if (token) {
-      return <Redirect to="/" />;
-    }
     return (
       <Grid
         textAlign="center"
@@ -110,7 +107,7 @@ class RegistrationForm extends React.Component {
               </Segment>
             </Form>
             <Message>
-              Already have an account? <NavLink to="/login">Login</NavLink>
+              <NavLink to="/">Back to Dashboard</NavLink>
             </Message>
           </React.Fragment>
         </Grid.Column>
