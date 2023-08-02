@@ -16,6 +16,19 @@ class AttendanceSerializer(serializers.ModelSerializer):
 
 
 class AttendanceRecordSerializer(serializers.ModelSerializer):
+
+    student_email = serializers.ReadOnlyField(source="studentID.email")
+    student_username = serializers.ReadOnlyField(source="studentID.username")
+
+    class Meta:
+        model = AttendanceRecord
+        fields = '__all__'
+
+
+class AttendanceRecordStudentSerializer(serializers.ModelSerializer):
+    Attendance_title = serializers.ReadOnlyField(source="attendanceID.title")
+    Attendance_created_date = serializers.ReadOnlyField(source="attendanceID.created_date")
+
     class Meta:
         model = AttendanceRecord
         fields = '__all__'

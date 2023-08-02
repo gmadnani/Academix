@@ -1,6 +1,22 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.conf import settings
 # Create your models here.
+
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def generate_token(sender, instance=None, created=False, **kwargs):
+    """
+    :param sender:
+    :param instance:
+    :param created:
+    :param kwargs:
+    :return:
+    """
+    if created:
+        UserProfile.objects.create(owner=instance)
 
 
 class UserProfile(models.Model):
