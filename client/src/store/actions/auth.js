@@ -93,36 +93,6 @@ axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 export const authLogin = (username, password) => {
   return dispatch => {
     dispatch(authStart());
-    // setTimeout(() => {
-    //   const users = [
-    //     {
-    //       role: 'student',
-    //       username: 'jack',
-    //       password: '123456'
-    //     },
-    //     {
-    //       role: 'student',
-    //       username: 'bob',
-    //       password: '123456'
-    //     },
-    //     {
-    //       role: 'teacher',
-    //       username: 'John',
-    //       password: '123456'
-    //     }
-    //   ];
-
-    //   const user = users.find(item => item.username === username && item.password === password);
-    //   if (!user) {
-    //     dispatch(authFail(new Error("Username or password is invalid!")));
-    //   } else {
-    //     localStorage.setItem("token", "token from be");
-    //     localStorage.setItem("expirationDate", new Date("2023-12-12"));
-    //     localStorage.setItem('role', user.role);
-    //     dispatch(authSuccess("token from be", user.role));
-    //     dispatch(checkAuthTimeout(3600));
-    //   }
-    // }, 1000)
     axios
       .post("http://127.0.0.1:8000/dj-rest-auth/login/", {
         username: username,
