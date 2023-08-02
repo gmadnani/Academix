@@ -57,7 +57,7 @@ const Home = ({
     }
   }, [role, fetchUsers, token]);
 
-  if (role !== 'student') {
+  if (role === 'student') {
   return (
     <div>
       <Swiper
