@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Grid, Segment, List , Header, Button,  } from 'semantic-ui-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import {useHistory} from 'react-router-dom';
+import {useHistory, Link} from 'react-router-dom';
 import { Autoplay } from 'swiper/modules';
 import { fetchUsers } from '../store/actions/user';
 
@@ -173,28 +173,36 @@ const Home = ({
     //     </Segment>
     //   </div>
       
-      <div>
-        <Header as="h3" textAlign="center">
-          List of Users
-        </Header>
-        <Segment>
-          <List>
-            {loadingUsers ? (
-              <p>Loading users...</p>
-            ) : errorUsers ? (
-              <p>Error loading users: {errorUsers.message}</p>
-            ) : (
-              users.map((user) => (
-                <List.Item key={user.id}>
-                  <p>{user.owner}</p>
-                  <p>{user.email}</p>
-                </List.Item>
-              ))
-            )}
-            console.log(users);
-          </List>
-        </Segment>
-      </div>  
+      // <div>
+      //   <Header as="h3" textAlign="center">
+      //     List of Users
+      //   </Header>
+      //   <Segment>
+      //     <List>
+      //       {loadingUsers ? (
+      //         <p>Loading users...</p>
+      //       ) : errorUsers ? (
+      //         <p>Error loading users: {errorUsers.message}</p>
+      //       ) : (
+      //         users.map((user) => (
+      //           <List.Item key={user.id}>
+      //             <p>{user.owner}</p>
+      //             <p>{user.email}</p>
+      //           </List.Item>
+      //         ))
+      //       )}
+      //       console.log(users);
+      //     </List>
+      //   </Segment>
+      // </div>  
+      <Link to ="/courseRegisteration"><Button
+        color="teal"
+        fluid
+        size="large"
+      >
+        Course Registeration
+      </Button>
+      </Link>
   );
 }
 }

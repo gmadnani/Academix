@@ -24,9 +24,9 @@ class CustomLayout extends React.Component {
               <Menu.Item header>Home</Menu.Item>
             </Link>
             {authenticated ? (
-              <Menu.Item header onClick={() => this.props.logout()}>
+              <Link to="/login"><Menu.Item header onClick={() => this.props.logout()}>
                 Logout
-              </Menu.Item>
+              </Menu.Item></Link>
             ) : (
               <React.Fragment>
                 <Link to="/login">

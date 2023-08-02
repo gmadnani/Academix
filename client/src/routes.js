@@ -8,6 +8,7 @@ import HomepageLayout from "./containers/Home";
 import StudentHome from "./containers/StudentHome";
 import TeacherHome from "./containers/TeacherHome";
 import CourseDetails from "./containers/CourseDetails";
+import AdminCourseRegisteration from "./containers/AdminCourseRegisteration";
 
 const BaseRouter = () => (
   <Hoc>
@@ -17,6 +18,7 @@ const BaseRouter = () => (
     <Route path="/teacher" component={TeacherHome}/>
     <Route exact path="/" component={HomepageLayout} />
     <Route path={`/courses/detail/:slug`} component={CourseDetails}/>
+    <Route path="/courseRegisteration" component={AdminCourseRegisteration}/>
   </Hoc>
 );
 console.log(localStorage.getItem("course"))
