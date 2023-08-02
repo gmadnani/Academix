@@ -40,7 +40,9 @@ class CustomLayout extends React.Component {
           </Container>
         </Menu>
 
-        {this.props.children}
+        <div style={{marginTop: '40px'}}>
+          {this.props.children}
+        </div>
 
         <Segment
           inverted

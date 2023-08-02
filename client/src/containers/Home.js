@@ -38,9 +38,7 @@ const Home = (props) => {
 
     }
   ];
-  const { token, role } = props;
-  if (token) {
-  }
+  const { role } = props;
   return (
     <div>
       <Swiper
@@ -100,10 +98,10 @@ const Home = (props) => {
                   <List.Item>
                     <Button
                       onClick={() => {
-                        history.push('facuity')
+                        history.push('teacher')
                       }}
                       fluid basic color={'teal'}>
-                      Facuity link
+                      Faculty link
                     </Button>
                   </List.Item>
                 )}

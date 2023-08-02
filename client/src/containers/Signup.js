@@ -5,7 +5,8 @@ import {
   Grid,
   Header,
   Message,
-  Segment
+  Segment,
+  Icon
 } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { NavLink, Redirect } from "react-router-dom";
@@ -31,7 +32,7 @@ class RegistrationForm extends React.Component {
 
   render() {
     const { username, email, password1, password2 } = this.state;
-    const { error, loading, token } = this.props;
+    const { error, loading, token, registrationSuccess } = this.props;
     if (token) {
       return <Redirect to="/" />;
     }
@@ -46,6 +47,14 @@ class RegistrationForm extends React.Component {
             Signup to your account
           </Header>
           {error && <p>{this.props.error.message}</p>}
+          {registrationSuccess && (
+          <Message success icon>
+            <Icon name='checkmark' />
+            <Message.Content>
+              <Message.Header>You have successfully registered.</Message.Header>
+            </Message.Content>
+          </Message>
+        )}
 
           <React.Fragment>
             <Form size="large" onSubmit={this.handleSubmit}>
@@ -114,7 +123,8 @@ const mapStateToProps = state => {
   return {
     loading: state.auth.loading,
     error: state.auth.error,
-    token: state.auth.token
+    token: state.auth.token,
+    registrationSuccess: state.auth.registrationSuccess
   };
 };
 
