@@ -3,6 +3,14 @@ import { connect } from "react-redux";
 import { fetchCourses } from "../store/actions/course";
 import { Card, CardContent, List } from "semantic-ui-react";
 import { Link } from 'react-router-dom';
+import {
+  Button,
+  Form,
+  Grid,
+  Header,
+  Message,
+  Segment
+} from "semantic-ui-react";
 
 class CourseDetails extends Component {
   componentDidMount() {
@@ -14,15 +22,18 @@ class CourseDetails extends Component {
     const courseID = url.split("/")
     localStorage.setItem("course", courseID[5])
     return(
+      <Grid>
         <List className='container m-4'>
                     <Card className='card'>
-                        <Link to={`/courses/detail/${localStorage.getItem("course")}`}>annocements</Link>
+                        <Link to={`/courses/detail/${localStorage.getItem("course")}`}>Introduction</Link>
                         <Link to={`/courses/detail/${localStorage.getItem("course")}/assignments`}>assignments</Link>
                         <Link to={`/courses/detail/${localStorage.getItem("course")}/grades`}>grades</Link>
                         <Link to={`/courses/detail/${localStorage.getItem("course")}/attendance`}>attendance</Link>
                         <Link to={`/courses/detail/${localStorage.getItem("course")}/zoom`}>Zoom Link</Link>
                     </Card>
         </List>
+        <h1> Introduction </h1>
+      </Grid>
     );
   }
 }

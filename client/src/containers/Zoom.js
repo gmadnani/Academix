@@ -4,7 +4,7 @@ import { fetchCourses } from "../store/actions/course";
 import { Card, CardContent, List } from "semantic-ui-react";
 import { Link } from 'react-router-dom';
 
-class Attendance extends Component {
+class Zoom extends Component {
   componentDidMount() {
     this.props.onFetchCourses(this.props.token);
   }
@@ -13,7 +13,7 @@ class Attendance extends Component {
     const url = window.location.href;
     const courseID = url.split("/")
     localStorage.setItem("course", courseID[5])
-    return( <h1> Attendance</h1>
+    return( <h1> Zoom</h1>
         // <List className='container m-4'>
         //             <Card className='card'>
         //                 <Link to={`/courses/detail/${localStorage.getItem("course")}`}>annocements</Link>
@@ -41,4 +41,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Attendance);
+)(Zoom);

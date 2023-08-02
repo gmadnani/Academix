@@ -9,6 +9,8 @@ import StudentHome from "./containers/StudentHome";
 import TeacherHome from "./containers/TeacherHome";
 import CourseDetails from "./containers/CourseDetails";
 import AdminCourseRegisteration from "./containers/AdminCourseRegisteration";
+import Attendance from "./containers/Attendance";
+import Zoom from "./containers/Zoom";
 
 const BaseRouter = () => (
   <Hoc>
@@ -18,6 +20,8 @@ const BaseRouter = () => (
     <Route path="/teacher" component={TeacherHome}/>
     <Route exact path="/" component={HomepageLayout} />
     <Route path={`/courses/detail/:slug`} component={CourseDetails}/>
+    <Route path={`/courses/detail/:slug/attendance`} component={Attendance}/>
+    <Route path={`/courses/detail/:slug/zoom`} component={Zoom}/>
     <Route path="/courseRegisteration" component={AdminCourseRegisteration}/>
   </Hoc>
 );
