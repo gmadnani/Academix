@@ -18,6 +18,7 @@ const authStart = (state, action) => {
 };
 
 const authSuccess = (state, action) => {
+  localStorage.setItem('token', action.token);
   return updateObject(state, {
     token: action.token,
     role: action.role,
@@ -25,6 +26,7 @@ const authSuccess = (state, action) => {
     loading: false
   });
 };
+
 
 
 const authFail = (state, action) => {
