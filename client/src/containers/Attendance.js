@@ -1,6 +1,6 @@
 import React, { useState, useEffect  } from 'react';
 import { connect } from "react-redux";
-import { Card, CardContent, List, Header, Grid, Segment, Form, Button, Modal, Message,Icon } from "semantic-ui-react";
+import { List, Header, Segment, Form, Button, Modal, Message} from "semantic-ui-react";
 import { createAttendance, fetchAttendances } from '../store/actions/attendance';
 
 const Attendance = ({ token, courseID, createAttendance, attendances, loading, error, fetchAttendances }) => {

@@ -42,20 +42,16 @@ export const fetchCourses = (token) => {
 export const registerStudentInCourse = (token, userEmail, courseNumber) => {
   return dispatch => {
     dispatch(registerStart());
-
-    // Fetch the admin email from the profile endpoint
-    axios.get('http://127.0.0.1:8000/users/profile/', {
+      axios.get('http://127.0.0.1:8000/users/profile/', {
       headers: {
         'Authorization': `Token ${token}`
       }
     })
       .then(response => {
-        // Get the admin email from the response data
         const adminEmail = response.data.email;
 
         const url = `http://127.0.0.1:8000/courses/admin/${courseNumber}/`;
 
-        // You can include additional headers or authorization here if needed
         const headers = {
           'Content-Type': 'application/json',
           'Authorization': `Token ${token}`
@@ -68,16 +64,13 @@ export const registerStudentInCourse = (token, userEmail, courseNumber) => {
 
         axios.post(url, data, { headers })
           .then(res => {
-            // Handle the successful registration
             dispatch(registerSuccess());
           })
           .catch(err => {
-            // Handle the registration failure
             dispatch(registerFail(err));
           });
       })
       .catch(error => {
-        // Handle any error that occurs while fetching the admin email
         dispatch(registerFail(error));
       });
   };

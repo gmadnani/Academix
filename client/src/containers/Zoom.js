@@ -13,17 +13,7 @@ class Zoom extends Component {
     const url = window.location.href;
     const courseID = url.split("/")
     localStorage.setItem("course", courseID[5])
-    return( <h1> Zoom</h1>
-        // <List className='container m-4'>
-        //             <Card className='card'>
-        //                 <Link to={`/courses/detail/${localStorage.getItem("course")}`}>annocements</Link>
-        //                 <Link to={`/courses/detail/${localStorage.getItem("course")}/assignments`}>assignments</Link>
-        //                 <Link to={`/courses/detail/${localStorage.getItem("course")}/grades`}>grades</Link>
-        //                 <Link to={`/courses/detail/${localStorage.getItem("course")}/attendance`}>attendance</Link>
-        //                 <Link to={`/courses/detail/${localStorage.getItem("course")}/zoom`}>Zoom Link</Link>
-        //             </Card>
-        // </List>
-    );
+    return( <h1> Zoom</h1> );
   }
 }
 

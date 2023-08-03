@@ -4,11 +4,10 @@ import {
   Form,
   Grid,
   Header,
-  Message,
   Segment
 } from "semantic-ui-react";
 import { connect } from "react-redux";
-import { NavLink, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { authLogin } from "../store/actions/auth";
 
 class LoginForm extends React.Component {
@@ -79,9 +78,6 @@ class LoginForm extends React.Component {
                 </Button>
               </Segment>
             </Form>
-            {/* <Message>
-              New to us? <NavLink to="/signup">Sign Up</NavLink>
-            </Message> */}
           </React.Fragment>
         </Grid.Column>
       </Grid>

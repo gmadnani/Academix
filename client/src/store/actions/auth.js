@@ -76,7 +76,6 @@ export const getUserRole = () => {
       })
       .then(res => {
         dispatch(getUserRoleSuccess(res.data.role));
-        // Update the auth state with the fetched role
         dispatch(authSuccess(getState().auth.token, res.data.role));
       })
       .catch(err => {
