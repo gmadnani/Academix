@@ -11,7 +11,7 @@ import random
 from datetime import datetime, timezone
 
 from .models import Attendance, AttendanceRecord
-from .serializers import AttendanceSerializer, AttendanceRecordSerializer
+from .serializers import AttendanceSerializer, AttendanceRecordSerializer, AttendanceRecordStudentSerializer
 from courses.models import CoursesList, CourseRegistration
 from users.models import UserProfile
 
@@ -26,18 +26,27 @@ def attendance_list(request, pk):
     except CoursesList.DoesNotExist:
         return Response(data={"msg": "No such course"}, status=status.HTTP_404_NOT_FOUND)
 
-    if course.owner != request.user:
-        return Response(data={"msg": "You have no access"}, status=status.HTTP_401_UNAUTHORIZED)
+    # if course.owner != request.user:
+    #     return Response(data={"msg": "You have no access"}, status=status.HTTP_401_UNAUTHORIZED)
 
     if request.method == "GET":
-        attendance_data = Attendance.objects.filter(courseID=course)
-        for i in attendance_data:
-            i.attended_number = AttendanceRecord.objects.filter(attendanceID=i, if_attended=True).count()
-            i.save()
-        s = AttendanceSerializer(instance=attendance_data, many=True)
-        return Response(data=s.data, status=status.HTTP_200_OK)
+        if course.owner == request.user:
+            attendance_data = Attendance.objects.filter(courseID=course)
+            for i in attendance_data:
+                i.attended_number = AttendanceRecord.objects.filter(attendanceID=i, if_attended=True).count()
+                i.save()
+            s = AttendanceSerializer(instance=attendance_data, many=True)
+            return Response(data=s.data, status=status.HTTP_200_OK)
+        if course.owner != request.user:
+            attendance_data = Attendance.objects.filter(courseID=course)
+            attendance_record = AttendanceRecord.objects.filter(Q(attendanceID__courseID=pk), studentID=request.user)
+            ss = AttendanceRecordStudentSerializer(instance=attendance_record, many=True)
+            return Response(data=ss.data, status=status.HTTP_200_OK)
+
 
     if request.method == "POST":
+        if course.owner != request.user:
+            return Response(data={"msg": "You have no access"}, status=status.HTTP_401_UNAUTHORIZED)
         s = AttendanceSerializer(data=request.data, partial=True)
         students_list = CourseRegistration.objects.filter(courseID=course, course_role='student')
         total_number = students_list.count()
@@ -61,10 +70,34 @@ def attendance_list(request, pk):
         return Response(data=s.data, status=status.HTTP_200_OK)
 
     if request.method == "DELETE":
+        if course.owner != request.user:
+            return Response(data={"msg": "You have no access"}, status=status.HTTP_401_UNAUTHORIZED)
         for i in request.data:
             attendance_instance = Attendance.objects.filter(title=i['title'], courseID=course)
             attendance_instance.delete()
             return Response(data={"msg": "Delete Successful"}, status=status.HTTP_200_OK)
+
+
+@api_view(["GET",])
+@permission_classes((IsAuthenticated,))
+def attendance_list_detailed(request, pk):
+    try:
+        attendance_object = Attendance.objects.get(pk=pk)
+    except Attendance.DoesNotExist:
+        return Response(data={"msg": "No such attendance"}, status=status.HTTP_404_NOT_FOUND)
+
+    course = attendance_object.courseID
+    print(course.owner)
+
+    if attendance_object.courseID.owner != request.user:
+        return Response(data={"msg": "You have no access"}, status=status.HTTP_401_UNAUTHORIZED)
+
+    if request.method == "GET":
+        attendance_record = AttendanceRecord.objects.filter(attendanceID=pk)
+        ss = AttendanceRecordSerializer(instance=attendance_record, many=True)
+        return Response(data=ss.data, status=status.HTTP_200_OK)
+
+    return Response(data={"msg": "Delete Successful"}, status=status.HTTP_200_OK)
 
 
 

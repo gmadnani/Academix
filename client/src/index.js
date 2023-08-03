@@ -8,14 +8,16 @@ import thunk from "redux-thunk";
 
 import authReducer from "./store/reducers/auth";
 import courseReducer from './store/reducers/course';
-import userReducer from './store/reducers/user'
+import userReducer from './store/reducers/user';
+import attendanceReducer from './store/reducers/attendance';
 
 const composeEnhances = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
   auth: authReducer,
   course: courseReducer,
-  user: userReducer
+  user: userReducer,
+  attendance: attendanceReducer
 });
 
 const store = createStore(rootReducer, composeEnhances(applyMiddleware(thunk)));

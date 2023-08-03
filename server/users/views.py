@@ -13,17 +13,17 @@ from .models import UserProfile
 from .serializers import UserProfileSerializer
 
 
-@receiver(post_save, sender=settings.AUTH_USER_MODEL)  # Django的信号机制
-def generate_token(sender, instance=None, created=False, **kwargs):
-    """
-    :param sender:
-    :param instance:
-    :param created:
-    :param kwargs:
-    :return:
-    """
-    if created:
-        UserProfile.objects.create(owner=instance)
+# @receiver(post_save, sender=settings.AUTH_USER_MODEL)  # Django的信号机制
+# def generate_token(sender, instance=None, created=False, **kwargs):
+#     """
+#     :param sender:
+#     :param instance:
+#     :param created:
+#     :param kwargs:
+#     :return:
+#     """
+#     if created:
+#         UserProfile.objects.create(owner=instance)
 
 
 @api_view(["GET", "POST", "PUT"])
