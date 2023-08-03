@@ -1,29 +1,45 @@
-import {
-    CREATE_ATTENDANCE_START,
-    CREATE_ATTENDANCE_SUCCESS,
-    CREATE_ATTENDANCE_FAIL,
-  } from '../actions/actiontypes';
+import * as actionTypes from "../actions/actiontypes.js";
   
   const initialState = {
     loading: false,
+    attendances: [],
     error: null,
   };
   
   const attendanceReducer = (state = initialState, action) => {
     switch (action.type) {
-      case CREATE_ATTENDANCE_START:
+      case actionTypes.FETCH_ATTENDANCES_START:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case actionTypes.FETCH_ATTENDANCES_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        attendances: action.attendances,
+        error: null,
+      };
+    case actionTypes.FETCH_ATTENDANCES_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
+      };
+      case actionTypes.CREATE_ATTENDANCE_START:
         return {
           ...state,
           loading: true,
           error: null,
         };
-      case CREATE_ATTENDANCE_SUCCESS:
+      case actionTypes.CREATE_ATTENDANCE_SUCCESS:
         return {
           ...state,
           loading: false,
           error: null,
         };
-      case CREATE_ATTENDANCE_FAIL:
+      case actionTypes.CREATE_ATTENDANCE_FAIL:
         return {
           ...state,
           loading: false,

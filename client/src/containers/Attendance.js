@@ -1,11 +1,9 @@
-import React, { Component, useState, useEffect  } from 'react';
+import React, { useState, useEffect  } from 'react';
 import { connect } from "react-redux";
-import { fetchCourses } from "../store/actions/course";
-import { Card, CardContent, List, Grid, Segment, Form, Button, Modal, Message,Icon } from "semantic-ui-react";
-import { Link } from 'react-router-dom';
-import { createAttendance } from '../store/actions/attendance';
+import { Card, CardContent, List, Header, Grid, Segment, Form, Button, Modal, Message,Icon } from "semantic-ui-react";
+import { createAttendance, fetchAttendances } from '../store/actions/attendance';
 
-const Attendance = ({ token, courseID, createAttendance }) => {
+const Attendance = ({ token, courseID, createAttendance, attendances, loading, error, fetchAttendances }) => {
   const [title, setTitle] = useState('');
   const [createdDate, setCreatedDate] = useState('');
   const [validTime, setValidTime] = useState('');
@@ -13,8 +11,15 @@ const Attendance = ({ token, courseID, createAttendance }) => {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   useEffect(() => {
+    console.log("courseID:", courseID);
+    console.log("loading:", loading);
+    console.log("error:", error);
+    console.log("attendances:", attendances);
+    fetchAttendances(token, courseID);
+  }, [fetchAttendances, token, courseID]);
+
+  useEffect(() => {
     if (showSuccessMessage) {
-      // Hide the success message after 3 seconds (adjust the time as needed)
       const timer = setTimeout(() => {
         setShowSuccessMessage(false);
       }, 3000);
@@ -30,7 +35,6 @@ const Attendance = ({ token, courseID, createAttendance }) => {
         setShowSuccessMessage(true);
       })
       .catch((error) => {
-        // Handle the error here if needed
         console.error('Error creating attendance:', error);
       });
   };
@@ -90,19 +94,47 @@ const Attendance = ({ token, courseID, createAttendance }) => {
       {showSuccessMessage && (
         <Message success header="Attendance Successfully Posted" content="Attendance has been created successfully!" />
       )}
+      <div>
+      <Header as="h3" textAlign="center">
+        List of Attendances
+      </Header>
+      {loading ? (
+        <p>Loading attendances...</p>
+      ) : error ? (
+        <p>Error loading attendances: {error.message}</p>
+      ) : (
+        <Segment>
+          <List divided relaxed>
+            {attendances.map((attendance) => (
+              <List.Item key={attendance.id}>
+                <List.Content>
+                  <List.Header as="a" href={`/attendance/detail/${attendance.id}`}>
+                    {attendance.title}
+                  </List.Header>
+                  <List.Description>{attendance.created_date}</List.Description>
+                </List.Content>
+              </List.Item>
+            ))}
+          </List>
+        </Segment>
+      )}
     </div>
+    </div>
+    
   );
 };
 
 const mapStateToProps = (state) => ({
   token: state.auth.token,
-  courses: state.course.courses,
-  loading: state.course.loading,
-  error: state.course.error,
+  loading: state.attendance.loading,
+  attendances: state.attendance.attendances,
+  error: state.attendance.error,
   courseID: localStorage.getItem('course'),
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  fetchAttendances: (token, courseID) =>
+    dispatch(fetchAttendances(token, courseID)),
   createAttendance: (token, courseID, title, createdDate, validTime) =>
     dispatch(createAttendance(token, courseID, title, createdDate, validTime)),
 });
