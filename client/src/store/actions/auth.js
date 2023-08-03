@@ -75,16 +75,17 @@ export const getUserRole = () => {
         }
       })
       .then(res => {
-        dispatch(getUserRoleSuccess(res.data.role));
+        const role = res.data.role;
+        localStorage.setItem('role', role); // Store the role in local storage
+        dispatch(getUserRoleSuccess(role));
         // Update the auth state with the fetched role
-        dispatch(authSuccess(getState().auth.token, res.data.role));
+        dispatch(authSuccess(getState().auth.token, role));
       })
       .catch(err => {
         dispatch(getUserRoleFail(err));
       });
   }
 }
-
 
 
 axios.defaults.xsrfCookieName = 'csrftoken';
@@ -172,22 +173,20 @@ export const authSignup = (username, email, password1, password2) => {
 export const authCheckState = () => {
   return dispatch => {
     const token = localStorage.getItem("token");
-    const role = localStorage.getItem('role');
-    if (token === undefined) {
+    if (!token) {
       dispatch(logout());
     } else {
       const expirationDate = new Date(localStorage.getItem("expirationDate"));
       if (expirationDate <= new Date()) {
         dispatch(logout());
       } else {
-        dispatch(authSuccess(token, role));
-        dispatch(
-          checkAuthTimeout(
-            (expirationDate.getTime() - new Date().getTime()) / 1000
-          )
-        );
+        const role = localStorage.getItem("role"); // retrieve role from local storage
+        dispatch(authSuccess(token, role)); // pass the retrieved role
+        dispatch(checkAuthTimeout(
+          (expirationDate.getTime() - new Date().getTime()) / 1000
+        ));
+        axios.defaults.headers.common = {'Authorization': `Token ${token}`};
       }
     }
   };
 };
-
