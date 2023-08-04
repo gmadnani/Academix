@@ -108,7 +108,7 @@ const Attendance = ({ token, courseID, createAttendance, attendances, loading, e
             {attendances.map((attendance) => (
               <List.Item key={attendance.id}>
                 <List.Content>
-                  <List.Header as="a" href={`/attendance/detail/${attendance.id}`}>
+                  <List.Header as="a" href={`attendance/detail/${attendance.id}`}>
                     {attendance.title}
                   </List.Header>
                   <List.Description>{attendance.created_date}</List.Description>

@@ -11,6 +11,7 @@ import CourseDetails from "./containers/CourseDetails";
 import AdminCourseRegisteration from "./containers/AdminCourseRegisteration";
 import Attendance from "./containers/Attendance";
 import Zoom from "./containers/Zoom";
+import AttendenceDetails from "./containers/AttendenceDetails";
 
 const BaseRouter = () => (
   <Hoc>
@@ -23,6 +24,7 @@ const BaseRouter = () => (
     <Route path={`/courses/detail/:slug/attendance`} component={Attendance}/>
     <Route path={`/courses/detail/:slug/zoom`} component={Zoom}/>
     <Route path="/courseRegisteration" component={AdminCourseRegisteration}/>
+    <Route path={`/courses/detail/:slug/attendance/detail/:slug`} component={AttendenceDetails}/>
   </Hoc>
 );
 console.log(localStorage.getItem("course"))

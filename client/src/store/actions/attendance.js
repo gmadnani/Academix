@@ -85,3 +85,45 @@ const createAttendanceFail = error => {
     error
   };
 };
+
+export const fetchAttendanceDetail = (token, attendanceID) => {
+  return dispatch => {
+    dispatch(fetchAttendanceDetailStart());
+
+    const url = `http://127.0.0.1:8000/attendance/detail/${attendanceID}/`;
+
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Token ${token}`
+    };
+
+    axios.get(url, { headers })
+      .then(res => {
+        const attendanceDetail = res.data;
+        dispatch(fetchAttendanceDetailSuccess(attendanceDetail));
+      })
+      .catch(err => {
+        dispatch(fetchAttendanceDetailFail(err));
+      });
+  };
+};
+
+const fetchAttendanceDetailStart = () => {
+  return {
+    type: actionTypes.FETCH_ATTENDANCE_DETAIL_START
+  };
+};
+
+const fetchAttendanceDetailSuccess = (attendanceDetail) => {
+  return {
+    type: actionTypes.FETCH_ATTENDANCE_DETAIL_SUCCESS,
+    attendanceDetail
+  };
+};
+
+const fetchAttendanceDetailFail = error => {
+  return {
+    type: actionTypes.FETCH_ATTENDANCE_DETAIL_FAIL,
+    error
+  };
+};

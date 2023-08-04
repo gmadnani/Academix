@@ -4,6 +4,7 @@ import * as actionTypes from "../actions/actiontypes.js";
     loading: false,
     attendances: [],
     error: null,
+    attendanceDetails: null,
   };
   
   const attendanceReducer = (state = initialState, action) => {
@@ -45,6 +46,25 @@ import * as actionTypes from "../actions/actiontypes.js";
           loading: false,
           error: action.error,
         };
+        case actionTypes.FETCH_ATTENDANCE_DETAIL_START:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case actionTypes.FETCH_ATTENDANCE_DETAIL_SUCCESS:
+      return {
+        ...state,
+        attendanceDetail: action.attendanceDetail,
+        loading: false,
+        error: null,
+      };
+    case actionTypes.FETCH_ATTENDANCE_DETAIL_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
+      };
       default:
         return state;
     }
