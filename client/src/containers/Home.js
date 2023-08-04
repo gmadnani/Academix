@@ -49,7 +49,8 @@ const Home = (props) => {
           delay: 3000,
         }}
         style={{
-          height: '600px'
+          marginTop: '-20px',
+          height: '580px'
       }}>
         {slides.map((slide, index) => (
           <SwiperSlide style={{height: '100%'}} key={index}>

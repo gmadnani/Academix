@@ -12,7 +12,6 @@ import {
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout } from "../store/actions/auth";
-
 class CustomLayout extends React.Component {
   render() {
     const { authenticated } = this.props;
@@ -24,9 +23,16 @@ class CustomLayout extends React.Component {
               <Menu.Item header>Home</Menu.Item>
             </Link>
             {authenticated ? (
-              <Menu.Item header onClick={() => this.props.logout()}>
-                Logout
-              </Menu.Item>
+              <div style={{ display: "flex"}}>
+                <Link to="/courses">
+                  <Menu.Item header>
+                  Courses
+                  </Menu.Item>
+                </Link>
+                <Menu.Item header onClick={() => this.props.logout()}>
+                  Logout
+                </Menu.Item>
+              </div>
             ) : (
               <React.Fragment>
                 <Link to="/login">
@@ -39,9 +45,9 @@ class CustomLayout extends React.Component {
             )}
           </Container>
         </Menu>
-
-        {this.props.children}
-
+        <div style={{paddingTop: 40}}>
+          {this.props.children}
+        </div>
         <Segment
           inverted
           vertical
