@@ -86,9 +86,9 @@ const createAttendanceFail = error => {
   };
 };
 
-export const fetchAttendanceDetail = (token, attendanceID) => {
+export const fetchAttendanceStudentList = (token, attendanceID) => {
   return dispatch => {
-    dispatch(fetchAttendanceDetailStart());
+    dispatch(fetchAttendanceStudentListStart());
 
     const url = `http://127.0.0.1:8000/attendance/detail/${attendanceID}/`;
 
@@ -99,31 +99,31 @@ export const fetchAttendanceDetail = (token, attendanceID) => {
 
     axios.get(url, { headers })
       .then(res => {
-        const attendanceDetail = res.data;
-        dispatch(fetchAttendanceDetailSuccess(attendanceDetail));
+        const studentList = res.data;
+        dispatch(fetchAttendanceStudentListSuccess(studentList));
       })
       .catch(err => {
-        dispatch(fetchAttendanceDetailFail(err));
+        dispatch(fetchAttendanceStudentListFail(err));
       });
   };
 };
 
-const fetchAttendanceDetailStart = () => {
+const fetchAttendanceStudentListStart = () => {
   return {
-    type: actionTypes.FETCH_ATTENDANCE_DETAIL_START
+    type: actionTypes.FETCH_ATTENDANCE_STUDENT_LIST_START
   };
 };
 
-const fetchAttendanceDetailSuccess = (attendanceDetail) => {
+const fetchAttendanceStudentListSuccess = (studentList) => {
   return {
-    type: actionTypes.FETCH_ATTENDANCE_DETAIL_SUCCESS,
-    attendanceDetail
+    type: actionTypes.FETCH_ATTENDANCE_STUDENT_LIST_SUCCESS,
+    studentList
   };
 };
 
-const fetchAttendanceDetailFail = error => {
+const fetchAttendanceStudentListFail = error => {
   return {
-    type: actionTypes.FETCH_ATTENDANCE_DETAIL_FAIL,
+    type: actionTypes.FETCH_ATTENDANCE_STUDENT_LIST_FAIL,
     error
   };
 };

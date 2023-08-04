@@ -46,20 +46,20 @@ import * as actionTypes from "../actions/actiontypes.js";
           loading: false,
           error: action.error,
         };
-        case actionTypes.FETCH_ATTENDANCE_DETAIL_START:
+        case actionTypes.FETCH_ATTENDANCE_STUDENT_LIST_START:
       return {
         ...state,
         loading: true,
         error: null,
       };
-    case actionTypes.FETCH_ATTENDANCE_DETAIL_SUCCESS:
+    case actionTypes.FETCH_ATTENDANCE_STUDENT_LIST_SUCCESS:
       return {
         ...state,
-        attendanceDetail: action.attendanceDetail,
+        studentList: action.studentList,
         loading: false,
         error: null,
       };
-    case actionTypes.FETCH_ATTENDANCE_DETAIL_FAIL:
+    case actionTypes.FETCH_ATTENDANCE_STUDENT_LIST_FAIL:
       return {
         ...state,
         loading: false,

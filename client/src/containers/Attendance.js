@@ -47,6 +47,10 @@ const Attendance = ({ token, courseID, createAttendance, attendances, loading, e
     setValidTime('');
   };
 
+  const handleAttendanceClick = (attendanceID) => {
+    localStorage.setItem('attendanceID', attendanceID);
+  };
+
   return (
     <div>
       <Button onClick={() => setShowForm(true)} primary>
@@ -106,7 +110,7 @@ const Attendance = ({ token, courseID, createAttendance, attendances, loading, e
         <Segment>
           <List divided relaxed>
             {attendances.map((attendance) => (
-              <List.Item key={attendance.id}>
+              <List.Item key={attendance.id} onClick={() => handleAttendanceClick(attendance.id)}>
                 <List.Content>
                   <List.Header as="a" href={`attendance/detail/${attendance.id}`}>
                     {attendance.title}

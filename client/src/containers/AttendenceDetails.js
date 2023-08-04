@@ -1,47 +1,43 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { Segment, Header, Loader, Dimmer } from 'semantic-ui-react';
-import { fetchAttendanceDetail } from '../store/actions/attendance';
+import { Segment, List, Header } from 'semantic-ui-react';
+import { fetchAttendanceStudentList } from '../store/actions/attendance';
 
-const AttendanceDetail = ({ token, attendanceID, attendanceDetail, loadingDetail, errorDetail, fetchAttendanceDetail }) => {
+const AttendanceDetails = ({ token, attendanceID, studentList, loadingStudentList, errorStudentList, fetchAttendanceStudentList }) => {
   useEffect(() => {
-    fetchAttendanceDetail(token, attendanceID);
-  }, [fetchAttendanceDetail, token, attendanceID]);
-
-  if (loadingDetail) {
-    return (
-      <Segment>
-        <Dimmer active>
-          <Loader>Loading attendance detail...</Loader>
-        </Dimmer>
-      </Segment>
-    );
-  }
-
-  if (errorDetail) {
-    return (
-      <Segment>
-        <p>Error loading attendance detail: {errorDetail.message}</p>
-      </Segment>
-    );
-  }
-
-  if (!attendanceDetail) {
-    return null;
-  }
+    fetchAttendanceStudentList(token, attendanceID);
+  }, [fetchAttendanceStudentList, token, attendanceID]);
 
   return (
     <div>
       <Header as="h3" textAlign="center">
-        Attendance Detail
+        Student List for Attendance
       </Header>
-      <Segment>
-        {/* Display the attendance detail information here */}
-        <p>Title: {attendanceDetail.title}</p>
-        <p>Created Date: {attendanceDetail.created_date}</p>
-        <p>Valid Time (in minutes): {attendanceDetail.valid_time}</p>
-        {/* ... other details */}
-      </Segment>
+      {loadingStudentList ? (
+        <p>Loading student list...</p>
+      ) : errorStudentList ? (
+        <p>Error loading student list: {errorStudentList.message}</p>
+      ) : (
+        // Add an extra check for studentList before using map
+        studentList && studentList.length > 0 ? (
+          <Segment>
+            <List divided relaxed>
+              {studentList.map((student) => (
+                <List.Item key={student.student_email}>
+                  <List.Content>
+                    <List.Header>{student.student_username}</List.Header>
+                    <List.Description>
+                      {student.student_email} - {student.if_attended ? 'Attended' : 'Absent'}
+                    </List.Description>
+                  </List.Content>
+                </List.Item>
+              ))}
+            </List>
+          </Segment>
+        ) : (
+          <p>No students found for this attendance.</p>
+        )
+      )}
     </div>
   );
 };
@@ -49,15 +45,15 @@ const AttendanceDetail = ({ token, attendanceID, attendanceDetail, loadingDetail
 const mapStateToProps = state => {
   return {
     token: state.auth.token,
-    attendanceID: localStorage.getItem('selectedAttendanceID'), // Retrieve attendanceID from local storage
-    attendanceDetail: state.attendance.attendanceDetail,
-    loadingDetail: state.attendance.loadingDetail,
-    errorDetail: state.attendance.errorDetail,
+    attendanceID: localStorage.getItem('attendanceID'),
+    studentList: state.attendance.studentList,
+    loading: state.attendance.loading,
+    error: state.attendance.error,
   };
 };
 
 const mapDispatchToProps = {
-  fetchAttendanceDetail,
+  fetchAttendanceStudentList,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AttendanceDetail);
+export default connect(mapStateToProps, mapDispatchToProps)(AttendanceDetails);
