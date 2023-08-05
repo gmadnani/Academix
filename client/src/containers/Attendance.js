@@ -11,10 +11,6 @@ const Attendance = ({ token, courseID, createAttendance, attendances, loading, e
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   useEffect(() => {
-    console.log("courseID:", courseID);
-    console.log("loading:", loading);
-    console.log("error:", error);
-    console.log("attendances:", attendances);
     fetchAttendances(token, courseID);
   }, [fetchAttendances, token, courseID]);
 
@@ -51,7 +47,8 @@ const Attendance = ({ token, courseID, createAttendance, attendances, loading, e
     localStorage.setItem('attendanceID', attendanceID);
   };
 
-  return (
+  if (localStorage.getItem("role") == 'teacher)'){
+    return (
     <div>
       <Button onClick={() => setShowForm(true)} primary>
         Create Attendance
@@ -125,7 +122,36 @@ const Attendance = ({ token, courseID, createAttendance, attendances, loading, e
     </div>
     </div>
     
-  );
+  );}
+  else{
+    return(
+    <div>
+      <Header as="h3" textAlign="center">
+        List of Attendances
+      </Header>
+      {loading ? (
+        <p>Loading attendances...</p>
+      ) : error ? (
+        <p>Error loading attendances: {error.message}</p>
+      ) : (
+        <Segment>
+          <List divided relaxed>
+            {attendances.map((attendance) => (
+              <List.Item key={attendance.id}>
+                <List.Content>
+                  <List.Header >
+                    {attendance.Attendance_title}
+                  </List.Header>
+                  <List.Description>{attendance.Attendance_created_date}</List.Description>
+                  {attendance.if_attended ? 'Attended' : 'Absent'}
+                </List.Content>
+              </List.Item>
+            ))}
+          </List>
+        </Segment>
+      )}
+    </div>
+  );}
 };
 
 const mapStateToProps = (state) => ({

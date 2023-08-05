@@ -44,11 +44,10 @@ const Home = ({
     }
   ];
   useEffect(() => {
-    if (role === 'student') {
       fetchUsers(token);
-    }
   }, [role, fetchUsers, token]);
 
+  localStorage.setItem('role', role);
   if (role !== 'admin') {
   return (
     <div>
