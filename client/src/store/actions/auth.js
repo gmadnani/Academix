@@ -11,7 +11,7 @@ export const authSuccess = (token, role) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
     token: token,
-    role
+    role: role
   };
 };
 
@@ -19,6 +19,12 @@ export const authFail = error => {
   return {
     type: actionTypes.AUTH_FAIL,
     error: error
+  };
+};
+
+export const registrationSuccess = () => {
+  return {
+    type: actionTypes.REGISTRATION_SUCCESS,
   };
 };
 
@@ -39,44 +45,53 @@ export const checkAuthTimeout = expirationTime => {
   };
 };
 
+export const getUserRoleStart = () => {
+  return {
+    type: actionTypes.GET_USER_ROLE_START
+  }
+}
+
+export const getUserRoleSuccess = role => {
+  return {
+    type: actionTypes.GET_USER_ROLE_SUCCESS,
+    role: role
+  }
+}
+
+export const getUserRoleFail = error => {
+  return {
+    type: actionTypes.GET_USER_ROLE_FAIL,
+    error: error
+  }
+}
+
+export const getUserRole = () => {
+  return (dispatch, getState) => {
+    dispatch(getUserRoleStart());
+    axios
+      .get('http://127.0.0.1:8000/users/profile/', {
+        headers: {
+          'Authorization': `Token ${getState().auth.token}`
+        }
+      })
+      .then(res => {
+        dispatch(getUserRoleSuccess(res.data.role));
+        dispatch(authSuccess(getState().auth.token, res.data.role));
+      })
+      .catch(err => {
+        dispatch(getUserRoleFail(err));
+      });
+  }
+}
+
+
+
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
 
 export const authLogin = (username, password) => {
   return dispatch => {
     dispatch(authStart());
-
-    // setTimeout(() => {
-    //   const users = [
-    //     {
-    //       role: 'student',
-    //       username: 'jack',
-    //       password: '123456'
-    //     },
-    //     {
-    //       role: 'student',
-    //       username: 'bob',
-    //       password: '123456'
-    //     },
-    //     {
-    //       role: 'teacher',
-    //       username: 'John',
-    //       password: '123456'
-    //     }
-    //   ];
-
-    //   const user = users.find(item => item.username === username && item.password === password);
-    //   if (!user) {
-    //     dispatch(authFail(new Error("Username or password is invalid!")));
-    //   } else {
-    //     localStorage.setItem("token", "token from be");
-    //     localStorage.setItem("expirationDate", new Date("2023-12-12"));
-    //     localStorage.setItem('role', user.role);
-    //     dispatch(authSuccess("token from be", user.role));
-    //     dispatch(checkAuthTimeout(3600));
-    //   }
-    // }, 1000)
-    
     axios
       .post("http://127.0.0.1:8000/dj-rest-auth/login/", {
         username: username,
@@ -87,8 +102,9 @@ export const authLogin = (username, password) => {
         const expirationDate = new Date(new Date().getTime() + 3600 * 1000);
         localStorage.setItem("token", token);
         localStorage.setItem("expirationDate", expirationDate);
-        dispatch(authSuccess(token));
+        dispatch(authSuccess(token, null));
         dispatch(checkAuthTimeout(3600));
+        dispatch(getUserRole());
       })
       .catch(err => {
         dispatch(authFail(err));
@@ -113,6 +129,7 @@ export const authSignup = (username, email, password1, password2) => {
         localStorage.setItem("expirationDate", expirationDate);
         dispatch(authSuccess(token));
         dispatch(checkAuthTimeout(3600));
+        dispatch(registrationSuccess());
       })
       .catch(err => {
         dispatch(authFail(err));
@@ -141,3 +158,4 @@ export const authCheckState = () => {
     }
   };
 };
+

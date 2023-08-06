@@ -1,18 +1,23 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { connect } from "react-redux";
 import { Grid, Segment, List , Header, Button,  } from 'semantic-ui-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import {useHistory} from 'react-router-dom';
+import {useHistory, Link} from 'react-router-dom';
 import { Autoplay } from 'swiper/modules';
+import { fetchUsers } from '../store/actions/user';
 
-const Home = (props) => {
+const Home = ({
+  role,
+  fetchUsers,
+  token,
+}) => {
   const history = useHistory();
-  console.log(props)
+
   const messages = [
-    {message: 'Message 1'},
-    {message: 'Message 2'},
-    {message: 'Message 3'},
+    { message: 'Message 1' },
+    { message: 'Message 2' },
+    { message: 'Message 3' },
     // etc
   ];
   const slides = [
@@ -38,9 +43,12 @@ const Home = (props) => {
 
     }
   ];
-  const { token, role } = props;
-  if (token) {
-  }
+  useEffect(() => {
+      fetchUsers(token);
+  }, [role, fetchUsers, token]);
+
+  localStorage.setItem('role', role);
+  if (role !== 'admin') {
   return (
     <div>
       <Swiper
@@ -100,10 +108,10 @@ const Home = (props) => {
                   <List.Item>
                     <Button
                       onClick={() => {
-                        history.push('facuity')
+                        history.push('teacher')
                       }}
                       fluid basic color={'teal'}>
-                      Facuity link
+                      Faculty link
                     </Button>
                   </List.Item>
                 )}
@@ -132,22 +140,44 @@ const Home = (props) => {
       </div>
     </div>
   )
+} else {
+  return(  
+      <div className="p5">
+        <Link to ="/signup"><Button
+          color="red"
+          fluid
+          size="large"
+        >
+          User Registeration
+        </Button>
+        </Link>
+
+        <Link to ="/courseRegisteration"><Button
+          color="teal"
+          fluid
+          size="large"
+        >
+          Course Registeration
+        </Button>
+        </Link>
+      </div>
+  );
+}
 }
 
 
 const mapStateToProps = state => {
   return {
-    loading: state.auth.loading,
-    error: state.auth.error,
+    loadingUsers: state.user.loading,
+    errorUsers: state.user.error,
+    users: state.user.users,
     token: state.auth.token,
     role: state.auth.role
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    // login: (username, password) => dispatch(authLogin(username, password))
-  };
+const mapDispatchToProps = {
+  fetchUsers,
 };
 
 export default connect(

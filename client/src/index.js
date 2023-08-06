@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useReducer } from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
@@ -7,11 +7,17 @@ import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 
 import authReducer from "./store/reducers/auth";
+import courseReducer from './store/reducers/course';
+import userReducer from './store/reducers/user';
+import attendanceReducer from './store/reducers/attendance';
 
 const composeEnhances = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
-  auth: authReducer
+  auth: authReducer,
+  course: courseReducer,
+  user: userReducer,
+  attendance: attendanceReducer
 });
 
 const store = createStore(rootReducer, composeEnhances(applyMiddleware(thunk)));

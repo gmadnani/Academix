@@ -5,10 +5,11 @@ import {
   Grid,
   Header,
   Message,
-  Segment
+  Segment,
+  Icon
 } from "semantic-ui-react";
 import { connect } from "react-redux";
-import { NavLink, Redirect } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { authSignup } from "../store/actions/auth";
 
 class RegistrationForm extends React.Component {
@@ -31,10 +32,7 @@ class RegistrationForm extends React.Component {
 
   render() {
     const { username, email, password1, password2 } = this.state;
-    const { error, loading, token } = this.props;
-    if (token) {
-      return <Redirect to="/" />;
-    }
+    const { error, loading, token, registrationSuccess } = this.props;
     return (
       <Grid
         textAlign="center"
@@ -46,6 +44,14 @@ class RegistrationForm extends React.Component {
             Signup to your account
           </Header>
           {error && <p>{this.props.error.message}</p>}
+          {registrationSuccess && (
+          <Message success icon>
+            <Icon name='checkmark' />
+            <Message.Content>
+              <Message.Header>You have successfully registered.</Message.Header>
+            </Message.Content>
+          </Message>
+        )}
 
           <React.Fragment>
             <Form size="large" onSubmit={this.handleSubmit}>
@@ -101,7 +107,7 @@ class RegistrationForm extends React.Component {
               </Segment>
             </Form>
             <Message>
-              Already have an account? <NavLink to="/login">Login</NavLink>
+              <NavLink to="/">Back to Dashboard</NavLink>
             </Message>
           </React.Fragment>
         </Grid.Column>
@@ -114,7 +120,8 @@ const mapStateToProps = state => {
   return {
     loading: state.auth.loading,
     error: state.auth.error,
-    token: state.auth.token
+    token: state.auth.token,
+    registrationSuccess: state.auth.registrationSuccess
   };
 };
 
