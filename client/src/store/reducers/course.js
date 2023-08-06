@@ -55,6 +55,25 @@ const reducer = (state = initialState, action) => {
         loading: false,
         error: action.error,
       };
+      case actionTypes.FETCH_COURSE_DETAILS_START:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case actionTypes.FETCH_COURSE_DETAILS_SUCCESS:
+      return {
+        ...state,
+        courseDetails: action.courseDetails,
+        loading: false,
+        error: null,
+      };
+    case actionTypes.FETCH_COURSE_DETAILS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.error,
+      };
     default: 
       return state;
   }

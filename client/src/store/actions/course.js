@@ -94,3 +94,46 @@ const registerFail = error => {
     error
   };
 };
+
+export const fetchCourseDetails = (token, courseID) => {
+  return dispatch => {
+    dispatch(fetchCourseDetailsStart());
+
+    const url = `http://127.0.0.1:8000/courses/detail/${courseID}/`;
+
+    // You can include additional headers or authorization here if needed
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Token ${token}`
+    };
+
+    axios.get(url, { headers })
+      .then(res => {
+        const courseDetails = res.data;
+        dispatch(fetchCourseDetailsSuccess(courseDetails));
+      })
+      .catch(err => {
+        dispatch(fetchCourseDetailsFail(err));
+      });
+  };
+};
+
+const fetchCourseDetailsStart = () => {
+  return {
+    type: actionTypes.FETCH_COURSE_DETAILS_START
+  };
+};
+
+const fetchCourseDetailsSuccess = (courseDetails) => {
+  return {
+    type: actionTypes.FETCH_COURSE_DETAILS_SUCCESS,
+    courseDetails
+  };
+};
+
+const fetchCourseDetailsFail = error => {
+  return {
+    type: actionTypes.FETCH_COURSE_DETAILS_FAIL,
+    error
+  };
+};

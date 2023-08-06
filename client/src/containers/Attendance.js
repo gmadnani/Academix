@@ -47,7 +47,7 @@ const Attendance = ({ token, courseID, createAttendance, attendances, loading, e
     localStorage.setItem('attendanceID', attendanceID);
   };
 
-  if (localStorage.getItem("role") == 'teacher)'){
+  if (localStorage.getItem("role") === 'teacher'){
     return (
     <div>
       <Button onClick={() => setShowForm(true)} primary>

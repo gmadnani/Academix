@@ -21,7 +21,7 @@ const BaseRouter = () => (
     <Route path="/teacher" component={TeacherHome}/>
     <Route exact path="/" component={HomepageLayout} />
     <Route path={`/courses/detail/:slug`} component={CourseDetails}/>
-    <Route path={`/courses/detail/:slug/attendance`} component={Attendance}/>
+    <Route exact path={`/courses/detail/:slug/attendance`} component={Attendance}/>
     <Route path={`/courses/detail/:slug/zoom`} component={Zoom}/>
     <Route path="/courseRegisteration" component={AdminCourseRegisteration}/>
     <Route path={`/courses/detail/:slug/attendance/detail/:slug`} component={AttendenceDetails}/>
