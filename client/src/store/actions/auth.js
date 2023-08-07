@@ -78,7 +78,7 @@ export const getUserRole = () => {
         const role = res.data.role;
         localStorage.setItem('role', role); // Store the role in local storage
         dispatch(getUserRoleSuccess(role));
-        dispatch(authSuccess(getState().auth.token, res.data.role));
+        dispatch(authSuccess(getState().auth.token, role));
       })
       .catch(err => {
         dispatch(getUserRoleFail(err));
