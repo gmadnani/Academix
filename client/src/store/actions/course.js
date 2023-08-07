@@ -21,9 +21,10 @@ export const fetchCoursesFail = error => {
   };
 };
 
-export const fetchCourses = (token) => {
+export const fetchCourses = () => {
   return dispatch => {
     dispatch(fetchCoursesStart());
+    const token = localStorage.getItem('token');  // Get token from localStorage
     axios.defaults.headers = {
       "Content-Type": "application/json",
       Authorization: `Token ${token}`
