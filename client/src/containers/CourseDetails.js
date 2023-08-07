@@ -61,9 +61,9 @@ const CourseDetails = ({ token, courseID, courseDetails, loading, error, fetchCo
 const mapStateToProps = state => ({
   token: state.auth.token,
   courseID: localStorage.getItem("course"),
-  courseDetails: state.course.courseDetails,
   loading: state.course.loading,
-  error: state.course.error
+  error: state.course.error,
+  courseDetails: state.course.courseDetails,
 });
 
 const mapDispatchToProps = {

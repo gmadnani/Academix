@@ -5,28 +5,27 @@ import Hoc from "./hoc/hoc";
 import Login from "./containers/Login";
 import Signup from "./containers/Signup";
 import HomepageLayout from "./containers/Home";
-import StudentHome from "./containers/StudentHome";
-import TeacherHome from "./containers/TeacherHome";
+import CourseList from "./containers/CourseList";
 import CourseDetails from "./containers/CourseDetails";
 import AdminCourseRegisteration from "./containers/AdminCourseRegisteration";
 import Attendance from "./containers/Attendance";
 import Zoom from "./containers/Zoom";
 import AttendenceDetails from "./containers/AttendenceDetails";
+import CreateCourse from "./containers/CreateCourse";
 
 const BaseRouter = () => (
   <Hoc>
-    <Route path="/login" component={Login} />
+    <Route path="/" component={Login} />
     <Route path="/signup" component={Signup} />
-    <Route path="/student" component={StudentHome}/>
-    <Route path="/teacher" component={TeacherHome}/>
-    <Route exact path="/" component={HomepageLayout} />
-    <Route path={`/courses/detail/:slug`} component={CourseDetails}/>
-    <Route exact path={`/courses/detail/:slug/attendance`} component={Attendance}/>
-    <Route path={`/courses/detail/:slug/zoom`} component={Zoom}/>
+    <Route path="/courseList" component={CourseList}/>
+    <Route exact path="/home" component={HomepageLayout} />
+    <Route path="/courses/detail/:courseID" component={CourseDetails} />
+    <Route path="/createCourse" component={CreateCourse}/>
+    <Route path="/courses/detail/:courseID/attendance" component={Attendance} />
+    <Route path="/courses/detail/:courseID/zoom" component={Zoom} />
+    <Route path="/courses/detail/:courseID/attendance/detail/:attendanceID" component={AttendenceDetails} />
     <Route path="/courseRegisteration" component={AdminCourseRegisteration}/>
-    <Route path={`/courses/detail/:slug/attendance/detail/:slug`} component={AttendenceDetails}/>
   </Hoc>
 );
-console.log(localStorage.getItem("course"))
 
 export default BaseRouter;
