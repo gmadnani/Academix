@@ -32,7 +32,7 @@ class RegistrationForm extends React.Component {
 
   render() {
     const { username, email, password1, password2 } = this.state;
-    const { error, loading, token, registrationSuccess } = this.props;
+    const { error, loading, registrationSuccess } = this.props;
     return (
       <Grid
         textAlign="center"
