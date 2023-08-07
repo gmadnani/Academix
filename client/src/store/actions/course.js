@@ -24,7 +24,26 @@ export const fetchCoursesFail = error => {
 export const fetchCourses = () => {
   return dispatch => {
     dispatch(fetchCoursesStart());
-    const token = localStorage.getItem('token');  // Get token from localStorage
+    const token = localStorage.getItem('token');
+    axios.defaults.headers = {
+      "Content-Type": "application/json",
+      Authorization: `Token ${token}`
+    };
+    axios.get('http://127.0.0.1:8000/courses/list/')
+      .then(res => {
+        const courses = res.data;
+        dispatch(fetchCoursesSuccess(courses));
+      })
+      .catch(err => {
+        dispatch(fetchCoursesFail(err));
+      });
+  };
+};
+
+export const fetchAdminCourses = () => {
+  return dispatch => {
+    dispatch(fetchCoursesStart());
+    const token = localStorage.getItem('token');
     axios.defaults.headers = {
       "Content-Type": "application/json",
       Authorization: `Token ${token}`
@@ -102,13 +121,12 @@ export const fetchCourseDetails = (token, courseID) => {
 
     const url = `http://127.0.0.1:8000/courses/detail/${courseID}/`;
 
-    // You can include additional headers or authorization here if needed
     const headers = {
       'Content-Type': 'application/json',
       'Authorization': `Token ${token}`
     };
 
-    axios.get(url, { headers })
+    return axios.get(url, { headers })
       .then(res => {
         const courseDetails = res.data;
         dispatch(fetchCourseDetailsSuccess(courseDetails));

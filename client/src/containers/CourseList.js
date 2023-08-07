@@ -23,17 +23,14 @@ class CourseList extends Component {
                   <CardContent>
                     <Card.Header>
                       <Link to={`/courses/detail/${course.courseID}`}>
-                        {course.courseName}
+                      {course.courseID}- {course.courseName}
                       </Link>
                     </Card.Header>
                     <Card.Meta>
                       <strong>
-                        {course.owner}
+                        teacher- {course.owner}
                       </strong>
                     </Card.Meta>
-                    <Card.Description>
-                      {course.courseDescription}
-                    </Card.Description>
                   </CardContent>
                 </Card>
               </List.Item>
@@ -53,12 +50,9 @@ class CourseList extends Component {
                   <CardContent>
                     <Card.Header>
                       <Link to={`/courses/detail/${course.courseID}`}>
-                        {course.courseName}
+                      {course.courseID}- {course.courseName}
                       </Link>
                     </Card.Header>
-                    <Card.Description>
-                      {course.courseDescription}
-                    </Card.Description>
                   </CardContent>
                 </Card>
               </List.Item>

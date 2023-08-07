@@ -69,7 +69,7 @@ const Home = ({
       </Swiper>
       <div style={{padding: '30px'}}>
         <Grid columns={2}>
-          <Grid.Column width={5}>
+          {/* <Grid.Column width={5}>
             <Header as='h3' textAlign='center'>Updates</Header>
             <Segment>
               <div style={{height: 300, overflowY: 'scroll'}}>
@@ -78,21 +78,12 @@ const Home = ({
                 ))}
               </div>
             </Segment>
-          </Grid.Column>
+          </Grid.Column> */}
 
-          <Grid.Column width={11}>
+          <Grid.Column width={16}>
             <Header as='h3' textAlign='center'>Campus Resources</Header>
             <Segment>
               <List>
-                <List.Item>
-                  <Button
-                    onClick={() => {
-                      history.push('zoom-dashboard')
-                    }}
-                    fluid basic color={'teal'}>
-                    Zoom Dashboard
-                  </Button>
-                </List.Item>
                 {role === 'student' && (
                   <List.Item>
                     <Button
@@ -115,7 +106,7 @@ const Home = ({
                     </Button>
                   </List.Item>
                 )}
-                <List.Item>
+                {/* <List.Item>
                   <Button
                     onClick={() => {
                       history.push('calendar')
@@ -123,7 +114,8 @@ const Home = ({
                     fluid basic color={'teal'}>
                     BU Calendar
                   </Button>
-                </List.Item>
+                </List.Item> */}
+                {role === 'teacher' && (
                 <List.Item>
                   <Button
                     onClick={() => {
@@ -133,6 +125,7 @@ const Home = ({
                     Create Course
                   </Button>
                 </List.Item>
+                )}
               </List>
             </Segment>
           </Grid.Column>

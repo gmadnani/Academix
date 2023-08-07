@@ -4,6 +4,15 @@ import { Form, Button } from 'semantic-ui-react';
 import { createCourse } from '../store/actions/course';
 import { useHistory } from 'react-router-dom';
 
+const semesterOptions = [
+  { key: 'fall', value: 'Fall', text: 'Fall' },
+  { key: 'spring', value: 'Spring', text: 'Spring' },
+  { key: 'summer', value: 'Summer', text: 'Summer' },
+];
+
+const currentYear = new Date().getFullYear();
+const validYears = Array.from({ length: 3 }, (_, index) => currentYear + index);
+
 const CreateCourseForm = ({ token, creatingCourse, createCourseError, createCourse }) => {
     const history = useHistory();
     const [courseData, setCourseData] = useState({
@@ -22,6 +31,8 @@ const CreateCourseForm = ({ token, creatingCourse, createCourseError, createCour
         Syllabus_Week10: '',
         Syllabus_Week11: '',
         Syllabus_Week12: '',
+        courseSemester: '',
+        courseYear: '', 
     });
 
   const handleChange = (e, { name, value }) => {
@@ -31,6 +42,10 @@ const CreateCourseForm = ({ token, creatingCourse, createCourseError, createCour
   const handleSubmit = () => {
     createCourse(token, courseData);
     history.push('/courseList');
+  };
+
+  const isYearValid = value => {
+    return !isNaN(value) && validYears.includes(parseInt(value, 10));
   };
 
   return (
@@ -47,6 +62,22 @@ const CreateCourseForm = ({ token, creatingCourse, createCourseError, createCour
         name="courseName"
         value={courseData.courseName}
         onChange={handleChange}
+        required
+      />
+      <Form.Select
+        label="Course Semester"
+        name="courseSemester"
+        value={courseData.courseSemester}
+        options={semesterOptions}
+        onChange={handleChange}
+        required
+      />
+      <Form.Input
+        label="Course Year"
+        name="courseYear"
+        value={courseData.courseYear}
+        onChange={handleChange}
+        error={courseData.courseYear && !isYearValid(courseData.courseYear) && 'You can only select a year from now to 2 years ahead'}
         required
       />
       <Form.TextArea

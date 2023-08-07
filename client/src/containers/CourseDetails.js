@@ -4,14 +4,14 @@ import { Card, Header, Segment, List } from "semantic-ui-react";
 import { Link } from 'react-router-dom';
 import { fetchCourseDetails } from '../store/actions/course'
 
-const url = window.location.href;
-const course = url.split("/")
-localStorage.setItem("course", course[5])
-
 const CourseDetails = ({ token, courseID, courseDetails, loading, error, fetchCourseDetails }) => {
   useEffect(() => {
     fetchCourseDetails(token, courseID);
   }, [fetchCourseDetails, token, courseID]);
+
+  const url = window.location.href;
+  const course = url.split("/")
+  localStorage.setItem("course", course[5])
 
   return(
     <div>
@@ -61,9 +61,9 @@ const CourseDetails = ({ token, courseID, courseDetails, loading, error, fetchCo
 const mapStateToProps = state => ({
   token: state.auth.token,
   courseID: localStorage.getItem("course"),
-  courseDetails: state.course.courseDetails,
   loading: state.course.loading,
-  error: state.course.error
+  error: state.course.error,
+  courseDetails: state.course.courseDetails,
 });
 
 const mapDispatchToProps = {

@@ -19,12 +19,12 @@ const BaseRouter = () => (
     <Route path="/signup" component={Signup} />
     <Route path="/courseList" component={CourseList}/>
     <Route exact path="/home" component={HomepageLayout} />
-    <Route path={`/courses/detail/:slug`} component={CourseDetails}/>
-    <Route path={`/createCourse`} component={CreateCourse}/>
-    <Route exact path={`/courses/detail/:slug/attendance`} component={Attendance}/>
-    <Route path={`/courses/detail/:slug/zoom`} component={Zoom}/>
+    <Route path="/courses/detail/:courseID" component={CourseDetails} />
+    <Route path="/createCourse" component={CreateCourse}/>
+    <Route path="/courses/detail/:courseID/attendance" component={Attendance} />
+    <Route path="/courses/detail/:courseID/zoom" component={Zoom} />
+    <Route path="/courses/detail/:courseID/attendance/detail/:attendanceID" component={AttendenceDetails} />
     <Route path="/courseRegisteration" component={AdminCourseRegisteration}/>
-    <Route path={`/courses/detail/:slug/attendance/detail/:slug`} component={AttendenceDetails}/>
   </Hoc>
 );
 
