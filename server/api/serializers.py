@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from users.models import UserProfile
-from .models import Assignment, Question, Choice, GradedAssignment
+from .models import Assignment, Question, Choice, GradedAssignment, AssignmentSubmission, AssignmentGrading
 
 
 class StringSerializer(serializers.StringRelatedField):
@@ -20,7 +20,6 @@ class QuestionSerializer(serializers.ModelSerializer):
 class AssignmentSerializer(serializers.ModelSerializer):
     questions = serializers.SerializerMethodField()
     teacher = StringSerializer(many=False)
-
     class Meta:
         model = Assignment
         fields = '__all__'
@@ -30,29 +29,15 @@ class AssignmentSerializer(serializers.ModelSerializer):
         return questions
 
     def create(self, request):
-        data = request.data
+        data = request
 
         assignment = Assignment()
         assignment.title = data['title']
+        assignment.due_date = data['due_date']
+        assignment.full_grade = data['full_grade']
+        assignment.courseId = data['courseId']
+        assignment.assignment_files = data['assignment_files']
         assignment.save()
-
-        order = 1
-        for q in data['questions']:
-            newQ = Question()
-            newQ.question = q['title']
-            newQ.order = order
-            newQ.save()
-
-            for c in q['choices']:
-                newC = Choice()
-                newC.title = c
-                newC.save()
-                newQ.choices.add(newC)
-
-            newQ.answer = Choice.objects.get(title=q['answer'])
-            newQ.assignment = assignment
-            newQ.save()
-            order += 1
         return assignment
 
 
@@ -73,17 +58,39 @@ class GradedAssignmentSerializer(serializers.ModelSerializer):
         graded_asnt = GradedAssignment()
         graded_asnt.assignment = assignment
         graded_asnt.student = student
-
-        questions = [q for q in assignment.questions.all()]
-        answers = [data['answers'][a] for a in data['answers']]
-
-        answered_correct_count = 0
-        for i in range(len(questions)):
-            if questions[i].answer.title == answers[i]:
-                answered_correct_count += 1
-            i += 1
-
-        grade = answered_correct_count / len(questions) * 100
-        graded_asnt.grade = grade
         graded_asnt.save()
         return graded_asnt
+    
+class SubmissionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AssignmentSubmission
+        fields = '__all__'
+        
+    def create(self, request):
+        data = request.data
+        
+        submission = AssignmentSubmission()
+        submission.assignmentID = data['assignmentID']
+        submission.student = UserProfile.objects.get(username=data['student'])
+        submission.title = data['title']
+        submission.description = data['description']
+        submission.file = data['file']
+        submission.submission_date = data['submission_date']
+        submission.save()
+        return submission
+
+class AssignmentGradingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AssignmentGrading
+        fields = '__all__'
+        
+    def create(self, request):
+        data = request.data
+        
+        grading = AssignmentGrading()
+        grading.assignmentID = data['assignmentID']
+        grading.student = UserProfile.objects.get(username = data['student'])
+        grading.courseID = data['courseID']
+        grading.grade = data['grade']
+        
+        return grading
