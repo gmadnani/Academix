@@ -1,6 +1,6 @@
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from django.db.models import Q
 from django.contrib.auth.models import User
@@ -68,3 +68,47 @@ def course_detail(request, pk):
                 course.delete()
                 return Response(status=status.HTTP_204_NO_CONTENT)
             return Response(data={"msg": "You have no authority"}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+@api_view(["GET", "POST", "DELETE"])
+@permission_classes((IsAdminUser,))
+def manage_registration(request, pk):
+    try:
+        registration = CourseRegistration.objects.filter(courseID=pk)
+    except CourseRegistration.DoesNotExist:
+        return Response(data={"msg": "No information of this course"}, status=status.HTTP_404_NOT_FOUND)
+    else:
+
+        if request.method == "GET":
+            ss = CourseRegistrationSerializer(instance=registration, many=True)
+            return Response(data=ss.data, status=status.HTTP_200_OK)
+
+        if request.method == "POST":
+            course = CoursesList.objects.get(pk=pk)
+            for i in request.data:
+                i['userID'] = User.objects.get(email=i['userID'])
+                registration_record = CourseRegistration.objects.filter(courseID=course, userID=i['userID'])
+                if registration_record.count() == 0:
+                    print(i)
+                    ss = CourseRegistrationSerializer(data=i, partial=True)
+                    if ss.is_valid():
+                        ss.save(userID=i['userID'], courseID=course)
+                    else:
+                        return Response(data={"msg": "Error"}, status=status.HTTP_400_BAD_REQUEST)
+
+            return Response(data={"msg": "Saving successful"}, status=status.HTTP_201_CREATED)
+
+        if request.method == "DELETE":
+            course = CoursesList.objects.get(pk=pk)
+            for i in request.data:
+                i['userID'] = User.objects.get(email=i['userID'])
+                registration_record = CourseRegistration.objects.filter(courseID=pk, userID=i['userID'])
+                if registration_record.exists:
+                    registration_record.delete()
+            return Response(data={"msg": "Delete successful"}, status=status.HTTP_200_OK)
+
+
+
+
+
+
