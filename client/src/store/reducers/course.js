@@ -3,6 +3,7 @@ import { updateObject } from "../utility";
 
 const initialState = {
   courses: [],
+  courseDetails: null,
   error: null,
   loading: false
 };
@@ -73,6 +74,25 @@ const reducer = (state = initialState, action) => {
         ...state,
         loading: false,
         error: action.error,
+      };
+      case actionTypes.CREATE_COURSE_START:
+      return {
+        ...state,
+        creatingCourse: true,
+        createCourseError: null,
+      };
+    case actionTypes.CREATE_COURSE_SUCCESS:
+      return {
+        ...state,
+        course: action.course,
+        creatingCourse: false,
+        createCourseError: null,
+      };
+    case actionTypes.CREATE_COURSE_FAIL:
+      return {
+        ...state,
+        creatingCourse: false,
+        createCourseError: action.error,
       };
     default: 
       return state;
