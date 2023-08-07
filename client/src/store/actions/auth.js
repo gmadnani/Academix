@@ -75,7 +75,9 @@ export const getUserRole = () => {
         }
       })
       .then(res => {
-        dispatch(getUserRoleSuccess(res.data.role));
+        const role = res.data.role;
+        localStorage.setItem('role', role); // Store the role in local storage
+        dispatch(getUserRoleSuccess(role));
         dispatch(authSuccess(getState().auth.token, res.data.role));
       })
       .catch(err => {
@@ -83,8 +85,6 @@ export const getUserRole = () => {
       });
   }
 }
-
-
 
 axios.defaults.xsrfCookieName = 'csrftoken';
 axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
