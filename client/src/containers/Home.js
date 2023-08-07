@@ -97,7 +97,7 @@ const Home = ({
                   <List.Item>
                     <Button
                       onClick={() => {
-                        history.push('student')
+                        history.push('courseList')
                       }}
                       fluid basic color={'teal'}>
                       Student link
@@ -108,7 +108,7 @@ const Home = ({
                   <List.Item>
                     <Button
                       onClick={() => {
-                        history.push('teacher')
+                        history.push('courseList')
                       }}
                       fluid basic color={'teal'}>
                       Faculty link
@@ -127,10 +127,10 @@ const Home = ({
                 <List.Item>
                   <Button
                     onClick={() => {
-                      history.push('profile')
+                      history.push('createCourse')
                     }}
                     fluid basic color={'teal'}>
-                    Profile
+                    Create Course
                   </Button>
                 </List.Item>
               </List>
