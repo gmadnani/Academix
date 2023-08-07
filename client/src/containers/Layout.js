@@ -24,7 +24,7 @@ class CustomLayout extends React.Component {
       <div>
         <Menu fixed="top" inverted>
           <Container>
-            <Link to="/">
+            <Link to="/home">
               <Menu.Item header>Home</Menu.Item>
             </Link>
             {authenticated ? (
