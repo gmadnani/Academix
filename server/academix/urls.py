@@ -46,6 +46,8 @@ urlpatterns = [
     path('courses/', include('courses.urls')),
     path('attendance/', include('attendence.urls')),
     path('docs/', docs_urls),
+    path('api/', include('api.urls')),
+    
 ]+static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)  # Configure static file url
 
 # Configure user upload file url
