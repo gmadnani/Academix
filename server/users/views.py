@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 
 
 from .models import UserProfile
-from .serializers import UserProfileSerializer
+from .serializers import UserProfileSerializer, RoleManagementSerializer
 
 
 # @receiver(post_save, sender=settings.AUTH_USER_MODEL)  # Django的信号机制
@@ -59,12 +59,30 @@ def get_profile(request):
 
 
 @api_view(["GET",])
-@permission_classes((IsAuthenticated,))
+@permission_classes((IsAdminUser,))
 def get_profile_all(request):
     if request.method == "GET":
         AllProfiles = UserProfile.objects.all()
         s = UserProfileSerializer(instance=AllProfiles, many=True)
         return Response(data=s.data, status=status.HTTP_200_OK)
+
+@api_view(["PUT","GET"])
+@permission_classes((IsAdminUser,))
+def change_role_type(request):
+    if request.method == "GET":
+        AllProfiles = UserProfile.objects.all()
+        s = RoleManagementSerializer(instance=AllProfiles, many=True)
+        return Response(data=s.data, status=status.HTTP_200_OK)
+
+    if request.method == "PUT":
+        request.data['owner'] = User.objects.get(username=request.data['owner']).id
+        user_file = UserProfile.objects.get(owner=request.data['owner'])
+        s = RoleManagementSerializer(instance=user_file, data=request.data)
+        if s.is_valid():
+            s.save(role=request.data['role'])
+            return Response(data=s.data, status=status.HTTP_200_OK)
+        return Response(data=s.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 
