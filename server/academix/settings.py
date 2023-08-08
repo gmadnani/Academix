@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'users',
     'courses',
     'attendence',
+    'api',
 ]
 
 SITE_ID = 1

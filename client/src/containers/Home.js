@@ -1,18 +1,23 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { connect } from "react-redux";
 import { Grid, Segment, List , Header, Button,  } from 'semantic-ui-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import {useHistory} from 'react-router-dom';
+import {useHistory, Link} from 'react-router-dom';
 import { Autoplay } from 'swiper/modules';
+import { fetchUsers } from '../store/actions/user';
 
-const Home = (props) => {
+const Home = ({
+  role,
+  fetchUsers,
+  token,
+}) => {
   const history = useHistory();
-  console.log(props)
+
   const messages = [
-    {message: 'Message 1'},
-    {message: 'Message 2'},
-    {message: 'Message 3'},
+    { message: 'Message 1' },
+    { message: 'Message 2' },
+    { message: 'Message 3' },
     // etc
   ];
   const slides = [
@@ -38,9 +43,12 @@ const Home = (props) => {
 
     }
   ];
-  const { token, role } = props;
-  if (token) {
-  }
+  useEffect(() => {
+      fetchUsers(token);
+  }, [role, fetchUsers, token]);
+
+  localStorage.setItem('role', role);
+  if (role !== 'admin') {
   return (
     <div>
       <Swiper
@@ -61,7 +69,7 @@ const Home = (props) => {
       </Swiper>
       <div style={{padding: '30px'}}>
         <Grid columns={2}>
-          <Grid.Column width={5}>
+          {/* <Grid.Column width={5}>
             <Header as='h3' textAlign='center'>Updates</Header>
             <Segment>
               <div style={{height: 300, overflowY: 'scroll'}}>
@@ -70,26 +78,17 @@ const Home = (props) => {
                 ))}
               </div>
             </Segment>
-          </Grid.Column>
+          </Grid.Column> */}
 
-          <Grid.Column width={11}>
+          <Grid.Column width={16}>
             <Header as='h3' textAlign='center'>Campus Resources</Header>
             <Segment>
               <List>
-                <List.Item>
-                  <Button
-                    onClick={() => {
-                      history.push('zoom-dashboard')
-                    }}
-                    fluid basic color={'teal'}>
-                    Zoom Dashboard
-                  </Button>
-                </List.Item>
                 {role === 'student' && (
                   <List.Item>
                     <Button
                       onClick={() => {
-                        history.push('student')
+                        history.push('courseList')
                       }}
                       fluid basic color={'teal'}>
                       Student link
@@ -100,14 +99,14 @@ const Home = (props) => {
                   <List.Item>
                     <Button
                       onClick={() => {
-                        history.push('facuity')
+                        history.push('courseList')
                       }}
                       fluid basic color={'teal'}>
-                      Facuity link
+                      Faculty link
                     </Button>
                   </List.Item>
                 )}
-                <List.Item>
+                {/* <List.Item>
                   <Button
                     onClick={() => {
                       history.push('calendar')
@@ -115,16 +114,18 @@ const Home = (props) => {
                     fluid basic color={'teal'}>
                     BU Calendar
                   </Button>
-                </List.Item>
+                </List.Item> */}
+                {role === 'teacher' && (
                 <List.Item>
                   <Button
                     onClick={() => {
-                      history.push('profile')
+                      history.push('createCourse')
                     }}
                     fluid basic color={'teal'}>
-                    Profile
+                    Create Course
                   </Button>
                 </List.Item>
+                )}
               </List>
             </Segment>
           </Grid.Column>
@@ -132,22 +133,44 @@ const Home = (props) => {
       </div>
     </div>
   )
+} else {
+  return(  
+      <div className="p5">
+        <Link to ="/signup"><Button
+          color="red"
+          fluid
+          size="large"
+        >
+          User Registeration
+        </Button>
+        </Link>
+
+        <Link to ="/courseRegisteration"><Button
+          color="teal"
+          fluid
+          size="large"
+        >
+          Course Registeration
+        </Button>
+        </Link>
+      </div>
+  );
+}
 }
 
 
 const mapStateToProps = state => {
   return {
-    loading: state.auth.loading,
-    error: state.auth.error,
+    loadingUsers: state.user.loading,
+    errorUsers: state.user.error,
+    users: state.user.users,
     token: state.auth.token,
     role: state.auth.role
   };
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    // login: (username, password) => dispatch(authLogin(username, password))
-  };
+const mapDispatchToProps = {
+  fetchUsers,
 };
 
 export default connect(

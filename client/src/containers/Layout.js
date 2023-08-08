@@ -12,21 +12,25 @@ import {
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout } from "../store/actions/auth";
+import * as actions from '../store/actions/auth';
 
 class CustomLayout extends React.Component {
+  componentDidMount() {
+    this.props.onTryAutoSignup();
+  }
   render() {
     const { authenticated } = this.props;
     return (
       <div>
         <Menu fixed="top" inverted>
           <Container>
-            <Link to="/">
+            <Link to="/home">
               <Menu.Item header>Home</Menu.Item>
             </Link>
             {authenticated ? (
-              <Menu.Item header onClick={() => this.props.logout()}>
+              <Link to="/login"><Menu.Item header onClick={() => this.props.logout()}>
                 Logout
-              </Menu.Item>
+              </Menu.Item></Link>
             ) : (
               <React.Fragment>
                 <Link to="/login">
@@ -40,7 +44,9 @@ class CustomLayout extends React.Component {
           </Container>
         </Menu>
 
-        {this.props.children}
+        <div style={{marginTop: '40px'}}>
+          {this.props.children}
+        </div>
 
         <Segment
           inverted
@@ -116,7 +122,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    logout: () => dispatch(logout())
+    logout: () => dispatch(logout()), 
+    onTryAutoSignup: () => dispatch(actions.authCheckState())
   };
 };
 
