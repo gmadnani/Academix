@@ -7,7 +7,8 @@ import { useHistory } from 'react-router-dom';
 const semesterOptions = [
   { key: 'fall', value: 'Fall', text: 'Fall' },
   { key: 'spring', value: 'Spring', text: 'Spring' },
-  { key: 'summer', value: 'Summer', text: 'Summer' },
+  { key: 'summer1', value: 'Summer1', text: 'Summer1' },
+  { key: 'summer2', value: 'Summer2', text: 'Summer2' },
 ];
 
 const currentYear = new Date().getFullYear();

@@ -15,10 +15,11 @@ import CreateCourse from "./containers/CreateCourse";
 
 const BaseRouter = () => (
   <Hoc>
-    <Route path="/" component={Login} />
+    <Route exact path="/" component={Login} />
+    <Route path="/login" component={Login} />
     <Route path="/signup" component={Signup} />
     <Route path="/courseList" component={CourseList}/>
-    <Route exact path="/home" component={HomepageLayout} />
+    <Route path="/home" component={HomepageLayout} />
     <Route path="/courses/detail/:courseID" component={CourseDetails} />
     <Route path="/createCourse" component={CreateCourse}/>
     <Route path="/courses/detail/:courseID/attendance" component={Attendance} />

@@ -3,7 +3,7 @@ import { updateObject } from "../utility";
 
 const initialState = {
   courses: [],
-  courseDetails: null,
+  courseDetails: {},
   error: null,
   loading: false
 };

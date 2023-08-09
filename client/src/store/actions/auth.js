@@ -141,7 +141,7 @@ export const authCheckState = () => {
   return dispatch => {
     const token = localStorage.getItem("token");
     const role = localStorage.getItem('role');
-    if (token === undefined) {
+    if (!token) {
       dispatch(logout());
     } else {
       const expirationDate = new Date(localStorage.getItem("expirationDate"));
