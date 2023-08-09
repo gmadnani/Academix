@@ -18,7 +18,10 @@ def generate_token(sender, instance=None, created=False, **kwargs):
     """
     if created:
         Token.objects.create(user=instance)
-        UserProfile.objects.create(owner=instance)
+        try:
+            personal_profile = UserProfile.objects.get(owner=instance)
+        except UserProfile.DoesNotExist:
+            UserProfile.objects.create(owner=instance)
         if instance.is_superuser:
             userprofile_object = UserProfile.objects.get(owner=instance)
             userprofile_object.role = 'admin'

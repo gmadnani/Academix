@@ -2,8 +2,9 @@ from django.shortcuts import render
 from django.core.mail import send_mail
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from rest_framework.response import Response
+from django.http import HttpResponse
 from django.db.models import Q
 from django.contrib.auth.models import User
 import string
@@ -42,7 +43,6 @@ def attendance_list(request, pk):
             attendance_record = AttendanceRecord.objects.filter(Q(attendanceID__courseID=pk), studentID=request.user)
             ss = AttendanceRecordStudentSerializer(instance=attendance_record, many=True)
             return Response(data=ss.data, status=status.HTTP_200_OK)
-
 
     if request.method == "POST":
         if course.owner != request.user:
@@ -102,7 +102,7 @@ def attendance_list_detailed(request, pk):
 
 
 @api_view(["GET",])
-@permission_classes((IsAuthenticated,))
+@permission_classes((AllowAny,))
 def activate_attendance(request, pk):
     try:
         attendance_record = AttendanceRecord.objects.get(token_key=pk)
@@ -114,8 +114,10 @@ def activate_attendance(request, pk):
     if (datetime.now(timezone.utc) - valid_time_before).seconds/60 < valid_time_interval:
         attendance_record.if_attended = True
         attendance_record.save()
-        return Response(data={"msg": "Check Attendance Successful"}, status=status.HTTP_200_OK)
-    return Response(data={"msg": "Check Attendance Unsuccessful"}, status=status.HTTP_200_OK)
+        # return Response(data={"msg": "Check Attendance Successful"}, status=status.HTTP_200_OK)
+        return HttpResponse('Check attendance successful, you can close this page.')
+    # return Response(data={"msg": "Check Attendance Unsuccessful"}, status=status.HTTP_200_OK)
+    return HttpResponse('Check attendance unsuccessful, the time session has expired')
 
 
 
