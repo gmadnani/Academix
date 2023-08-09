@@ -35,7 +35,7 @@ const CourseDetails = ({ token, courseID, courseDetails, loading, error, fetchCo
         ) : (
           <Segment>
             {console.log(courseDetails)}
-            {/* <p>Course Description: {courseDetails.courseDescription}</p>
+            <p>Course Description: {courseDetails.courseDescription}</p>
             <p>Syllabus:</p>
             <ul>
               <li>Week 1: {courseDetails.Syllabus_Week1}</li>
@@ -50,7 +50,7 @@ const CourseDetails = ({ token, courseID, courseDetails, loading, error, fetchCo
               <li>Week 10: {courseDetails.Syllabus_Week10}</li>
               <li>Week 11: {courseDetails.Syllabus_Week11}</li>
               <li>Week 12: {courseDetails.Syllabus_Week12}</li>
-            </ul> */}
+            </ul>
           </Segment>
         )}
       </div>

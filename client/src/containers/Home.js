@@ -14,12 +14,6 @@ const Home = ({
 }) => {
   const history = useHistory();
 
-  const messages = [
-    { message: 'Message 1' },
-    { message: 'Message 2' },
-    { message: 'Message 3' },
-    // etc
-  ];
   const slides = [
     {
       header: 'Slide 1',
@@ -47,7 +41,7 @@ const Home = ({
       fetchUsers(token);
   }, [role, fetchUsers, token]);
 
-  localStorage.setItem('role', role);
+  // localStorage.setItem('role', role);
   if (role !== 'admin') {
   return (
     <div>
