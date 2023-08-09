@@ -22,6 +22,7 @@ from dj_rest_auth.registration.views import VerifyEmailView
 from dj_rest_auth.views import PasswordResetView, PasswordResetConfirmView
 from django.views.generic.base import TemplateView
 from rest_framework.documentation import include_docs_urls
+from . import views
 
 
 docs_urls = include_docs_urls(title='API documentation',
@@ -35,12 +36,14 @@ urlpatterns = [
     path('password-reset-confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
     path('admin/', admin.site.urls),
     path('dj-rest-auth/', include('dj_rest_auth.urls')),
+    path('login/', views.CustomLoginView.as_view(), name='customized login page'),
     path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
-    re_path(
-        r"^verify-email/(?P<key>[-:\w]+)/$",
-        VerifyEmailView.as_view(),
-        name="account_confirm_email",
-    ),
+    # re_path(
+    #     r"^verify-email/(?P<key>[-:\w]+)/$",
+    #     VerifyEmailView.as_view(),
+    #     name="account_confirm_email",
+    # ),
+    path('verify-email/<str:pk>', views.custom_verfiy_email, name='account_confirm_email'),
     path('dj-rest-auth/account-confirm-email/', VerifyEmailView.as_view(), name='account_email_verification_sent'),
     path('users/', include('users.urls')),
     path('courses/', include('courses.urls')),
