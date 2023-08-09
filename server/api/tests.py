@@ -10,11 +10,14 @@ User = get_user_model()
 
 class AssignmentTestCase(TestCase):
     def setUp(self):
+        print("--Assignment Test Cases--")
         self.user = User.objects.create_user(
             username='testuser', password='testpassword'
         )
         self.course = CoursesList.objects.create(
-            courseName='Intro to CS', courseDescription='An introductory course to Computer Science', owner=User.objects.create_user(username="professor",password="122345")
+            courseName='Intro to CS', 
+            courseDescription='An introductory course to Computer Science', 
+            owner=User.objects.create_user(username="professor",password="122345")
         )
         self.due_date = timezone.now() + timedelta(days=7)
         self.assignment = Assignment.objects.create(
@@ -26,6 +29,7 @@ class AssignmentTestCase(TestCase):
         )
 
     def test_assignment_creation(self):
+        print("Test: Assignment Creation")
         assignment = Assignment.objects.get(title='Test Assignment')
         self.assertEqual(assignment.courseId, self.course)
         self.assertEqual(assignment.due_date, self.due_date)
@@ -34,11 +38,14 @@ class AssignmentTestCase(TestCase):
 
 class GradedAssignmentTestCase(TestCase):
     def setUp(self):
+        print("--Graded Assignment Test Cases--")
         self.user = User.objects.create_user(
             username='testuser', password='testpassword'
         )
         self.course = CoursesList.objects.create(
-            courseName='Intro to CS', courseDescription='An introductory course to Computer Science',owner=User.objects.create_user(username="professor",password="122345")
+            courseName='Intro to CS', 
+            courseDescription='An introductory course to Computer Science',
+            owner=User.objects.create_user(username="professor",password="122345")
         )
         self.due_date = timezone.now() + timedelta(days=7)
         self.assignment = Assignment.objects.create(
@@ -53,6 +60,7 @@ class GradedAssignmentTestCase(TestCase):
         )
 
     def test_graded_assignment_creation(self):
+        print("Test: Graded Assignment Creation")
         graded_assignment = GradedAssignment.objects.get(student=self.user)
         self.assertEqual(graded_assignment.assignment, self.assignment)
         self.assertEqual(graded_assignment.grade, 95)

@@ -7,6 +7,7 @@ from .forms import RegisterForm, LoginForm
 # Register Form
 class RegisterFormTestCase(TestCase):
     def test_valid_register_form(self):
+        print("--Register Form Test Cases--")
         # dummy form data, success case
         form_data = {
             'username': 'username',
@@ -17,6 +18,7 @@ class RegisterFormTestCase(TestCase):
         form = RegisterForm(data=form_data)
         # if not form.is_valid(): 
         #    print(form.errors)  # more error details
+        print("Test: Valid Register Form")
         self.assertTrue(form.is_valid())
 
     def test_invalid_register_form(self):
@@ -28,17 +30,20 @@ class RegisterFormTestCase(TestCase):
             'password1': 'wrongpassword'
         }
         form = RegisterForm(data=form_data)
+        print("Test: Invalid Register Form")
         self.assertFalse(form.is_valid())
 
 # Login Form
 class LoginFormTestCase(TestCase):
     def test_valid_login_form(self):
+        print("--Login Form Test Cases--")
         # dummy form data, success case
         form_data = {
             'username': 'username',
             'password': 'mypassw0rd'
         }
         form = LoginForm(data=form_data)
+        print("Test: Valid Login Form")
         self.assertTrue(form.is_valid())
 
     def test_invalid_login_form(self):
@@ -48,4 +53,5 @@ class LoginFormTestCase(TestCase):
             'password': 'password'
         }
         form = LoginForm(data=form_data)
+        print("Test: Invalid Login Form")
         self.assertFalse(form.is_valid())

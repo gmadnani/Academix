@@ -6,6 +6,7 @@ from .models import CoursesList
 class CoursesListTest(TestCase):
     @classmethod
     def setUpTestData(cls):
+        print("--Courses Test Cases--")
         # Create a test user for the ForeignKey relationship
         cls.test_user = User.objects.create_user(username='testuser', password='testpassword')
         # Create a test CoursesList instance
@@ -13,22 +14,13 @@ class CoursesListTest(TestCase):
             courseID='CS101',
             courseName='Intro to CS',
             courseDescription='An introductory course to Computer Science',
-            owner=cls.test_user,
-            # owner='teacher',
+            owner=cls.test_user
         )
 
-    def test_course_id(self):
+    def test_course_info(self):
+        print("Test: Verifying Course Info")
         course = CoursesList.objects.get(courseID='CS101')
         self.assertEqual(course.courseID, 'CS101')
-
-    def test_course_name(self):
-        course = CoursesList.objects.get(courseID='CS101')
         self.assertEqual(course.courseName, 'Intro to CS')
-
-    def test_course_description(self):
-        course = CoursesList.objects.get(courseID='CS101')
         self.assertEqual(course.courseDescription, 'An introductory course to Computer Science')
-
-    def test_owner(self):
-        course = CoursesList.objects.get(courseID='CS101')
         self.assertEqual(course.owner, self.test_user)

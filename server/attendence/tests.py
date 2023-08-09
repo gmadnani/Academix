@@ -8,6 +8,7 @@ User = get_user_model()
 
 class AttendanceTestCase(TestCase):
     def setUp(self):
+        print("--Attendance Test Cases--")
         # create mock course data
         self.course = CoursesList.objects.create(
             courseID="CS101",
@@ -30,6 +31,7 @@ class AttendanceTestCase(TestCase):
         self.student2 = User.objects.create_user(username="student2", password="password456")
 
     def test_attendance_creation(self):
+        print("Test: Attendance Creation")
         self.assertEqual(self.attendance.title, "Test Attendance")
         self.assertEqual(self.attendance.courseID, self.course)
         self.assertEqual(self.attendance.valid_time, 10)
@@ -38,6 +40,7 @@ class AttendanceTestCase(TestCase):
 
 class AttendanceRecordTestCase(TestCase):
     def setUp(self):
+        print("--Attendance Record Test Cases--")
         self.course = CoursesList.objects.create(
             courseID="CS101",
             courseSemester="Spring",
@@ -58,6 +61,7 @@ class AttendanceRecordTestCase(TestCase):
         self.student2 = User.objects.create_user(username="student2", password="password456")
 
     def test_attendance_record_creation(self):
+        print("Test: Attendance Record Creation")
         attendance_record = AttendanceRecord.objects.create(
             attendanceID=self.attendance,
             studentID=self.student1,

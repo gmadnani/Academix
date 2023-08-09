@@ -11,11 +11,13 @@ class EmailSendTestCase(TestCase):
     @patch('utils.email_send.random_str')
     @patch('utils.email_send.send_mail')
     def test_send_register_email(self, mock_send_mail, mock_random_str):
+        print("--Email Send Test Cases--")
         email = 'test@example.com'
         code = 'example_code'  
         mock_random_str.return_value = code
         
         # test for send_type = 'register'
+        print("Test: Email Send Type - Register")
         send_register_email(email, send_type='register')
 
         mock_send_mail.assert_called_once_with(
@@ -26,6 +28,7 @@ class EmailSendTestCase(TestCase):
         )
 
         # test for send_type = 'forget'
+        print("Test: Email Send Type - Forgot Password")
         send_register_email(email, send_type='forget')
 
         mock_send_mail.assert_called_with(
