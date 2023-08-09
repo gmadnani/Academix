@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.core.mail import send_mail
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from rest_framework.response import Response
 from django.http import HttpResponse
 from django.db.models import Q
@@ -102,7 +102,7 @@ def attendance_list_detailed(request, pk):
 
 
 @api_view(["GET",])
-@permission_classes((IsAuthenticated,))
+@permission_classes((AllowAny,))
 def activate_attendance(request, pk):
     try:
         attendance_record = AttendanceRecord.objects.get(token_key=pk)
