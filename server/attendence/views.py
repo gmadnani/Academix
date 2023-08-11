@@ -78,7 +78,7 @@ def attendance_list(request, pk):
             return Response(data={"msg": "Delete Successful"}, status=status.HTTP_200_OK)
 
 
-@api_view(["GET",])
+@api_view(["GET", "PUT"])
 @permission_classes((IsAuthenticated,))
 def attendance_list_detailed(request, pk):
     try:
@@ -86,8 +86,8 @@ def attendance_list_detailed(request, pk):
     except Attendance.DoesNotExist:
         return Response(data={"msg": "No such attendance"}, status=status.HTTP_404_NOT_FOUND)
 
-    course = attendance_object.courseID
-    print(course.owner)
+    # course = attendance_object.courseID
+    # print(course.owner)
 
     if attendance_object.courseID.owner != request.user:
         return Response(data={"msg": "You have no access"}, status=status.HTTP_401_UNAUTHORIZED)
@@ -97,7 +97,20 @@ def attendance_list_detailed(request, pk):
         ss = AttendanceRecordSerializer(instance=attendance_record, many=True)
         return Response(data=ss.data, status=status.HTTP_200_OK)
 
-    return Response(data={"msg": "Delete Successful"}, status=status.HTTP_200_OK)
+    if request.method == "PUT":
+        username = request.data['studentID']
+        if_attended = request.data['if_attended']
+        userid = User.objects.get(username=username)
+        try:
+            attendance_record = AttendanceRecord.objects.get(attendanceID=attendance_object, studentID=userid)
+        except CourseRegistration.DoesNotExist:
+            return Response(data={"msg": "Record Not Found"}, status=status.HTTP_404_NOT_FOUND)
+        attendance_record.if_attended=if_attended
+        attendance_record.save()
+        s = AttendanceRecordSerializer(instance=attendance_record)
+        return Response(data=s.data, status=status.HTTP_400_BAD_REQUEST)
+
+    return Response(data={"msg": "No information"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 
