@@ -18,24 +18,18 @@ class QuestionSerializer(serializers.ModelSerializer):
 
 
 class AssignmentSerializer(serializers.ModelSerializer):
-    questions = serializers.SerializerMethodField()
-    teacher = StringSerializer(many=False)
     class Meta:
         model = Assignment
         fields = '__all__'
-
-    def get_questions(self, obj):
-        questions = QuestionSerializer(obj.questions.all(), many=True).data
-        return questions
 
     def create(self, request):
         data = request
 
         assignment = Assignment()
         assignment.title = data['title']
+        assignment.courseId = data['courseId']
         assignment.due_date = data['due_date']
         assignment.full_grade = data['full_grade']
-        assignment.courseId = data['courseId']
         assignment.assignment_files = data['assignment_files']
         assignment.save()
         return assignment

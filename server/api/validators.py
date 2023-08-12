@@ -5,4 +5,4 @@ def validate_file_extension(value):
     ext = os.path.splitext(value.name)[1]  
     allowed_extensions = ['.pdf', '.doc', '.docx'] 
     if not ext.lower() in allowed_extensions:
-        raise ValidationError('Only PDF and DOC files are allowed.')
+        raise ValidationError('Only PDF, DOC and DOCX files are allowed.')
