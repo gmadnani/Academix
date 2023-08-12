@@ -1,1 +1,1 @@
-web: gunicorn server.academix.wsgi
+web: gunicorn academix.server.wsgi
