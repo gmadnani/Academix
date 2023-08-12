@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Card, Header, Segment, List, Button, Form } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
-import { fetchCourseDetails, updateCourseDescription } from '../store/actions/course';
+import { fetchCourseDetails, updateCourseDescription, updateSyllabusEntry } from '../store/actions/course';
 
 const CourseDetails = ({
   token,
@@ -12,13 +12,16 @@ const CourseDetails = ({
   error,
   fetchCourseDetails,
   updateCourseDescription,
+  updateSyllabusEntry,
 }) => {
   useEffect(() => {
     fetchCourseDetails(token, courseID);
   }, [fetchCourseDetails, token, courseID]);
 
   const [editing, setEditing] = useState(false);
+  const [editingSyllabus, setEditingSyllabus] = useState(false);
   const [editedDescription, setEditedDescription] = useState(courseDetails.courseDescription);
+  const [editedSyllabus, setEditedSyllabus] = useState({ ...courseDetails.syllabus });
 
   const handleEditClick = () => {
     setEditing(true);
@@ -27,6 +30,7 @@ const CourseDetails = ({
   const handleCancelClick = () => {
     setEditing(false);
     setEditedDescription(courseDetails.courseDescription);
+    setEditedSyllabus({ ...courseDetails.syllabus });
   };
 
   const handleSaveClick = () => {
@@ -40,14 +44,37 @@ const CourseDetails = ({
       });
   };
 
+  const handleSyllabusChange = (week, newValue) => {
+    setEditedSyllabus(prevSyllabus => ({
+      ...prevSyllabus,
+      [week]: newValue,
+    }));
+  };
+
+  const handleSaveSyllabusClick = () => {
+    Object.keys(editedSyllabus).forEach(week => {
+      updateSyllabusEntry(token, courseID, week, editedSyllabus[week])
+        .then(() => {
+          fetchCourseDetails(token, courseID);
+        })
+        .catch(error => {
+          console.error(`Error updating syllabus for week ${week}:`, error);
+        });
+    });
+  };
+
+  const handleEditSyllabusClick = () => {
+    setEditingSyllabus(true);
+  };
+
   return (
     <div>
       <List className="container m-4">
         <Card className="card">
           <Link to={`/courses/detail/${courseID}`}>Introduction</Link>
-          <Link to={`/courses/detail/${courseID}/assignments`}>assignments</Link>
-          <Link to={`/courses/detail/${courseID}/grades`}>grades</Link>
-          <Link to={`/courses/detail/${courseID}/attendance`}>attendance</Link>
+          <Link to={`/courses/detail/${courseID}/assignments`}>Assignments</Link>
+          <Link to={`/courses/detail/${courseID}/grades`}>Grades</Link>
+          <Link to={`/courses/detail/${courseID}/attendance`}>Attendance</Link>
           <Link to={`/courses/detail/${courseID}/zoom`}>Zoom Link</Link>
         </Card>
       </List>
@@ -69,6 +96,14 @@ const CourseDetails = ({
                 disabled={editing}
               >
                 Edit
+              </Button>
+              <Button
+                primary
+                floated="right"
+                onClick={handleEditSyllabusClick}
+                disabled={editingSyllabus}
+              >
+                Edit Syllabus
               </Button>
             </div>
             {editing ? (
@@ -99,19 +134,31 @@ const CourseDetails = ({
                 <p>Course Description: {courseDetails.courseDescription}</p>
                 <p>Syllabus:</p>
                 <ul>
-                <li>Week 1: {courseDetails.Syllabus_Week1}</li>
-                <li>Week 2: {courseDetails.Syllabus_Week2}</li>
-                <li>Week 3: {courseDetails.Syllabus_Week3}</li>
-                <li>Week 4: {courseDetails.Syllabus_Week4}</li>
-                <li>Week 5: {courseDetails.Syllabus_Week5}</li>
-                <li>Week 6: {courseDetails.Syllabus_Week6}</li>
-                <li>Week 7: {courseDetails.Syllabus_Week7}</li>
-                <li>Week 8: {courseDetails.Syllabus_Week8}</li>
-                <li>Week 9: {courseDetails.Syllabus_Week9}</li>
-                <li>Week 10: {courseDetails.Syllabus_Week10}</li>
-                <li>Week 11: {courseDetails.Syllabus_Week11}</li>
-                <li>Week 12: {courseDetails.Syllabus_Week12}</li>
+                  {Object.keys(courseDetails).map(key => {
+                    if (key.startsWith('Syllabus_Week')) {
+                      const weekNumber = key.split('Syllabus_Week')[1];
+                      return (
+                        <li key={key}>
+                          <strong>Week {weekNumber}: </strong>
+                          {editing ? (
+                            <Form.Input
+                              value={editedSyllabus[key]}
+                              onChange={event => handleSyllabusChange(key, event.target.value)}
+                            />
+                          ) : (
+                            courseDetails[key]
+                          )}
+                        </li>
+                      );
+                    }
+                    return null;
+                  })}
                 </ul>
+                {editing && (
+                  <Button onClick={handleSaveSyllabusClick} primary>
+                    Save Syllabus
+                  </Button>
+                )}
               </div>
             )}
           </Segment>
@@ -132,6 +179,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   fetchCourseDetails,
   updateCourseDescription,
+  updateSyllabusEntry,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CourseDetails);

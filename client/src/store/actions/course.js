@@ -241,3 +241,47 @@ const updateCourseDescriptionFail = error => {
     error
   };
 };
+
+export const updateSyllabusEntry = (token, courseID, week, content) => {
+  return dispatch => {
+    dispatch(updateSyllabusEntryStart());
+
+    const url = `http://127.0.0.1:8000/courses/detail/${courseID}/syllabus/${week}/`;
+
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Token ${token}`
+    };
+
+    const data = {
+      content: content
+    };
+
+    return axios.put(url, data, { headers })
+      .then(res => {
+        dispatch(updateSyllabusEntrySuccess());
+      })
+      .catch(err => {
+        dispatch(updateSyllabusEntryFail(err));
+      });
+  };
+};
+
+const updateSyllabusEntryStart = () => {
+  return {
+    type: actionTypes.UPDATE_SYLLABUS_ENTRY_START
+  };
+};
+
+const updateSyllabusEntrySuccess = () => {
+  return {
+    type: actionTypes.UPDATE_SYLLABUS_ENTRY_SUCCESS
+  };
+};
+
+const updateSyllabusEntryFail = error => {
+  return {
+    type: actionTypes.UPDATE_SYLLABUS_ENTRY_FAIL,
+    error
+  };
+};

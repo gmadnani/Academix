@@ -115,6 +115,24 @@ const reducer = (state = initialState, action) => {
         updatingCourseDescription: false,
         updateCourseDescriptionError: action.error
       };
+      case actionTypes.UPDATE_SYLLABUS_ENTRY_START:
+      return {
+        ...state,
+        loading: true
+      };
+
+    case actionTypes.UPDATE_SYLLABUS_ENTRY_SUCCESS:
+      return {
+        ...state,
+        loading: false
+      };
+
+    case actionTypes.UPDATE_SYLLABUS_ENTRY_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.error
+      };
     default: 
       return state;
   }
