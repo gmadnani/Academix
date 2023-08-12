@@ -12,6 +12,7 @@ import Attendance from "./containers/Attendance";
 import Zoom from "./containers/Zoom";
 import AttendenceDetails from "./containers/AttendenceDetails";
 import CreateCourse from "./containers/CreateCourse";
+import Assignment from "./containers/Assignment";
 
 const BaseRouter = () => (
   <Hoc>
@@ -23,6 +24,7 @@ const BaseRouter = () => (
     <Route path="/courses/detail/:courseID" component={CourseDetails} />
     <Route path="/createCourse" component={CreateCourse}/>
     <Route path="/courses/detail/:courseID/attendance" component={Attendance} />
+    <Route path="/courses/detail/:courseID/assignments" component={Assignment} />
     <Route path="/courses/detail/:courseID/zoom" component={Zoom} />
     <Route path="/courses/detail/:courseID/attendance/detail/:attendanceID" component={AttendenceDetails} />
     <Route path="/courseRegisteration" component={AdminCourseRegisteration}/>

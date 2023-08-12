@@ -197,3 +197,47 @@ const createCourseFail = error => {
     error
   };
 };
+
+export const updateCourseDescription = (token, courseID, description) => {
+  return dispatch => {
+    dispatch(updateCourseDescriptionStart());
+
+    const url = `http://127.0.0.1:8000/courses/detail/${courseID}/`;
+
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Token ${token}`
+    };
+
+    const data = {
+      courseDescription: description
+    };
+
+   return axios.put(url, data, { headers })
+  .then(res => {
+    dispatch(updateCourseDescriptionSuccess());
+  })
+  .catch(err => {
+    dispatch(updateCourseDescriptionFail(err));
+  });
+  };
+};
+
+const updateCourseDescriptionStart = () => {
+  return {
+    type: actionTypes.UPDATE_COURSE_DESCRIPTION_START
+  };
+};
+
+const updateCourseDescriptionSuccess = () => {
+  return {
+    type: actionTypes.UPDATE_COURSE_DESCRIPTION_SUCCESS
+  };
+};
+
+const updateCourseDescriptionFail = error => {
+  return {
+    type: actionTypes.UPDATE_COURSE_DESCRIPTION_FAIL,
+    error
+  };
+};

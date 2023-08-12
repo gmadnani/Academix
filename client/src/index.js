@@ -10,6 +10,7 @@ import authReducer from "./store/reducers/auth";
 import courseReducer from './store/reducers/course';
 import userReducer from './store/reducers/user';
 import attendanceReducer from './store/reducers/attendance';
+import assignmentReducer from "./store/reducers/assignment";
 
 const composeEnhances = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   auth: authReducer,
   course: courseReducer,
   user: userReducer,
-  attendance: attendanceReducer
+  attendance: attendanceReducer,
+  assignment: assignmentReducer
 });
 
 const store = createStore(rootReducer, composeEnhances(applyMiddleware(thunk)));
