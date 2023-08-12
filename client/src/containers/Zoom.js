@@ -1,19 +1,26 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { Card, Header, Segment, List } from "semantic-ui-react";
-import { Link } from 'react-router-dom';
-import { fetchCourseDetails } from '../store/actions/course'
+import { Header, Segment } from "semantic-ui-react";
+//import { Link } from "react-router-dom";
+import { fetchCourseDetails } from "../store/actions/course";
 
-const Zoom = ({ token, courseID, courseDetails, loading, error, fetchCourseDetails }) => {
+const Zoom = ({
+  token,
+  courseID,
+  courseDetails,
+  loading,
+  error,
+  fetchCourseDetails,
+}) => {
   useEffect(() => {
     fetchCourseDetails(token, courseID);
   }, [fetchCourseDetails, token, courseID]);
 
   const url = window.location.href;
-  const course = url.split("/")
-  localStorage.setItem("course", course[5])
+  const course = url.split("/");
+  localStorage.setItem("course", course[5]);
 
-  return(
+  return (
     <div>
       <div>
         <Header as="h3" textAlign="center">
@@ -32,21 +39,18 @@ const Zoom = ({ token, courseID, courseDetails, loading, error, fetchCourseDetai
       </div>
     </div>
   );
-}
+};
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   token: state.auth.token,
   courseID: localStorage.getItem("course"),
   courseDetails: state.course.courseDetails,
   loading: state.course.loading,
-  error: state.course.error
+  error: state.course.error,
 });
 
 const mapDispatchToProps = {
   fetchCourseDetails,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Zoom);
+export default connect(mapStateToProps, mapDispatchToProps)(Zoom);
