@@ -1,18 +1,30 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from "react-redux";
-import { Card, Header, Segment, List } from "semantic-ui-react";
+import { Card, Header, Segment, List, Button, Input } from "semantic-ui-react";
 import { Link } from 'react-router-dom';
-import { fetchCourseDetails } from '../store/actions/course'
+import { fetchCourseDetails, updateCourseDetails } from '../store/actions/course';
 
-const Zoom = ({ token, courseID, courseDetails, loading, error, fetchCourseDetails }) => {
+const Zoom = ({ token, courseID, courseDetails, loading, error, fetchCourseDetails, updateCourseDetails }) => {
   useEffect(() => {
     fetchCourseDetails(token, courseID);
   }, [fetchCourseDetails, token, courseID]);
 
-  const url = window.location.href;
-  const course = url.split("/")
-  localStorage.setItem("course", course[5])
+  const [editing, setEditing] = useState(false);
+  const [editedCourseZoomlink, setEditedCourseZoomlink] = useState(courseDetails.courseZoomlink);
 
+  useEffect(() => {
+    setEditedCourseZoomlink(courseDetails.courseZoomlink);
+  }, [courseDetails]);
+
+  const handleEditToggle = () => {
+    if (editing) {
+      updateCourseDetails(token, courseID, {
+        courseZoomlink: editedCourseZoomlink,
+      });
+    }
+    setEditing(!editing);
+  }
+  if(localStorage.getItem("role") === 'teacher'){
   return(
     <div>
       <div>
@@ -25,13 +37,48 @@ const Zoom = ({ token, courseID, courseDetails, loading, error, fetchCourseDetai
           <p>Error loading course details: {error.message}</p>
         ) : (
           <Segment>
-            {console.log(courseDetails)}
-            <p>Zoom Link: {courseDetails.courseZoomlink}</p>
+            <Button onClick={handleEditToggle}>
+              {editing ? 'Save' : 'Edit'}
+            </Button>
+            {editing ? (
+              <div>
+                Zoom Link: 
+                <Input
+                value={editedCourseZoomlink}
+                onChange={(e) => setEditedCourseZoomlink(e.target.value)}
+                />
+                </div>
+            ):(
+
+              <p>Zoom Link: {courseDetails.courseZoomlink}</p>
+            )}
           </Segment>
         )}
       </div>
     </div>
   );
+  }
+  else{
+    return(
+      <div>
+        <div>
+          <Header as="h3" textAlign="center">
+            Zoom Link
+          </Header>
+          {loading ? (
+            <p>Loading course details...</p>
+          ) : error ? (
+            <p>Error loading course details: {error.message}</p>
+          ) : (
+            <Segment>
+              {console.log(courseDetails)}
+              <p>Zoom Link: {courseDetails.courseZoomlink}</p>
+            </Segment>
+          )}
+        </div>
+      </div>
+    );
+  }
 }
 
 const mapStateToProps = state => ({
@@ -44,6 +91,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   fetchCourseDetails,
+  updateCourseDetails
 };
 
 export default connect(

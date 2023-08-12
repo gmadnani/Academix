@@ -24,6 +24,22 @@ const CourseDetails = ({ token, courseID, courseDetails, loading, error, fetchCo
   const [editedSyllabusWeek11, setEditedSyllabusWeek11] = useState(courseDetails.Syllabus_Week11);
   const [editedSyllabusWeek12, setEditedSyllabusWeek12] = useState(courseDetails.Syllabus_Week12);
 
+  useEffect(() => {
+    setEditedCourseDescription(courseDetails.courseDescription);
+    setEditedSyllabusWeek1(courseDetails.Syllabus_Week1);
+    setEditedSyllabusWeek2(courseDetails.Syllabus_Week2);
+    setEditedSyllabusWeek3(courseDetails.Syllabus_Week3);
+    setEditedSyllabusWeek4(courseDetails.Syllabus_Week4);
+    setEditedSyllabusWeek5(courseDetails.Syllabus_Week5);
+    setEditedSyllabusWeek6(courseDetails.Syllabus_Week6);
+    setEditedSyllabusWeek7(courseDetails.Syllabus_Week7);
+    setEditedSyllabusWeek8(courseDetails.Syllabus_Week8);
+    setEditedSyllabusWeek9(courseDetails.Syllabus_Week9);
+    setEditedSyllabusWeek10(courseDetails.Syllabus_Week10);
+    setEditedSyllabusWeek11(courseDetails.Syllabus_Week11);
+    setEditedSyllabusWeek12(courseDetails.Syllabus_Week12);
+  }, [courseDetails]);
+
   const handleEditToggle = () => {
     if (editing) {
       updateCourseDetails(token, courseID, {
