@@ -140,6 +140,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'users/static'),
 ]
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # setting the url where user upload their files
 MEDIA_URL = 'media/'
