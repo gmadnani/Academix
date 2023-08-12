@@ -27,7 +27,7 @@ def custom_verfiy_email(request, pk):
 def expires_in(token):
     time_elapsed = timezone.now() - token.created
     # the token will be expired in 3 hours
-    left_time = timedelta(seconds=60) - time_elapsed
+    left_time = timedelta(seconds=3600) - time_elapsed
     return left_time
 
 
