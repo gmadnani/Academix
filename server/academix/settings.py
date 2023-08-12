@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-&9c!(4ulg(%b(%qh-vy-wg+os5+739sb4rhzmcn7tf@_i%%mvc
 DEBUG = False
 
 # ALLOWED_HOSTS = ['*']
-ALLOWED_HOSTS = ['https://academix-backend-7b4aa8076d2e.herokuapp.com/',  'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['https://academix-back-f296f40df966.herokuapp.com/',  'localhost', '127.0.0.1']
 
 
 # Application definition
