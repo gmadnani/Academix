@@ -1,0 +1,54 @@
+.course-list-container {
+  margin: 60px 40px 20px;
+  padding: 20px;
+  border-radius: 15px;
+  background: linear-gradient(145deg, #d5e8e8, #eaf3f3);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.semester-group {
+  margin-top: 30px;
+}
+
+.semester-header {
+  margin-bottom: 20px;
+  color: #2c3e50;
+  font-weight: 700;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.course-item {
+  margin: 5px 0 10px;
+  border: 2px solid #e0e4e9;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #eaf3f3, #f7f9fc);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.07);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.course-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.1);
+}
+
+.course-card {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.course-card-content {
+  padding: 20px;
+}
+
+.course-card-header a {
+  color: #008080;
+  transition: color 0.3s;
+}
+
+.course-card-header a:hover {
+  color: #005757;
+}
+
+.course-card-meta {
+  margin-top: 10px;
+}
