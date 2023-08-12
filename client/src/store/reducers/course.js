@@ -5,13 +5,13 @@ const initialState = {
   courses: [],
   courseDetails: {},
   error: null,
-  loading: false
+  loading: false,
 };
 
 const fetchCoursesStart = (state, action) => {
   return updateObject(state, {
     error: null,
-    loading: true
+    loading: true,
   });
 };
 
@@ -19,24 +19,24 @@ const fetchCoursesSuccess = (state, action) => {
   return updateObject(state, {
     courses: action.courses,
     error: null,
-    loading: false
+    loading: false,
   });
 };
 
 const fetchCoursesFail = (state, action) => {
   return updateObject(state, {
     error: action.error,
-    loading: false
+    loading: false,
   });
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.FETCH_COURSES_START: 
+    case actionTypes.FETCH_COURSES_START:
       return fetchCoursesStart(state, action);
-    case actionTypes.FETCH_COURSES_SUCCESS: 
+    case actionTypes.FETCH_COURSES_SUCCESS:
       return fetchCoursesSuccess(state, action);
-    case actionTypes.FETCH_COURSES_FAIL: 
+    case actionTypes.FETCH_COURSES_FAIL:
       return fetchCoursesFail(state, action);
     case actionTypes.COURSE_REGISTER_START:
       return {
@@ -56,7 +56,7 @@ const reducer = (state = initialState, action) => {
         loading: false,
         error: action.error,
       };
-      case actionTypes.FETCH_COURSE_DETAILS_START:
+    case actionTypes.FETCH_COURSE_DETAILS_START:
       return {
         ...state,
         loading: true,
@@ -75,7 +75,7 @@ const reducer = (state = initialState, action) => {
         loading: false,
         error: action.error,
       };
-      case actionTypes.CREATE_COURSE_START:
+    case actionTypes.CREATE_COURSE_START:
       return {
         ...state,
         creatingCourse: true,
@@ -94,7 +94,7 @@ const reducer = (state = initialState, action) => {
         creatingCourse: false,
         createCourseError: action.error,
       };
-    default: 
+    default:
       return state;
   }
 };

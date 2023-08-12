@@ -13,7 +13,7 @@ const initialState = {
 const authStart = (state, action) => {
   return updateObject(state, {
     error: null,
-    loading: true
+    loading: true,
   });
 };
 
@@ -22,46 +22,46 @@ const authSuccess = (state, action) => {
     token: action.token,
     role: action.role,
     error: null,
-    loading: false
+    loading: false,
   });
 };
 
 const authFail = (state, action) => {
   return updateObject(state, {
     error: action.error,
-    loading: false
+    loading: false,
   });
 };
 
 const authLogout = (state, action) => {
   return updateObject(state, {
-    token: null
+    token: null,
   });
 };
 
 const authSignupSuccess = (state, action) => {
   return updateObject(state, {
-    registrationSuccess: true
+    registrationSuccess: true,
   });
 };
 
 const getUserRoleStart = (state, action) => {
   return updateObject(state, {
-    userRoleLoading: true
+    userRoleLoading: true,
   });
 };
 
 const getUserRoleSuccess = (state, action) => {
   return updateObject(state, {
     role: action.role,
-    userRoleLoading: false
+    userRoleLoading: false,
   });
 };
 
 const getUserRoleFail = (state, action) => {
   return updateObject(state, {
     userRoleLoading: false,
-    error: action.error
+    error: action.error,
   });
 };
 
@@ -75,7 +75,7 @@ const reducer = (state = initialState, action) => {
       return authFail(state, action);
     case actionTypes.AUTH_LOGOUT:
       return authLogout(state, action);
-    case actionTypes.REGISTRATION_SUCCESS: 
+    case actionTypes.REGISTRATION_SUCCESS:
       return authSignupSuccess(state, action);
     case actionTypes.GET_USER_ROLE_START:
       return getUserRoleStart(state, action);

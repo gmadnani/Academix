@@ -7,12 +7,13 @@ import {
   Image,
   List,
   Menu,
-  Segment
+  Segment,
+  Icon,
 } from "semantic-ui-react";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout } from "../store/actions/auth";
-import * as actions from '../store/actions/auth';
+import * as actions from "../store/actions/auth";
 
 class CustomLayout extends React.Component {
   componentDidMount() {
@@ -22,36 +23,107 @@ class CustomLayout extends React.Component {
     const { authenticated } = this.props;
     return (
       <div>
-        <Menu fixed="top" inverted>
+        <Menu fixed="top" style={{ backgroundColor: "#6A808C" }}>
           <Container>
             <Link to="/home">
-              <Menu.Item header>Home</Menu.Item>
+              <Menu.Item
+                header
+                style={{
+                  margin: "10px 10px",
+                  border: "2px solid #b2d8d8",
+                  borderRadius: "15px !important",
+                  padding: "8px 12px",
+                  transition: "all 0.3s",
+                  boxShadow: "0px 3px 15px rgba(0,0,0,0.2)",
+                }}
+                onMouseOver={(e) =>
+                  (e.target.style.backgroundColor = "#b2d8d8")
+                }
+                onMouseOut={(e) => (e.target.style.backgroundColor = "")}
+              >
+                <Icon name="home" />
+                Home
+              </Menu.Item>
             </Link>
             {authenticated ? (
-              <Link to="/login"><Menu.Item header onClick={() => this.props.logout()}>
-                Logout
-              </Menu.Item></Link>
+              <Link to="/login">
+                <Menu.Item
+                  header
+                  onClick={() => this.props.logout()}
+                  style={{
+                    margin: "10px 10px",
+                    border: "2px solid #b2d8d8",
+                    borderRadius: "30px",
+                    padding: "8px 12px",
+                    transition: "all 0.3s",
+                    boxShadow: "0px 3px 15px rgba(0,0,0,0.2)",
+                  }}
+                  onMouseOver={(e) =>
+                    (e.target.style.backgroundColor = "#b2d8d8")
+                  }
+                  onMouseOut={(e) => (e.target.style.backgroundColor = "")}
+                >
+                  <Icon name="sign-out" />
+                  Logout
+                </Menu.Item>
+              </Link>
             ) : (
               <React.Fragment>
                 <Link to="/login">
-                  <Menu.Item header>Login</Menu.Item>
+                  <Menu.Item
+                    header
+                    style={{
+                      margin: "10px 10px",
+                      border: "2px solid #b2d8d8",
+                      borderRadius: "15px !important",
+                      padding: "8px 12px",
+                      transition: "all 0.3s",
+                      boxShadow: "0px 3px 15px rgba(0,0,0,0.2)",
+                    }}
+                    onMouseOver={(e) =>
+                      (e.target.style.backgroundColor = "#b2d8d8")
+                    }
+                    onMouseOut={(e) => (e.target.style.backgroundColor = "")}
+                  >
+                    <Icon name="sign-in" />
+                    Login
+                  </Menu.Item>
                 </Link>
                 <Link to="/signup">
-                  <Menu.Item header>Signup</Menu.Item>
+                  <Menu.Item
+                    header
+                    style={{
+                      margin: "10px 10px",
+                      border: "2px solid #b2d8d8",
+                      borderRadius: "15px !important",
+                      padding: "8px 12px",
+                      transition: "all 0.3s",
+                      boxShadow: "0px 3px 15px rgba(0,0,0,0.2)",
+                    }}
+                    onMouseOver={(e) =>
+                      (e.target.style.backgroundColor = "#b2d8d8")
+                    }
+                    onMouseOut={(e) => (e.target.style.backgroundColor = "")}
+                  >
+                    <Icon name="user plus" />
+                    Signup
+                  </Menu.Item>
                 </Link>
               </React.Fragment>
             )}
           </Container>
         </Menu>
 
-        <div style={{marginTop: '40px'}}>
+        <div style={{ marginTop: "40px", backgroundColor: "#F0FFFF" }}>
           {this.props.children}
         </div>
 
         <Segment
-          inverted
-          vertical
-          style={{ margin: "5em 0em 0em", padding: "5em 0em" }}
+          style={{
+            margin: "0",
+            padding: "5em 0em",
+            backgroundColor: "#6A808C",
+          }}
         >
           <Container textAlign="center">
             <Grid divided inverted stackable>
@@ -114,22 +186,19 @@ class CustomLayout extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    authenticated: state.auth.token !== null
+    authenticated: state.auth.token !== null,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    logout: () => dispatch(logout()), 
-    onTryAutoSignup: () => dispatch(actions.authCheckState())
+    logout: () => dispatch(logout()),
+    onTryAutoSignup: () => dispatch(actions.authCheckState()),
   };
 };
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(CustomLayout)
+  connect(mapStateToProps, mapDispatchToProps)(CustomLayout)
 );
