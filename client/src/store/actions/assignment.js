@@ -5,11 +5,11 @@ export const fetchAssignments = (token, courseID) => {
   return (dispatch) => {
     dispatch(fetchAssignmentsStart());
 
-    const url = `http://127.0.0.1:8000/api/${courseID}/assignment/list`;
+    const url = `http://127.0.0.1:8000/api/${courseID}/assignment/list/`;
 
     const headers = {
       'Content-Type': 'application/json',
-      Authorization: `Token ${token}`,
+      'Authorization': `Token ${token}`
     };
 
     axios
@@ -55,7 +55,7 @@ export const createAssignment = (
   return (dispatch) => {
     dispatch(createAssignmentStart());
 
-    const url = `http://127.0.0.1:8000/api/${courseID}/assignment/add`;
+    const url = `http://127.0.0.1:8000/api/${courseID}/assignment/add/`;
     console.log(url)
 
     const headers = {
@@ -65,6 +65,7 @@ export const createAssignment = (
 
     const formData = new FormData();
     formData.append('title', title);
+    formData.append('courseId', courseID);
     formData.append('due_date', dueDate);
     formData.append('full_grade', fullGrade);
     formData.append('assignment_files', assignmentFile);

@@ -26,13 +26,10 @@ def add_assignment(request, pk):
     courseid = CoursesList.objects.get(pk = pk)
     user = UserProfile.objects.get(owner=request.user)
     if user.role == 'teacher':
-        form = AssignmentForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.instance.courseId = courseid
-            form.save()       
-        else:
-            form = AssignmentForm(request.POST, request.FILES) 
-    return render(request, 'api/assignment_form.html', {'form': form})
+        ass = AssignmentSerializer(data=request.data)
+        if ass.is_valid():
+            ass.save()
+            return Response(data=ass.data, status=status.HTTP_201_CREATED)
 
 @api_view(["GET", "POST", "DELETE"])
 @permission_classes((IsAuthenticated,))

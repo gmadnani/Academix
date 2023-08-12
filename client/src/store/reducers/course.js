@@ -96,42 +96,24 @@ const reducer = (state = initialState, action) => {
         creatingCourse: false,
         createCourseError: action.error,
       };
-      case actionTypes.UPDATE_COURSE_DESCRIPTION_START:
+      case actionTypes.UPDATE_COURSE_DETAILS_START:
       return {
         ...state,
         updatingCourseDescription: true,
         updateCourseDescriptionError: null
       };
 
-    case actionTypes.UPDATE_COURSE_DESCRIPTION_SUCCESS:
+    case actionTypes.UPDATE_COURSE_DETAILS_SUCCESS:
       return {
         ...state,
         updatingCourseDescription: false
       };
 
-    case actionTypes.UPDATE_COURSE_DESCRIPTION_FAIL:
+    case actionTypes.UPDATE_COURSE_DETAILS_FAIL:
       return {
         ...state,
         updatingCourseDescription: false,
         updateCourseDescriptionError: action.error
-      };
-      case actionTypes.UPDATE_SYLLABUS_ENTRY_START:
-      return {
-        ...state,
-        loading: true
-      };
-
-    case actionTypes.UPDATE_SYLLABUS_ENTRY_SUCCESS:
-      return {
-        ...state,
-        loading: false
-      };
-
-    case actionTypes.UPDATE_SYLLABUS_ENTRY_FAIL:
-      return {
-        ...state,
-        loading: false,
-        error: action.error
       };
     default: 
       return state;

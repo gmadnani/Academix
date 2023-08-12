@@ -198,9 +198,9 @@ const createCourseFail = error => {
   };
 };
 
-export const updateCourseDescription = (token, courseID, description) => {
+export const updateCourseDetails = (token, courseID, updatedDetails) => {
   return dispatch => {
-    dispatch(updateCourseDescriptionStart());
+    dispatch(updateCourseDetailsStart());
 
     const url = `http://127.0.0.1:8000/courses/detail/${courseID}/`;
 
@@ -209,79 +209,32 @@ export const updateCourseDescription = (token, courseID, description) => {
       'Authorization': `Token ${token}`
     };
 
-    const data = {
-      courseDescription: description
-    };
-
-   return axios.put(url, data, { headers })
-  .then(res => {
-    dispatch(updateCourseDescriptionSuccess());
-  })
-  .catch(err => {
-    dispatch(updateCourseDescriptionFail(err));
-  });
-  };
-};
-
-const updateCourseDescriptionStart = () => {
-  return {
-    type: actionTypes.UPDATE_COURSE_DESCRIPTION_START
-  };
-};
-
-const updateCourseDescriptionSuccess = () => {
-  return {
-    type: actionTypes.UPDATE_COURSE_DESCRIPTION_SUCCESS
-  };
-};
-
-const updateCourseDescriptionFail = error => {
-  return {
-    type: actionTypes.UPDATE_COURSE_DESCRIPTION_FAIL,
-    error
-  };
-};
-
-export const updateSyllabusEntry = (token, courseID, week, content) => {
-  return dispatch => {
-    dispatch(updateSyllabusEntryStart());
-
-    const url = `http://127.0.0.1:8000/courses/detail/${courseID}/syllabus/${week}/`;
-
-    const headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `Token ${token}`
-    };
-
-    const data = {
-      content: content
-    };
-
-    return axios.put(url, data, { headers })
+    axios.put(url, updatedDetails, { headers })
       .then(res => {
-        dispatch(updateSyllabusEntrySuccess());
+        dispatch(updateCourseDetailsSuccess(updatedDetails));
       })
       .catch(err => {
-        dispatch(updateSyllabusEntryFail(err));
+        dispatch(updateCourseDetailsFail(err));
       });
   };
 };
 
-const updateSyllabusEntryStart = () => {
+const updateCourseDetailsStart = () => {
   return {
-    type: actionTypes.UPDATE_SYLLABUS_ENTRY_START
+    type: actionTypes.UPDATE_COURSE_DETAILS_START
   };
 };
 
-const updateSyllabusEntrySuccess = () => {
+const updateCourseDetailsSuccess = (updatedDetails) => {
   return {
-    type: actionTypes.UPDATE_SYLLABUS_ENTRY_SUCCESS
+    type: actionTypes.UPDATE_COURSE_DETAILS_SUCCESS,
+    updatedDetails
   };
 };
 
-const updateSyllabusEntryFail = error => {
+const updateCourseDetailsFail = error => {
   return {
-    type: actionTypes.UPDATE_SYLLABUS_ENTRY_FAIL,
+    type: actionTypes.UPDATE_COURSE_DETAILS_FAIL,
     error
   };
 };
