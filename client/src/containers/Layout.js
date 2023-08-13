@@ -117,7 +117,6 @@ class CustomLayout extends React.Component {
         <div style={{ marginTop: "40px", backgroundColor: "#F0FFFF" }}>
           {this.props.children}
         </div>
-
       </div>
     );
   }
