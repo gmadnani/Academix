@@ -5,6 +5,11 @@ import { Link } from 'react-router-dom';
 import { fetchCourseDetails, updateCourseDetails } from '../store/actions/course';
 
 const CourseDetails = ({ token, courseID, courseDetails, loading, error, fetchCourseDetails, updateCourseDetails }) => {
+
+  const url = window.location.href;
+  const course = url.split("/")
+  localStorage.setItem("course", course[5])
+
   useEffect(() => {
     fetchCourseDetails(token, courseID);
   }, [fetchCourseDetails, token, courseID]);
@@ -192,7 +197,6 @@ const CourseDetails = ({ token, courseID, courseDetails, loading, error, fetchCo
             <p>Error loading course details: {error.message}</p>
           ) : (
             <Segment>
-              {console.log(courseDetails)}
               <p>Course Description: {courseDetails.courseDescription}</p>
               <p>Syllabus:</p>
               <ul>

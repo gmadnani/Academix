@@ -6,7 +6,6 @@ export const fetchAttendances = (token, courseID) => {
     dispatch(fetchAttendancesStart());
 
     const url = `http://127.0.0.1:8000/attendance/${courseID}/`;
-
     const headers = {
       'Content-Type': 'application/json',
       'Authorization': `Token ${token}`
@@ -43,7 +42,7 @@ const fetchAttendancesFail = error => {
   };
 };
 
-export const createAttendance = (token, courseID, title, createdDate, validTime) => {
+export const createAttendance = (token, courseID, title, createdDate, validTime, total_number) => {
   return dispatch => {
     dispatch(createAttendanceStart());
     const url = `http://127.0.0.1:8000/attendance/${courseID}/`;
@@ -55,6 +54,9 @@ export const createAttendance = (token, courseID, title, createdDate, validTime)
 
     const data = {
       title: title,
+      created_date: createdDate,
+      valid_time: validTime,
+      total_number: total_number
     };
 
     return axios.post(url, data, { headers })

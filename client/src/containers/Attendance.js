@@ -1,12 +1,14 @@
-import React, { useState, useEffect  } from 'react';
-import { connect } from "react-redux";
-import { List, Header, Segment, Form, Button, Modal, Message} from "semantic-ui-react";
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { List, Header, Segment, Form, Button, Modal, Message } from 'semantic-ui-react';
 import { createAttendance, fetchAttendances } from '../store/actions/attendance';
 
 const Attendance = ({ token, courseID, createAttendance, attendances, loading, error, fetchAttendances }) => {
   const [title, setTitle] = useState('');
   const [createdDate, setCreatedDate] = useState('');
+  const [createdTime, setCreatedTime] = useState('');
   const [validTime, setValidTime] = useState('');
+  const [total_number, setTotalNumber] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
@@ -25,14 +27,23 @@ const Attendance = ({ token, courseID, createAttendance, attendances, loading, e
   }, [showSuccessMessage]);
 
   const handleCreateAttendance = () => {
-    createAttendance(token, courseID, title, createdDate, validTime)
-      .then(() => {
-        setShowForm(false);
-        setShowSuccessMessage(true);
-      })
-      .catch((error) => {
-        console.error('Error creating attendance:', error);
-      });
+    if (title && createdDate && createdTime && validTime) {
+      const formattedDateTime = `${createdDate} ${createdTime}:00`;
+      const validTimeInSeconds = parseInt(validTime) * 1000;
+      createAttendance(token, courseID, title, formattedDateTime, validTimeInSeconds, total_number)
+        .then(() => {
+          setShowForm(false);
+          setShowSuccessMessage(true);
+          setTitle('');
+          setCreatedDate('');
+          setCreatedTime('');
+          setValidTime('');
+          setTotalNumber('');
+        })
+        .catch((error) => {
+          console.error('Error creating attendance:', error);
+        });
+    }
   };
 
   const handleCloseForm = () => {
@@ -40,7 +51,9 @@ const Attendance = ({ token, courseID, createAttendance, attendances, loading, e
     setShowSuccessMessage(false);
     setTitle('');
     setCreatedDate('');
+    setCreatedTime('');
     setValidTime('');
+    setTotalNumber('');
   };
 
   const handleAttendanceClick = (attendanceID) => {
@@ -69,14 +82,22 @@ const Attendance = ({ token, courseID, createAttendance, attendances, loading, e
               />
             </Form.Field>
             <Form.Field>
-              <label>Created Date (format: "YYYY-MM-DD HH:mm:ss")</label>
+              <label>Created Date</label>
               <input
-                type="text"
+                type="date"
                 placeholder="Enter Created Date"
                 value={createdDate}
                 onChange={(event) => setCreatedDate(event.target.value)}
               />
             </Form.Field>
+            <Form.Field>
+            <label>Created Time</label>
+            <input
+              type="time"
+              value={createdTime}
+              onChange={(event) => setCreatedTime(event.target.value)}
+            />
+          </Form.Field>
             <Form.Field>
               <label>Valid Time (in minutes)</label>
               <input
@@ -84,6 +105,15 @@ const Attendance = ({ token, courseID, createAttendance, attendances, loading, e
                 placeholder="Enter Valid Time"
                 value={validTime}
                 onChange={(event) => setValidTime(event.target.value)}
+              />
+            </Form.Field>
+            <Form.Field>
+              <label>Enter total number of students</label>
+              <input
+                type="number"
+                placeholder="optional"
+                value={total_number}
+                onChange={(event) => setTotalNumber(event.target.value)}
               />
             </Form.Field>
             <Button onClick={handleCreateAttendance} primary>
