@@ -83,11 +83,12 @@ def assignment_submission_view(request, pk, pk2):
             return Response(data=submission.data, status=status.HTTP_201_CREATED)
         return Response(data=submission.data, status=status.HTTP_400_BAD_REQUEST)        
 
-@api_view(["GET", "POST"])
+@api_view(["GET"])
 @permission_classes((IsAuthenticated,))
 def teacher_submissions_view(request, pk, pk2):
     course = CoursesList.objects.get(pk = pk)
-    if course.owner == request.user:
+    user = UserProfile.objects.get(owner=request.user)
+    if course.owner == request.user or user.role == 'admin':
         if request.method == 'GET':
             submission = AssignmentSubmission.objects.filter(courseID=pk, assignmentID=pk2)
             s = SubmissionSerializer(instance = submission, many=True)
@@ -98,6 +99,7 @@ def teacher_submissions_view(request, pk, pk2):
 @api_view(["GET", "POST"])
 @permission_classes((IsAuthenticated,))
 def submissions_details(request, pk, pk2, pk3):
+    user = UserProfile.objects.get(owner=request.user)
     if request.method == 'GET':
         student = User.objects.get(username=pk3)
         submission = AssignmentSubmission.objects.filter(courseID=pk, assignmentID=pk2, student=student)
