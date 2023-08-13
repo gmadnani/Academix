@@ -5,10 +5,8 @@ import { fetchUsers } from "../store/actions/user";
 import { fetchCourses } from "../store/actions/course";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import "semantic-ui-css/semantic.min.css";
-import "./css/Admin.css";
 
-const AdminCourseRegisteration = ({
+const AdminCourseRemove = ({
   users,
   courses,
   fetchUsers,
@@ -33,30 +31,28 @@ const AdminCourseRegisteration = ({
     setSelectedStudent(data.value);
   };
 
-  const handleRegister = () => {
+  const handleRemove = () => {
     if (selectedCourse && selectedStudent) {
       const courseNumber = selectedCourse;
       const userData = [{ userID: selectedStudent }];
 
       axios
-        .post(
-          `http://127.0.0.1:8000/courses/admin/${courseNumber}/`,
-          userData,
-          {
-            headers: {
-              Authorization: `Token ${token}`,
-            },
-          }
-        )
+        .delete(`http://127.0.0.1:8000/courses/admin/${courseNumber}/`, {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+          data: userData,
+        })
         .then((response) => {
-          setSuccessMessage("Student registered successfully.");
+          setSuccessMessage("Student deleted successfully.");
           setTimeout(() => {
             setSuccessMessage("");
+            fetchUsers(token);
             history.push("/home");
           }, 2000);
         })
         .catch((error) => {
-          console.error("Registration error:", error);
+          console.error("Deletion error:", error);
         });
     }
   };
@@ -64,7 +60,7 @@ const AdminCourseRegisteration = ({
   return (
     <div className="admin-panel">
       <Header as="h3" textAlign="center">
-        Admin Course Registration
+        Admin Course Removal
       </Header>
       <Segment>
         <Form>
@@ -100,8 +96,8 @@ const AdminCourseRegisteration = ({
               onChange={handleStudentChange}
             />
           </Form.Field>
-          <Button onClick={handleRegister} primary>
-            Register Student
+          <Button onClick={handleRemove} primary>
+            Delete student from course
           </Button>
           {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
         </Form>
@@ -123,7 +119,4 @@ const mapDispatchToProps = {
   fetchCourses,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AdminCourseRegisteration);
+export default connect(mapStateToProps, mapDispatchToProps)(AdminCourseRemove);

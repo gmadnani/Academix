@@ -6,6 +6,8 @@ const initialState = {
   courseDetails: {},
   error: null,
   loading: false,
+  updatingCourseDescription: false,
+  updateCourseDescriptionError: null
 };
 
 const fetchCoursesStart = (state, action) => {
@@ -94,7 +96,26 @@ const reducer = (state = initialState, action) => {
         creatingCourse: false,
         createCourseError: action.error,
       };
-    default:
+      case actionTypes.UPDATE_COURSE_DETAILS_START:
+      return {
+        ...state,
+        updatingCourseDescription: true,
+        updateCourseDescriptionError: null
+      };
+
+    case actionTypes.UPDATE_COURSE_DETAILS_SUCCESS:
+      return {
+        ...state,
+        updatingCourseDescription: false
+      };
+
+    case actionTypes.UPDATE_COURSE_DETAILS_FAIL:
+      return {
+        ...state,
+        updatingCourseDescription: false,
+        updateCourseDescriptionError: action.error
+      };
+    default: 
       return state;
   }
 };

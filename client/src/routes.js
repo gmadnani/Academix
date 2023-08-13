@@ -13,12 +13,17 @@ import AdminCourseRegisteration from "./containers/AdminCourseRegisteration";
 //import Zoom from "./containers/Zoom";
 import AttendenceDetails from "./containers/AttendenceDetails";
 import CreateCourse from "./containers/CreateCourse";
+import Assignment from "./containers/Assignment";
+import AdminCourseRemove from "./containers/AdminCourseRemove";
+import AdminUserChange from "./containers/AdminUserChange";
 
 const BaseRouter = () => (
   <Hoc>
     <Route exact path="/" component={Login} />
     <Route path="/login" component={Login} />
     <Route path="/signup" component={Signup} />
+    <PrivateRoute path="/courseRemove" component={AdminCourseRemove}/>
+    <PrivateRoute path="/changeUser" component={AdminUserChange}/>
     <PrivateRoute path="/courseList" component={CourseList} />
     <PrivateRoute path="/home" component={HomepageLayout} />
     <PrivateRoute path="/courses/detail/:courseID" component={CourseDetails} />

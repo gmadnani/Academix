@@ -26,6 +26,7 @@ const Attendance = ({
 }) => {
   const [title, setTitle] = useState("");
   const [createdDate, setCreatedDate] = useState("");
+  const [createdTime, setCreatedTime] = useState("");
   const [validTime, setValidTime] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
@@ -45,14 +46,28 @@ const Attendance = ({
   }, [showSuccessMessage]);
 
   const handleCreateAttendance = () => {
-    createAttendance(token, courseID, title, createdDate, validTime)
-      .then(() => {
-        setShowForm(false);
-        setShowSuccessMessage(true);
-      })
-      .catch((error) => {
-        console.error("Error creating attendance:", error);
-      });
+    if (title && createdDate && createdTime && validTime) {
+      const formattedDateTime = `${createdDate} ${createdTime}:00`;
+      const validTimeInSeconds = parseInt(validTime) * 1000;
+      createAttendance(
+        token,
+        courseID,
+        title,
+        formattedDateTime,
+        validTimeInSeconds
+      )
+        .then(() => {
+          setShowForm(false);
+          setShowSuccessMessage(true);
+          setTitle("");
+          setCreatedDate("");
+          setCreatedTime("");
+          setValidTime("");
+        })
+        .catch((error) => {
+          console.error("Error creating attendance:", error);
+        });
+    }
   };
 
   const handleCloseForm = () => {
@@ -60,6 +75,7 @@ const Attendance = ({
     setShowSuccessMessage(false);
     setTitle("");
     setCreatedDate("");
+    setCreatedTime("");
     setValidTime("");
   };
 
@@ -87,12 +103,20 @@ const Attendance = ({
                 />
               </Form.Field>
               <Form.Field>
-                <label>Created Date (format: "YYYY-MM-DD HH:mm:ss")</label>
+                <label>Created Date</label>
                 <input
-                  type="text"
+                  type="date"
                   placeholder="Enter Created Date"
                   value={createdDate}
                   onChange={(event) => setCreatedDate(event.target.value)}
+                />
+              </Form.Field>
+              <Form.Field>
+                <label>Created Time</label>
+                <input
+                  type="time"
+                  value={createdTime}
+                  onChange={(event) => setCreatedTime(event.target.value)}
                 />
               </Form.Field>
               <Form.Field>

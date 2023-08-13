@@ -126,10 +126,31 @@ const Home = ({ role, fetchUsers, token }) => {
           </Button>
         </Link>
 
-        <Link to="/courseRegisteration">
-          <Button color="teal" fluid size="large">
-            Course Registeration
-          </Button>
+        <Link to ="/changeUser"><Button
+          color="red"
+          fluid
+          size="large"
+        >
+          User Permission's Change
+        </Button>
+        </Link>
+
+        <Link to ="/courseRegisteration"><Button
+          color="teal"
+          fluid
+          size="large"
+        >
+          Course Registeration
+        </Button>
+        </Link>
+
+        <Link to ="/courseRemove"><Button
+          color="teal"
+          fluid
+          size="large"
+        >
+          Course Delete User
+        </Button>
         </Link>
       </div>
     );
