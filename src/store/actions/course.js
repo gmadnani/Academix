@@ -9,7 +9,7 @@ export const fetchCourses = () => {
       "Content-Type": "application/json",
       Authorization: `Token ${token}`
     };
-    axios.get('http://127.0.0.1:8000/courses/list/')
+    axios.get('https://academix-back-f296f40df966.herokuapp.com/courses/list/')
       .then(res => {
         const courses = res.data;
         dispatch(fetchCoursesSuccess(courses));
@@ -44,14 +44,14 @@ export const fetchCoursesFail = (error) => {
 export const registerStudentInCourse = (token, userEmail, courseNumber) => {
   return (dispatch) => {
     dispatch(registerStart());
-      axios.get('http://127.0.0.1:8000/users/profile/', {
+      axios.get('https://academix-back-f296f40df966.herokuapp.com/users/profile/', {
       headers: {
         'Authorization': `Token ${token}`
       }
     })
       .then(response => {
 
-        const url = `http://127.0.0.1:8000/courses/admin/${courseNumber}/`;
+        const url = `https://academix-back-f296f40df966.herokuapp.com/courses/admin/${courseNumber}/`;
 
         const headers = {
           "Content-Type": "application/json",
@@ -100,7 +100,7 @@ export const fetchCourseDetails = (token, courseID) => {
   return (dispatch) => {
     dispatch(fetchCourseDetailsStart());
 
-    const url = `http://127.0.0.1:8000/courses/detail/${courseID}/`;
+    const url = `https://academix-back-f296f40df966.herokuapp.com/courses/detail/${courseID}/`;
 
     const headers = {
       "Content-Type": "application/json",
@@ -143,7 +143,7 @@ export const createCourse = (token, courseData) => {
   return (dispatch) => {
     dispatch(createCourseStart());
 
-    const url = "http://127.0.0.1:8000/courses/list/";
+    const url = "https://academix-back-f296f40df966.herokuapp.com/courses/list/";
 
     const headers = {
       "Content-Type": "application/json",
@@ -186,7 +186,7 @@ export const updateCourseDetails = (token, courseID, updatedDetails) => {
     return new Promise((resolve, reject) => {  // new promise
       dispatch(updateCourseDetailsStart());
 
-      const url = `http://127.0.0.1:8000/courses/detail/${courseID}/`;
+      const url = `https://academix-back-f296f40df966.herokuapp.com/courses/detail/${courseID}/`;
 
       const headers = {
         'Content-Type': 'application/json',

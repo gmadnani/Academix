@@ -5,7 +5,7 @@ export const fetchAttendances = (token, courseID) => {
   return (dispatch) => {
     dispatch(fetchAttendancesStart());
 
-    const url = `http://127.0.0.1:8000/attendance/${courseID}/`;
+    const url = `https://academix-back-f296f40df966.herokuapp.com/attendance/${courseID}/`;
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Token ${token}`,
@@ -13,7 +13,7 @@ export const fetchAttendances = (token, courseID) => {
 
     axios
       .get(url, { headers })
-      .then((res) => {
+      .then((res) => 
         const attendances = res.data;
         dispatch(fetchAttendancesSuccess(attendances));
       })
@@ -46,7 +46,7 @@ const fetchAttendancesFail = (error) => {
 export const createAttendance = (token, courseID, title, createdDate, validTime, total_number) => {
   return dispatch => {
     dispatch(createAttendanceStart());
-    const url = `http://127.0.0.1:8000/attendance/${courseID}/`;
+    const url = `https://academix-back-f296f40df966.herokuapp.com/attendance/${courseID}/`;
 
     const headers = {
       "Content-Type": "application/json",
@@ -94,7 +94,7 @@ export const fetchAttendanceStudentList = (token, attendanceID) => {
   return (dispatch) => {
     dispatch(fetchAttendanceStudentListStart());
 
-    const url = `http://127.0.0.1:8000/attendance/detail/${attendanceID}/`;
+    const url = `https://academix-back-f296f40df966.herokuapp.com/attendance/detail/${attendanceID}/`;
 
     const headers = {
       "Content-Type": "application/json",

@@ -5,10 +5,9 @@ export const fetchAssignments = (token, courseID) => {
   return (dispatch) => {
     dispatch(fetchAssignmentsStart());
 
-    const url = `http://127.0.0.1:8000/api/${courseID}/assignment/list/`;
+    const url = `https://academix-back-f296f40df966.herokuapp.com/api/${courseID}/assignment/list/`;
 
     const headers = {
-      'Content-Type': 'application/json',
       'Authorization': `Token ${token}`
     };
 
@@ -55,7 +54,7 @@ export const createAssignment = (
   return (dispatch) => {
     dispatch(createAssignmentStart());
 
-    const url = `http://127.0.0.1:8000/api/${courseID}/assignment/add/`;
+    const url = `https://academix-back-f296f40df966.herokuapp.com/api/${courseID}/assignment/add/`;
     console.log(url)
 
     const headers = {
@@ -104,7 +103,7 @@ export const fetchAssignmentDetails = (token, courseID, assignmentID) => {
     return dispatch => {
       dispatch(fetchAssignmentDetailsStart());
   
-      const url = `http://127.0.0.1:8000/api/${courseID}/${assignmentID}/detail/`;
+      const url = `https://academix-back-f296f40df966.herokuapp.com/api/${courseID}/${assignmentID}/detail/`;
   
       const headers = {
         'Authorization': `Token ${token}`,

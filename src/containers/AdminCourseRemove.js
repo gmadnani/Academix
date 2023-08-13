@@ -37,7 +37,7 @@ const AdminCourseRemove = ({
       const userData = [{ userID: selectedStudent }];
 
       axios
-        .delete(`http://127.0.0.1:8000/courses/admin/${courseNumber}/`, {
+        .delete(`https://academix-back-f296f40df966.herokuapp.com/courses/admin/${courseNumber}/`, {
           headers: {
             Authorization: `Token ${token}`,
           },

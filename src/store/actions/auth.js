@@ -69,7 +69,7 @@ export const getUserRole = () => {
   return (dispatch, getState) => {
     dispatch(getUserRoleStart());
     axios
-      .get("http://127.0.0.1:8000/users/profile/", {
+      .get("https://academix-back-f296f40df966.herokuapp.com/users/profile/", {
         headers: {
           Authorization: `Token ${getState().auth.token}`,
         },
@@ -93,7 +93,7 @@ export const authLogin = (username, password) => {
   return (dispatch) => {
     dispatch(authStart());
     axios
-      .post("http://127.0.0.1:8000/dj-rest-auth/login/", {
+      .post("https://academix-back-f296f40df966.herokuapp.com/login/", {
         username: username,
         password: password,
       })
@@ -116,7 +116,7 @@ export const authSignup = (username, email, password1, password2) => {
   return (dispatch) => {
     dispatch(authStart());
     axios
-      .post("http://127.0.0.1:8000/dj-rest-auth/registration/", {
+      .post("https://academix-back-f296f40df966.herokuapp.com/dj-rest-auth/registration/", {
         username: username,
         email: email,
         password1: password1,

@@ -36,7 +36,7 @@ const AttendanceDetails = ({
         const newAttendanceStatus = updatedAttendance[studentID];
         try {
           await axios.put(
-            `http://127.0.0.1:8000/attendance/detail/${attendanceID}/`,
+            `https://academix-back-f296f40df966.herokuapp.com/attendance/detail/${attendanceID}/`,
             {
               studentID: studentID,
               if_attended: newAttendanceStatus,
