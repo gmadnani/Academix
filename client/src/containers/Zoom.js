@@ -81,12 +81,12 @@ const Zoom = ({ token, courseID, courseDetails, loading, error, fetchCourseDetai
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   token: state.auth.token,
   courseID: localStorage.getItem("course"),
   courseDetails: state.course.courseDetails,
   loading: state.course.loading,
-  error: state.course.error
+  error: state.course.error,
 });
 
 const mapDispatchToProps = {
@@ -94,7 +94,4 @@ const mapDispatchToProps = {
   updateCourseDetails
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Zoom);
+export default connect(mapStateToProps, mapDispatchToProps)(Zoom);

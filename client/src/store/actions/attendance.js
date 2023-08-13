@@ -1,22 +1,23 @@
-import axios from 'axios';
+import axios from "axios";
 import * as actionTypes from "./actiontypes";
-  
+
 export const fetchAttendances = (token, courseID) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(fetchAttendancesStart());
 
     const url = `http://127.0.0.1:8000/attendance/${courseID}/`;
     const headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `Token ${token}`
+      "Content-Type": "application/json",
+      Authorization: `Token ${token}`,
     };
 
-    axios.get(url, { headers })
-      .then(res => {
+    axios
+      .get(url, { headers })
+      .then((res) => {
         const attendances = res.data;
         dispatch(fetchAttendancesSuccess(attendances));
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch(fetchAttendancesFail(err));
       });
   };
@@ -24,21 +25,21 @@ export const fetchAttendances = (token, courseID) => {
 
 const fetchAttendancesStart = () => {
   return {
-    type: actionTypes.FETCH_ATTENDANCES_START
+    type: actionTypes.FETCH_ATTENDANCES_START,
   };
 };
 
 const fetchAttendancesSuccess = (attendances) => {
   return {
     type: actionTypes.FETCH_ATTENDANCES_SUCCESS,
-    attendances
+    attendances,
   };
 };
 
-const fetchAttendancesFail = error => {
+const fetchAttendancesFail = (error) => {
   return {
     type: actionTypes.FETCH_ATTENDANCES_FAIL,
-    error
+    error,
   };
 };
 
@@ -48,8 +49,8 @@ export const createAttendance = (token, courseID, title, createdDate, validTime,
     const url = `http://127.0.0.1:8000/attendance/${courseID}/`;
 
     const headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `Token ${token}`
+      "Content-Type": "application/json",
+      Authorization: `Token ${token}`,
     };
 
     const data = {
@@ -59,11 +60,12 @@ export const createAttendance = (token, courseID, title, createdDate, validTime,
       total_number: total_number
     };
 
-    return axios.post(url, data, { headers })
-      .then(res => {
+    return axios
+      .post(url, data, { headers })
+      .then((res) => {
         dispatch(createAttendanceSuccess());
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch(createAttendanceFail(err));
       });
   };
@@ -71,40 +73,41 @@ export const createAttendance = (token, courseID, title, createdDate, validTime,
 
 const createAttendanceStart = () => {
   return {
-    type: actionTypes.CREATE_ATTENDANCE_START
+    type: actionTypes.CREATE_ATTENDANCE_START,
   };
 };
 
 const createAttendanceSuccess = () => {
   return {
-    type: actionTypes.CREATE_ATTENDANCE_SUCCESS
+    type: actionTypes.CREATE_ATTENDANCE_SUCCESS,
   };
 };
 
-const createAttendanceFail = error => {
+const createAttendanceFail = (error) => {
   return {
     type: actionTypes.CREATE_ATTENDANCE_FAIL,
-    error
+    error,
   };
 };
 
 export const fetchAttendanceStudentList = (token, attendanceID) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(fetchAttendanceStudentListStart());
 
     const url = `http://127.0.0.1:8000/attendance/detail/${attendanceID}/`;
 
     const headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `Token ${token}`
+      "Content-Type": "application/json",
+      Authorization: `Token ${token}`,
     };
 
-    axios.get(url, { headers })
-      .then(res => {
+    axios
+      .get(url, { headers })
+      .then((res) => {
         const studentList = res.data;
         dispatch(fetchAttendanceStudentListSuccess(studentList));
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch(fetchAttendanceStudentListFail(err));
       });
   };
@@ -112,20 +115,20 @@ export const fetchAttendanceStudentList = (token, attendanceID) => {
 
 const fetchAttendanceStudentListStart = () => {
   return {
-    type: actionTypes.FETCH_ATTENDANCE_STUDENT_LIST_START
+    type: actionTypes.FETCH_ATTENDANCE_STUDENT_LIST_START,
   };
 };
 
 const fetchAttendanceStudentListSuccess = (studentList) => {
   return {
     type: actionTypes.FETCH_ATTENDANCE_STUDENT_LIST_SUCCESS,
-    studentList
+    studentList,
   };
 };
 
-const fetchAttendanceStudentListFail = error => {
+const fetchAttendanceStudentListFail = (error) => {
   return {
     type: actionTypes.FETCH_ATTENDANCE_STUDENT_LIST_FAIL,
-    error
+    error,
   };
 };

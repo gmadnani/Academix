@@ -103,7 +103,7 @@ const AdminCourseRegisteration = ({
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     users: state.user.users,
     courses: state.course.courses,

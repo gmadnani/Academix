@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Segment, List, Header, Message } from "semantic-ui-react";
 import { fetchAttendanceStudentList } from "../store/actions/attendance";
-import axios from "axios"; // Import axios
+import axios from "axios";
+
+import "./css/CourseDetails.css";
 
 const AttendanceDetails = ({
   token,
@@ -75,6 +77,26 @@ const AttendanceDetails = ({
         <p>Loading student list...</p>
       ) : errorStudentList ? (
         <p>Error loading student list: {errorStudentList.message}</p>
+      ) : // Add an extra check for studentList before using map
+      studentList && studentList.length > 0 ? (
+        <Segment basic>
+          <List divided relaxed>
+            {studentList.map((student) => (
+              <List.Item
+                key={student.student_email}
+                className="student-list-item"
+              >
+                <List.Content>
+                  <List.Header>{student.student_username}</List.Header>
+                  <List.Description>
+                    {student.student_email} -{" "}
+                    {student.if_attended ? "Attended" : "Absent"}
+                  </List.Description>
+                </List.Content>
+              </List.Item>
+            ))}
+          </List>
+        </Segment>
       ) : (
         studentList && studentList.length > 0 ? (
           <Segment>
