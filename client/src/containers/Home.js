@@ -147,6 +147,15 @@ const Home = ({
           Course Registeration
         </Button>
         </Link>
+
+        <Link to ="/courseRemove"><Button
+          color="teal"
+          fluid
+          size="large"
+        >
+          Course Delete User
+        </Button>
+        </Link>
       </div>
   );
 }
