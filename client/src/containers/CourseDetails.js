@@ -136,10 +136,12 @@ const CourseDetails = ({ token, courseID, courseDetails, loading, error, fetchCo
                   value={editedSyllabusWeek1}
                   onChange={(e) => setEditedSyllabusWeek1(e.target.value)}
                 />
+                Week2:
                 <Input
                   value={editedSyllabusWeek2}
                   onChange={(e) => setEditedSyllabusWeek2(e.target.value)}
                 />
+                Week3:
                 <Input
                   value={editedSyllabusWeek3}
                   onChange={(e) => setEditedSyllabusWeek3(e.target.value)}
@@ -244,6 +246,7 @@ const CourseDetails = ({ token, courseID, courseDetails, loading, error, fetchCo
               activeStyle={{ fontWeight: "bold", color: "#2185d0" }}
             />
           </Menu>
+          </div>
           <div className="twelve wide stretched column right-content">
           <Segment basic padded>
             <Switch>
@@ -310,7 +313,6 @@ const CourseDetails = ({ token, courseID, courseDetails, loading, error, fetchCo
               />
             </Switch>
           </Segment>
-        </div>
         </div>
       </div>
     );
