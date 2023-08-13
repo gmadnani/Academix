@@ -138,10 +138,11 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
-    "/var/www/static/",
+    # "/var/www/static/",
 ]
 
-STATIC_ROOT = "/var/www/academix-back-f296f40df966.herokuapp.com/static/"
+# STATIC_ROOT = "/var/www/academix-back-f296f40df966.herokuapp.com/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # setting the url where user upload their files
 MEDIA_URL = 'media/'
