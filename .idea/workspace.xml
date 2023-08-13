@@ -5,8 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="692b1c4f-7c62-4f8f-9749-1bb728cd33f5" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/academix/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/server/academix/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Procfile" beforeDir="false" afterPath="$PROJECT_DIR$/server/Procfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,7 +78,7 @@
       <workItem from="1691877509373" duration="1831000" />
       <workItem from="1691879354758" duration="435000" />
       <workItem from="1691879807930" duration="4307000" />
-      <workItem from="1691891188056" duration="1286000" />
+      <workItem from="1691891188056" duration="1897000" />
     </task>
     <servers />
   </component>
