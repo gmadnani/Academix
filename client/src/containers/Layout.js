@@ -89,7 +89,7 @@ class CustomLayout extends React.Component {
                     Login
                   </Menu.Item>
                 </Link>
-                <Link to="/signup">
+                {/* <Link to="/signup">
                   <Menu.Item
                     header
                     style={{
@@ -108,7 +108,7 @@ class CustomLayout extends React.Component {
                     <Icon name="user plus" />
                     Signup
                   </Menu.Item>
-                </Link>
+                </Link> */}
               </React.Fragment>
             )}
           </Container>

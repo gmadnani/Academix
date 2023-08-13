@@ -40,7 +40,7 @@ const AdminCourseRegisteration = ({
 
       axios
         .post(
-          `http://127.0.0.1:8000/courses/admin/${courseNumber}/`,
+          `https://academix-back-f296f40df966.herokuapp.com/courses/admin/${courseNumber}/`,
           userData,
           {
             headers: {

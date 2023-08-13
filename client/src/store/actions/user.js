@@ -23,7 +23,7 @@ export const fetchUsers = (token) => {
       Authorization: `Token ${token}`,
     };
     axios
-      .get("http://127.0.0.1:8000/users/allprofile/")
+      .get("https://academix-back-f296f40df966.herokuapp.com/users/allprofile/")
       .then((res) => {
         const users = res.data;
         dispatch(fetchUsersSuccess(users));

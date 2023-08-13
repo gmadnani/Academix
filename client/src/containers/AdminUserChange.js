@@ -29,7 +29,7 @@ const AdminUserChange = ({ users, fetchUsers, token }) => {
 
       axios
         .put(
-          `http://127.0.0.1:8000/users/roles/`,
+          `https://academix-back-f296f40df966.herokuapp.com/users/roles/`,
           {
             owner: selectedUser,
             role: selectedRole,
