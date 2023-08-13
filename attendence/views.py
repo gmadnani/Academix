@@ -63,7 +63,7 @@ def attendance_list(request, pk):
                 email_address = i.userID.email
                 email_title = '{}--{}--AttendanceLink'.format(course.courseID, s.instance.title)
                 email_body = 'Please use the following link to activate your code：' + \
-                             'http://127.0.0.1:8000/attendance/activate/{0}'.format(str_code)
+                             'https://academix-back-f296f40df966.herokuapp.com/attendance/activate/{0}'.format(str_code)
                 send_status = send_mail(email_title, email_body, 'academix673@gmail.com', [email_address])
                 if send_status:
                     pass

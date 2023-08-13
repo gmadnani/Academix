@@ -4,92 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="692b1c4f-7c62-4f8f-9749-1bb728cd33f5" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Procfile" beforeDir="false" afterPath="$PROJECT_DIR$/Procfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/academix/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/academix/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/academix/asgi.py" beforeDir="false" afterPath="$PROJECT_DIR$/academix/asgi.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/academix/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/academix/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/academix/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/academix/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/academix/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/academix/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/academix/wsgi.py" beforeDir="false" afterPath="$PROJECT_DIR$/academix/wsgi.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/api/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/api/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/api/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/apps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/api/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/api/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/api/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/migrations/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/api/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/api/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/api/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/api/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/api/validators.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/validators.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/api/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/api/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/attendence/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/attendence/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/attendence/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/attendence/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/attendence/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/attendence/apps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/attendence/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/attendence/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/attendence/migrations/0002_alter_attendance_attended_number.py" beforeDir="false" afterPath="$PROJECT_DIR$/attendence/migrations/0002_alter_attendance_attended_number.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/attendence/migrations/0003_alter_attendance_created_date.py" beforeDir="false" afterPath="$PROJECT_DIR$/attendence/migrations/0003_alter_attendance_created_date.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/attendence/migrations/0004_alter_attendance_created_date.py" beforeDir="false" afterPath="$PROJECT_DIR$/attendence/migrations/0004_alter_attendance_created_date.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/attendence/migrations/0005_alter_attendance_created_date.py" beforeDir="false" afterPath="$PROJECT_DIR$/attendence/migrations/0005_alter_attendance_created_date.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/attendence/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/attendence/migrations/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/attendence/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/attendence/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/attendence/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/attendence/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/attendence/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/attendence/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/attendence/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/attendence/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/attendence/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/attendence/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/courses/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/courses/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/courses/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/courses/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/courses/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/courses/apps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/courses/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/courses/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/courses/migrations/0002_auto_20230705_1438.py" beforeDir="false" afterPath="$PROJECT_DIR$/courses/migrations/0002_auto_20230705_1438.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/courses/migrations/0003_alter_courselist_userid.py" beforeDir="false" afterPath="$PROJECT_DIR$/courses/migrations/0003_alter_courselist_userid.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/courses/migrations/0004_remove_courselist_created_at.py" beforeDir="false" afterPath="$PROJECT_DIR$/courses/migrations/0004_remove_courselist_created_at.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/courses/migrations/0005_auto_20230719_0306.py" beforeDir="false" afterPath="$PROJECT_DIR$/courses/migrations/0005_auto_20230719_0306.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/courses/migrations/0006_alter_courseslist_coursename.py" beforeDir="false" afterPath="$PROJECT_DIR$/courses/migrations/0006_alter_courseslist_coursename.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/courses/migrations/0007_auto_20230801_2152.py" beforeDir="false" afterPath="$PROJECT_DIR$/courses/migrations/0007_auto_20230801_2152.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/courses/migrations/0008_alter_courseslist_syllabus_week10_and_more.py" beforeDir="false" afterPath="$PROJECT_DIR$/courses/migrations/0008_alter_courseslist_syllabus_week10_and_more.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/courses/migrations/0008_auto_20230807_1641.py" beforeDir="false" afterPath="$PROJECT_DIR$/courses/migrations/0008_auto_20230807_1641.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/courses/migrations/0009_merge_20230808_0336.py" beforeDir="false" afterPath="$PROJECT_DIR$/courses/migrations/0009_merge_20230808_0336.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/courses/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/courses/migrations/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/courses/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/courses/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/courses/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/courses/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/courses/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/courses/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/courses/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/courses/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/courses/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/courses/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/manage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/media/images/2023/06/mario4.png" beforeDir="false" afterPath="$PROJECT_DIR$/media/images/2023/06/mario4.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/media/images/2023/06/mario6.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/media/images/2023/06/mario6.jpeg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/media/images/default.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/media/images/default.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/media/uploads/test_file.txt" beforeDir="false" afterPath="$PROJECT_DIR$/media/uploads/test_file.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/media/uploads/test_file_E3UP54s.txt" beforeDir="false" afterPath="$PROJECT_DIR$/media/uploads/test_file_E3UP54s.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/media/uploads/test_file_d2qNYcS.txt" beforeDir="false" afterPath="$PROJECT_DIR$/media/uploads/test_file_d2qNYcS.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/media/uploads/test_file_d4u4WDb.txt" beforeDir="false" afterPath="$PROJECT_DIR$/media/uploads/test_file_d4u4WDb.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/static/.keep" beforeDir="false" afterPath="$PROJECT_DIR$/static/.keep" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/users/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/users/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/users/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/apps.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/users/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/users/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/users/migrations/0002_emailverifyrecord.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/migrations/0002_emailverifyrecord.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/users/migrations/0003_auto_20230705_0446.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/migrations/0003_auto_20230705_0446.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/users/migrations/0004_auto_20230705_1438.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/migrations/0004_auto_20230705_1438.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/users/migrations/0005_rename_nike_name_userprofile_full_name.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/migrations/0005_rename_nike_name_userprofile_full_name.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/users/migrations/0006_alter_userprofile_birthday.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/migrations/0006_alter_userprofile_birthday.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/users/migrations/0007_alter_userprofile_role.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/migrations/0007_alter_userprofile_role.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/users/migrations/0008_alter_userprofile_role.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/migrations/0008_alter_userprofile_role.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/users/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/migrations/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/users/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/users/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/users/static/users/bulma.css" beforeDir="false" afterPath="$PROJECT_DIR$/users/static/users/bulma.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/users/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/tests.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/users/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/users/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/users/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/utils/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/utils/email_send.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/email_send.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/utils/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/tests.py" afterDir="false" />
-    </list>
+    <list default="true" id="692b1c4f-7c62-4f8f-9749-1bb728cd33f5" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -161,7 +76,7 @@
       <workItem from="1691877509373" duration="1831000" />
       <workItem from="1691879354758" duration="435000" />
       <workItem from="1691879807930" duration="4307000" />
-      <workItem from="1691891188056" duration="3598000" />
+      <workItem from="1691891188056" duration="4242000" />
     </task>
     <servers />
   </component>
