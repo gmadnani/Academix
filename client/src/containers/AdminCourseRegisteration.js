@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Segment, Header, Button, Dropdown, Form } from 'semantic-ui-react';
-import { fetchUsers } from '../store/actions/user';
-import { fetchCourses } from '../store/actions/course';
-import { useHistory } from 'react-router-dom';
-import axios from 'axios';
+import { Segment, Header, Button, Dropdown, Form } from "semantic-ui-react";
+import { fetchUsers } from "../store/actions/user";
+import { fetchCourses } from "../store/actions/course";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
+import "semantic-ui-css/semantic.min.css";
+import "./css/Admin.css";
 
 const AdminCourseRegisteration = ({
   users,
@@ -13,9 +15,9 @@ const AdminCourseRegisteration = ({
   fetchCourses,
   token,
 }) => {
-  const [selectedCourse, setSelectedCourse] = useState('');
-  const [selectedStudent, setSelectedStudent] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [selectedCourse, setSelectedCourse] = useState("");
+  const [selectedStudent, setSelectedStudent] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const history = useHistory();
 
   useEffect(() => {
@@ -36,26 +38,31 @@ const AdminCourseRegisteration = ({
       const courseNumber = selectedCourse;
       const userData = [{ userID: selectedStudent }];
 
-      axios.post(`http://127.0.0.1:8000/courses/admin/${courseNumber}/`, userData, {
-        headers: {
-          Authorization: `Token ${token}`,
-        },
-      })
-      .then((response) => {
-        setSuccessMessage('Student registered successfully.');
-        setTimeout(() => {
-          setSuccessMessage('');
-          history.push('/home');
-        }, 2000);
-      })
-      .catch((error) => {
-        console.error('Registration error:', error);
-      });
+      axios
+        .post(
+          `http://127.0.0.1:8000/courses/admin/${courseNumber}/`,
+          userData,
+          {
+            headers: {
+              Authorization: `Token ${token}`,
+            },
+          }
+        )
+        .then((response) => {
+          setSuccessMessage("Student registered successfully.");
+          setTimeout(() => {
+            setSuccessMessage("");
+            history.push("/home");
+          }, 2000);
+        })
+        .catch((error) => {
+          console.error("Registration error:", error);
+        });
     }
   };
 
   return (
-    <div>
+    <div className="admin-panel">
       <Header as="h3" textAlign="center">
         Admin Course Registration
       </Header>
@@ -74,7 +81,7 @@ const AdminCourseRegisteration = ({
                 text: course.courseName,
               }))}
               value={selectedCourse}
-              onChange={handleCourseChange} 
+              onChange={handleCourseChange}
             />
           </Form.Field>
           <Form.Field>
@@ -96,7 +103,7 @@ const AdminCourseRegisteration = ({
           <Button onClick={handleRegister} primary>
             Register Student
           </Button>
-          {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
+          {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
         </Form>
       </Segment>
     </div>

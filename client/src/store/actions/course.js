@@ -183,24 +183,29 @@ const createCourseFail = (error) => {
 
 export const updateCourseDetails = (token, courseID, updatedDetails) => {
   return dispatch => {
-    dispatch(updateCourseDetailsStart());
+    return new Promise((resolve, reject) => {  // new promise
+      dispatch(updateCourseDetailsStart());
 
-    const url = `http://127.0.0.1:8000/courses/detail/${courseID}/`;
+      const url = `http://127.0.0.1:8000/courses/detail/${courseID}/`;
 
-    const headers = {
-      'Content-Type': 'application/json',
-      'Authorization': `Token ${token}`
-    };
+      const headers = {
+        'Content-Type': 'application/json',
+        'Authorization': `Token ${token}`
+      };
 
-    axios.put(url, updatedDetails, { headers })
-      .then(res => {
-        dispatch(updateCourseDetailsSuccess(updatedDetails));
-      })
-      .catch(err => {
-        dispatch(updateCourseDetailsFail(err));
-      });
+      axios.put(url, updatedDetails, { headers })
+        .then(res => {
+          dispatch(updateCourseDetailsSuccess(updatedDetails));
+          resolve(res.data);
+        })
+        .catch(err => {
+          dispatch(updateCourseDetailsFail(err));
+          reject(err);
+        });
+    });
   };
 };
+
 
 const updateCourseDetailsStart = () => {
   return {

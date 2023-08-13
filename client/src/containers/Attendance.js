@@ -1,13 +1,33 @@
-import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
-import { List, Header, Segment, Form, Button, Modal, Message, Loader } from 'semantic-ui-react';
-import { createAttendance, fetchAttendances } from '../store/actions/attendance';
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import {
+  List,
+  Header,
+  Segment,
+  Form,
+  Button,
+  Modal,
+  Message,
+  Loader,
+} from "semantic-ui-react";
+import {
+  createAttendance,
+  fetchAttendances,
+} from "../store/actions/attendance";
 
-const Attendance = ({ token, courseID, createAttendance, attendances, loading, error, fetchAttendances }) => {
-  const [title, setTitle] = useState('');
-  const [createdDate, setCreatedDate] = useState('');
-  const [createdTime, setCreatedTime] = useState('');
-  const [validTime, setValidTime] = useState('');
+const Attendance = ({
+  token,
+  courseID,
+  createAttendance,
+  attendances,
+  loading,
+  error,
+  fetchAttendances,
+}) => {
+  const [title, setTitle] = useState("");
+  const [createdDate, setCreatedDate] = useState("");
+  const [createdTime, setCreatedTime] = useState("");
+  const [validTime, setValidTime] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
@@ -29,17 +49,23 @@ const Attendance = ({ token, courseID, createAttendance, attendances, loading, e
     if (title && createdDate && createdTime && validTime) {
       const formattedDateTime = `${createdDate} ${createdTime}:00`;
       const validTimeInSeconds = parseInt(validTime) * 1000;
-      createAttendance(token, courseID, title, formattedDateTime, validTimeInSeconds)
+      createAttendance(
+        token,
+        courseID,
+        title,
+        formattedDateTime,
+        validTimeInSeconds
+      )
         .then(() => {
           setShowForm(false);
           setShowSuccessMessage(true);
-          setTitle('');
-          setCreatedDate('');
-          setCreatedTime('');
-          setValidTime('');
+          setTitle("");
+          setCreatedDate("");
+          setCreatedTime("");
+          setValidTime("");
         })
         .catch((error) => {
-          console.error('Error creating attendance:', error);
+          console.error("Error creating attendance:", error);
         });
     }
   };
@@ -47,10 +73,10 @@ const Attendance = ({ token, courseID, createAttendance, attendances, loading, e
   const handleCloseForm = () => {
     setShowForm(false);
     setShowSuccessMessage(false);
-    setTitle('');
-    setCreatedDate('');
-    setCreatedTime('');
-    setValidTime('');
+    setTitle("");
+    setCreatedDate("");
+    setCreatedTime("");
+    setValidTime("");
   };
 
   const handleAttendanceClick = (attendanceID) => {
@@ -59,60 +85,6 @@ const Attendance = ({ token, courseID, createAttendance, attendances, loading, e
 
   if (localStorage.getItem("role") === "teacher") {
     return (
-    <div>
-      <Button onClick={() => setShowForm(true)} primary>
-        Create Attendance
-      </Button>
-      <Modal open={showForm} onClose={handleCloseForm} closeIcon>
-        <Modal.Header>
-          Create Attendance
-        </Modal.Header>
-        <Modal.Content>
-          <Form>
-            <Form.Field>
-              <label>Title</label>
-              <input
-                type="text"
-                placeholder="Enter Title"
-                value={title}
-                onChange={(event) => setTitle(event.target.value)}
-              />
-            </Form.Field>
-            <Form.Field>
-              <label>Created Date</label>
-              <input
-                type="date"
-                placeholder="Enter Created Date"
-                value={createdDate}
-                onChange={(event) => setCreatedDate(event.target.value)}
-              />
-            </Form.Field>
-            <Form.Field>
-            <label>Created Time</label>
-            <input
-              type="time"
-              value={createdTime}
-              onChange={(event) => setCreatedTime(event.target.value)}
-            />
-          </Form.Field>
-            <Form.Field>
-              <label>Valid Time (in minutes)</label>
-              <input
-                type="number"
-                placeholder="Enter Valid Time"
-                value={validTime}
-                onChange={(event) => setValidTime(event.target.value)}
-              />
-            </Form.Field>
-            <Button onClick={handleCreateAttendance} primary>
-              Create
-            </Button>
-          </Form>
-        </Modal.Content>
-      </Modal>
-      {showSuccessMessage && (
-        <Message success header="Attendance Successfully Posted" content="Attendance has been created successfully!" />
-      )}
       <div>
         <Button onClick={() => setShowForm(true)} primary>
           Create Attendance
@@ -131,12 +103,20 @@ const Attendance = ({ token, courseID, createAttendance, attendances, loading, e
                 />
               </Form.Field>
               <Form.Field>
-                <label>Created Date (format: "YYYY-MM-DD HH:mm:ss")</label>
+                <label>Created Date</label>
                 <input
-                  type="text"
+                  type="date"
                   placeholder="Enter Created Date"
                   value={createdDate}
                   onChange={(event) => setCreatedDate(event.target.value)}
+                />
+              </Form.Field>
+              <Form.Field>
+                <label>Created Time</label>
+                <input
+                  type="time"
+                  value={createdTime}
+                  onChange={(event) => setCreatedTime(event.target.value)}
                 />
               </Form.Field>
               <Form.Field>
@@ -207,7 +187,6 @@ const Attendance = ({ token, courseID, createAttendance, attendances, loading, e
           )}
         </div>
       </div>
-    </div>
     );
   } else {
     return (

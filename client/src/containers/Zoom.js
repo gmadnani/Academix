@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from "react-redux";
-import { Card, Header, Segment, List, Button, Input } from "semantic-ui-react";
-import { Link } from 'react-router-dom';
+import { Header, Segment, Button, Input } from "semantic-ui-react";
 import { fetchCourseDetails, updateCourseDetails } from '../store/actions/course';
 
 const Zoom = ({ token, courseID, courseDetails, loading, error, fetchCourseDetails, updateCourseDetails }) => {
@@ -20,10 +19,13 @@ const Zoom = ({ token, courseID, courseDetails, loading, error, fetchCourseDetai
     if (editing) {
       updateCourseDetails(token, courseID, {
         courseZoomlink: editedCourseZoomlink,
+      }).then(() => {
+        fetchCourseDetails(token, courseID);
       });
     }
     setEditing(!editing);
   }
+  
   if(localStorage.getItem("role") === 'teacher'){
   return(
     <div>

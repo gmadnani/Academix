@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Segment, Header, Button, Dropdown, Form } from 'semantic-ui-react';
-import { fetchUsers } from '../store/actions/user';
-import { fetchCourses } from '../store/actions/course';
-import { useHistory } from 'react-router-dom';
-import axios from 'axios';
+import { Segment, Header, Button, Dropdown, Form } from "semantic-ui-react";
+import { fetchUsers } from "../store/actions/user";
+import { fetchCourses } from "../store/actions/course";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 const AdminCourseRemove = ({
   users,
@@ -13,9 +13,9 @@ const AdminCourseRemove = ({
   fetchCourses,
   token,
 }) => {
-  const [selectedCourse, setSelectedCourse] = useState('');
-  const [selectedStudent, setSelectedStudent] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [selectedCourse, setSelectedCourse] = useState("");
+  const [selectedStudent, setSelectedStudent] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const history = useHistory();
 
   useEffect(() => {
@@ -35,29 +35,30 @@ const AdminCourseRemove = ({
     if (selectedCourse && selectedStudent) {
       const courseNumber = selectedCourse;
       const userData = [{ userID: selectedStudent }];
-  
-      axios.delete(`http://127.0.0.1:8000/courses/admin/${courseNumber}/`, {
-        headers: {
-          Authorization: `Token ${token}`,
-        },
-        data: userData,
-      })
-      .then((response) => {
-        setSuccessMessage('Student deleted successfully.');
-        setTimeout(() => {
-          setSuccessMessage('');
-          fetchUsers(token);
-          history.push('/home');
-        }, 2000);
-      })
-      .catch((error) => {
-        console.error('Deletion error:', error);
-      });
+
+      axios
+        .delete(`http://127.0.0.1:8000/courses/admin/${courseNumber}/`, {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+          data: userData,
+        })
+        .then((response) => {
+          setSuccessMessage("Student deleted successfully.");
+          setTimeout(() => {
+            setSuccessMessage("");
+            fetchUsers(token);
+            history.push("/home");
+          }, 2000);
+        })
+        .catch((error) => {
+          console.error("Deletion error:", error);
+        });
     }
   };
 
   return (
-    <div>
+    <div className="admin-panel">
       <Header as="h3" textAlign="center">
         Admin Course Removal
       </Header>
@@ -76,7 +77,7 @@ const AdminCourseRemove = ({
                 text: course.courseName,
               }))}
               value={selectedCourse}
-              onChange={handleCourseChange} 
+              onChange={handleCourseChange}
             />
           </Form.Field>
           <Form.Field>
@@ -98,14 +99,14 @@ const AdminCourseRemove = ({
           <Button onClick={handleRemove} primary>
             Delete student from course
           </Button>
-          {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
+          {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
         </Form>
       </Segment>
     </div>
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     users: state.user.users,
     courses: state.course.courses,
@@ -118,7 +119,4 @@ const mapDispatchToProps = {
   fetchCourses,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AdminCourseRemove);
+export default connect(mapStateToProps, mapDispatchToProps)(AdminCourseRemove);

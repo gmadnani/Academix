@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Segment, Header, Button, Dropdown, Form } from 'semantic-ui-react';
-import { fetchUsers } from '../store/actions/user';
-import { useHistory } from 'react-router-dom';
-import axios from 'axios';
+import { Segment, Header, Button, Dropdown, Form } from "semantic-ui-react";
+import { fetchUsers } from "../store/actions/user";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
 
-const AdminUserChange = ({
-  users,
-  fetchUsers,
-  token,
-}) => {
-  const [selectedUser, setSelectedUser] = useState('');
-  const [selectedRole, setSelectedRole] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+const AdminUserChange = ({ users, fetchUsers, token }) => {
+  const [selectedUser, setSelectedUser] = useState("");
+  const [selectedRole, setSelectedRole] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const history = useHistory();
 
   useEffect(() => {
@@ -29,35 +25,36 @@ const AdminUserChange = ({
 
   const handleRegister = () => {
     if (selectedUser && selectedRole) {
-    //   const user = { owner: selectedUser };
+      //   const user = { owner: selectedUser };
 
-      axios.put(
-        `http://127.0.0.1:8000/users/roles/`,
-        {
-          owner: selectedUser,
-          role: selectedRole,
-        },
-        {
-          headers: {
-            Authorization: `Token ${token}`,
+      axios
+        .put(
+          `http://127.0.0.1:8000/users/roles/`,
+          {
+            owner: selectedUser,
+            role: selectedRole,
           },
-        }
-      )
-      .then((response) => {
-        setSuccessMessage('Role changed successfully.');
-        setTimeout(() => {
-          setSuccessMessage('');
-          history.push('/home');
-        }, 2000);
-      })
-      .catch((error) => {
-        console.error('Role change error:', error);
-      });
+          {
+            headers: {
+              Authorization: `Token ${token}`,
+            },
+          }
+        )
+        .then((response) => {
+          setSuccessMessage("Role changed successfully.");
+          setTimeout(() => {
+            setSuccessMessage("");
+            history.push("/home");
+          }, 2000);
+        })
+        .catch((error) => {
+          console.error("Role change error:", error);
+        });
     }
   };
 
   return (
-    <div>
+    <div className="admin-panel">
       <Header as="h3" textAlign="center">
         Admin User Role Change
       </Header>
@@ -86,8 +83,8 @@ const AdminUserChange = ({
               fluid
               selection
               options={[
-                { key: 'student', value: 'student', text: 'Student' },
-                { key: 'teacher', value: 'teacher', text: 'Teacher' },
+                { key: "student", value: "student", text: "Student" },
+                { key: "teacher", value: "teacher", text: "Teacher" },
               ]}
               value={selectedRole}
               onChange={handleRoleChange}
@@ -96,14 +93,14 @@ const AdminUserChange = ({
           <Button onClick={handleRegister} primary>
             Change Role
           </Button>
-          {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
+          {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
         </Form>
       </Segment>
     </div>
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     users: state.user.users,
     token: state.auth.token,
@@ -114,7 +111,4 @@ const mapDispatchToProps = {
   fetchUsers,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AdminUserChange);
+export default connect(mapStateToProps, mapDispatchToProps)(AdminUserChange);
