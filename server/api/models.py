@@ -9,7 +9,7 @@ class Assignment(models.Model):
     courseId = models.ForeignKey(CoursesList, on_delete=models.CASCADE)
     due_date = models.DateTimeField(verbose_name="due date")
     full_grade = models.IntegerField()
-    # assignment_files = models.FileField(upload_to='uploads/', validators=[validate_file_extension])
+    assignment_files = models.FileField(upload_to='uploads/', validators=[validate_file_extension])
     def __str__(self):
         return self.title        
 

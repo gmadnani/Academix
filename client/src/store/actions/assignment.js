@@ -8,7 +8,6 @@ export const fetchAssignments = (token, courseID) => {
     const url = `http://127.0.0.1:8000/api/${courseID}/assignment/list/`;
 
     const headers = {
-      'Content-Type': 'application/json',
       'Authorization': `Token ${token}`
     };
 
