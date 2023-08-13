@@ -37,13 +37,13 @@ First, clone this repository:
 2. Install required packages `npm install`
 5. Run front-end `npm start`
 
-Alternatively, you can use the version hosted on Heroku by navigating to: [placeholder]()
+Alternatively, you can use the version hosted on Heroku by navigating to: [Academix](placeholder)
 
 ### Screenshots
 
 ## URL
 
-The application is deployed here: [placeholder]()
+The application is deployed here: [Academix](placeholder)
 
 ## Build
 
@@ -59,7 +59,7 @@ This project is licensed under MIT.
 
 ## Team
 
-- Girish Madani [GitHub](placeholder)
+- Girish Madnani [GitHub](placeholder)
 - Varun Nadgir [GitHub](placeholder)
 - Boyan Deng [GitHub](placeholder)   
 - K R Ajay Krishna Reddy [GitHub](placeholder)
