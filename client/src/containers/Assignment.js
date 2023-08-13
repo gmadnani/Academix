@@ -33,7 +33,7 @@ const Assignment = ({
   };
   
   const handleFileChange = (e) => {
-    setAssignmentFiles(e.target.files);
+    setAssignmentFiles(e.target.files[0]);
   };
 
   return (

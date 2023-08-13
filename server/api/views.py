@@ -7,13 +7,13 @@ from .models import Assignment, AssignmentSubmission, AssignmentGrading
 from courses.models import CoursesList, CourseRegistration
 from .serializers import AssignmentSerializer, SubmissionSerializer, AssignmentGradingSerializer
 from users.models import UserProfile
-from .forms import AssignmentForm, AssignmentGradingForm, AssignmentSubmissionForm
 from django.shortcuts import render
 
 
 @api_view(["GET"])
 @permission_classes((IsAuthenticated,))
 def assignment_list(request, pk):
+    user = request.user
     courseid = CoursesList.objects.get(pk = pk)
     assignment_data = Assignment.objects.all()
     assignment_data = assignment_data.filter(courseId=courseid)
@@ -25,6 +25,7 @@ def assignment_list(request, pk):
 def add_assignment(request, pk):
     courseid = CoursesList.objects.get(pk = pk)
     user = UserProfile.objects.get(owner=request.user)
+    
     if user.role == 'teacher' or user.role== 'admin':
         ass = AssignmentSerializer(data=request.data, partial=True)
         if ass.is_valid():
@@ -35,7 +36,6 @@ def add_assignment(request, pk):
 
 @api_view(["GET", "POST", "DELETE"])
 @permission_classes((IsAuthenticated,))
-
 def assignment_detail(request, pk, pk2):
     user = UserProfile.objects.get(owner=request.user)
     try:
@@ -54,12 +54,10 @@ def assignment_detail(request, pk, pk2):
             except user.role != 'teacher':
                 return Response(data={"msg": "You lack required permissions"}, status=status.HTTP_401_UNAUTHORIZED)
             else:
-                form = AssignmentForm(request.POST, request.FILES, instance=assignment)
-                if form.is_valid():
-                    form.instance.courseId = courseid
-                    form.save()  
-                    return Response(status=status.HTTP_202_ACCEPTED) 
-                return render(request, 'api/assignment_form.html', {'form': form})
+                ass = AssignmentSerializer(data=request.data, partial=True)
+                if ass.is_valid():
+                    ass.save()
+                    return Response(data=ass.data, status=status.HTTP_201_CREATED)
         
         elif request.method == "DELETE":
             course = CoursesList.objects.get(pk = pk)
@@ -79,27 +77,29 @@ def assignment_submission_view(request, pk, pk2):
         return Response(data = s.data, status=status.HTTP_200_OK)
     
     elif request.method == 'POST':
-        form = AssignmentSubmissionForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.instance.student = request.user
-            form.instance.assignmentID = pk2
-            form.instance.courseID = pk
-            form.save()       
-        else:
-            form = AssignmentSubmissionForm(request.POST, request.FILES) 
-        return render(request, 'api/assignment_submission_form.html', {'form': form})
+        submission = SubmissionSerializer(data = request.data, partial=True)
+        if submission.is_valid():
+            submission.save()
+            return Response(data=submission.data, status=status.HTTP_201_CREATED)
+        return Response(data=submission.data, status=status.HTTP_400_BAD_REQUEST)        
 
-@api_view(["GET", "POST"])
+@api_view(["GET"])
 @permission_classes((IsAuthenticated,))
 def teacher_submissions_view(request, pk, pk2):
-    if request.method == 'GET':
-        submission = AssignmentSubmission.objects.filter(courseID=pk, assignmentID=pk2)
-        s = SubmissionSerializer(instance = submission, many=True)
-        return Response(data=s.data, status=status.HTTP_200_OK)
+    course = CoursesList.objects.get(pk = pk)
+    user = UserProfile.objects.get(owner=request.user)
+    if course.owner == request.user or user.role == 'admin':
+        if request.method == 'GET':
+            submission = AssignmentSubmission.objects.filter(courseID=pk, assignmentID=pk2)
+            s = SubmissionSerializer(instance = submission, many=True)
+            return Response(data=s.data, status=status.HTTP_200_OK)
+    else:
+        return Response("You lack required permissions", status=status.HTTP_401_UNAUTHORIZED)
     
 @api_view(["GET", "POST"])
 @permission_classes((IsAuthenticated,))
 def submissions_details(request, pk, pk2, pk3):
+    user = UserProfile.objects.get(owner=request.user)
     if request.method == 'GET':
         student = User.objects.get(username=pk3)
         submission = AssignmentSubmission.objects.filter(courseID=pk, assignmentID=pk2, student=student)
@@ -107,15 +107,11 @@ def submissions_details(request, pk, pk2, pk3):
         return Response(data=s.data, status=status.HTTP_200_OK)
     
     if request.method == 'POST':
-        form = AssignmentGradingForm(request.POST)
-        if form.is_valid():
-            form.instance.student = User.objects.get(username=pk3)
-            form.instance.assignmentID = pk2
-            form.instance.courseID = pk
-            form.save()
-        else:
-            form = AssignmentGradingForm(request.POST)
-        return render(request, 'api/assignment_grading.html', {'form' : form})
+        grading = AssignmentGradingSerializer(data = request.data, partial=True)
+        if grading.is_valid():
+            grading.save()
+            return Response(data = grading.data, status=status.HTTP_201_CREATED)
+        return Response(data = grading.data, status = status.HTTP_400_BAD_REQUEST)
     
 @api_view(["GET"])
 @permission_classes((IsAuthenticated, ))
@@ -125,7 +121,3 @@ def view_course_grades(request, pk, pk2):
         grading = AssignmentGrading.objects.filter(courseID = pk, student=student)
         grades = AssignmentGradingSerializer(instance = grading, many=True)
         return Response(data=grades.data, status=status.HTTP_200_OK)
-               
-    
- 
-        

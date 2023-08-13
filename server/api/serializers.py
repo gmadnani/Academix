@@ -36,7 +36,7 @@ class AssignmentSerializer(serializers.ModelSerializer):
         assignment.due_date = data['due_date']
         assignment.full_grade = data['full_grade']
         assignment.courseId = data['courseId']
-        assignment.assignment_files = data['assignment_files']
+        # assignment.assignment_files = data['assignment_files']
         assignment.save()
         return assignment
 

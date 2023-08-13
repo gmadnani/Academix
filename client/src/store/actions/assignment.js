@@ -59,7 +59,6 @@ export const createAssignment = (
     console.log(url)
 
     const headers = {
-      'Content-Type': 'application/json',
       Authorization: `Token ${token}`,
     };
 
