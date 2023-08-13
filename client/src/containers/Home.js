@@ -139,6 +139,15 @@ const Home = ({
         </Button>
         </Link>
 
+        <Link to ="/changeUser"><Button
+          color="red"
+          fluid
+          size="large"
+        >
+          User Permission's Change
+        </Button>
+        </Link>
+
         <Link to ="/courseRegisteration"><Button
           color="teal"
           fluid

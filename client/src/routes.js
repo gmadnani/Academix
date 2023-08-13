@@ -14,6 +14,7 @@ import AttendenceDetails from "./containers/AttendenceDetails";
 import CreateCourse from "./containers/CreateCourse";
 import Assignment from "./containers/Assignment";
 import AdminCourseRemove from "./containers/AdminCourseRemove";
+import AdminUserChange from "./containers/AdminUserChange";
 
 const BaseRouter = () => (
   <Hoc>
@@ -30,6 +31,7 @@ const BaseRouter = () => (
     <Route path="/courses/detail/:courseID/attendance/detail/:attendanceID" component={AttendenceDetails} />
     <Route path="/courseRegisteration" component={AdminCourseRegisteration}/>
     <Route path="/courseRemove" component={AdminCourseRemove}/>
+    <Route path="/changeUser" component={AdminUserChange}/>
   </Hoc>
 );
 
