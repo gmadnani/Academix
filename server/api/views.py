@@ -25,11 +25,13 @@ def assignment_list(request, pk):
 def add_assignment(request, pk):
     courseid = CoursesList.objects.get(pk = pk)
     user = UserProfile.objects.get(owner=request.user)
-    if user.role == 'teacher':
-        ass = AssignmentSerializer(data=request.data)
+    if user.role == 'teacher' or user.role== 'admin':
+        ass = AssignmentSerializer(data=request.data, partial=True)
         if ass.is_valid():
             ass.save()
-            return Response(data=ass.data, status=status.HTTP_201_CREATED)
+            return Response(data = ass.data, status=status.HTTP_201_CREATED)
+        return Response(data=ass.data, status=status.HTTP_400_BAD_REQUEST)
+    return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 @api_view(["GET", "POST", "DELETE"])
 @permission_classes((IsAuthenticated,))

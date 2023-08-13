@@ -1,6 +1,25 @@
 import * as actionTypes from "./actiontypes";
 import axios from 'axios';
 
+export const fetchCourses = () => {
+  return dispatch => {
+    dispatch(fetchCoursesStart());
+    const token = localStorage.getItem('token');
+    axios.defaults.headers = {
+      "Content-Type": "application/json",
+      Authorization: `Token ${token}`
+    };
+    axios.get('http://127.0.0.1:8000/courses/list/')
+      .then(res => {
+        const courses = res.data;
+        dispatch(fetchCoursesSuccess(courses));
+      })
+      .catch(err => {
+        dispatch(fetchCoursesFail(err));
+      });
+  };
+};
+
 export const fetchCoursesStart = () => {
   return {
     type: actionTypes.FETCH_COURSES_START
@@ -21,43 +40,6 @@ export const fetchCoursesFail = error => {
   };
 };
 
-export const fetchCourses = () => {
-  return dispatch => {
-    dispatch(fetchCoursesStart());
-    const token = localStorage.getItem('token');
-    axios.defaults.headers = {
-      "Content-Type": "application/json",
-      Authorization: `Token ${token}`
-    };
-    axios.get('http://127.0.0.1:8000/courses/list/')
-      .then(res => {
-        const courses = res.data;
-        dispatch(fetchCoursesSuccess(courses));
-      })
-      .catch(err => {
-        dispatch(fetchCoursesFail(err));
-      });
-  };
-};
-
-export const fetchAdminCourses = () => {
-  return dispatch => {
-    dispatch(fetchCoursesStart());
-    const token = localStorage.getItem('token');
-    axios.defaults.headers = {
-      "Content-Type": "application/json",
-      Authorization: `Token ${token}`
-    };
-    axios.get('http://127.0.0.1:8000/courses/list/')
-      .then(res => {
-        const courses = res.data;
-        dispatch(fetchCoursesSuccess(courses));
-      })
-      .catch(err => {
-        dispatch(fetchCoursesFail(err));
-      });
-  };
-};
 
 export const registerStudentInCourse = (token, userEmail, courseNumber) => {
   return dispatch => {
@@ -68,7 +50,6 @@ export const registerStudentInCourse = (token, userEmail, courseNumber) => {
       }
     })
       .then(response => {
-        const adminEmail = response.data.email;
 
         const url = `http://127.0.0.1:8000/courses/admin/${courseNumber}/`;
 
@@ -77,10 +58,9 @@ export const registerStudentInCourse = (token, userEmail, courseNumber) => {
           'Authorization': `Token ${token}`
         };
 
-        const data = {
-          adminID: adminEmail,
+        const data = [{
           userID: userEmail,
-        };
+        }];
 
         axios.post(url, data, { headers })
           .then(res => {

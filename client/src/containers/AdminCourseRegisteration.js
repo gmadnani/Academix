@@ -1,24 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Segment, Header, Button, Dropdown, Form } from 'semantic-ui-react';
-import 'swiper/css';
 import { fetchUsers } from '../store/actions/user';
-import { fetchAdminCourses, registerStudentInCourse } from '../store/actions/course';
+import { fetchCourses } from '../store/actions/course';
+import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 
 const AdminCourseRegisteration = ({
-  role,
   users,
   courses,
   fetchUsers,
-  fetchAdminCourses,
-  registerStudentInCourse,
+  fetchCourses,
   token,
 }) => {
   const [selectedCourse, setSelectedCourse] = useState('');
   const [selectedStudent, setSelectedStudent] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const history = useHistory();
 
-  const handleCourseChange = (event) => {
-    setSelectedCourse(event.target.value);
+  useEffect(() => {
+    fetchUsers(token);
+    fetchCourses(token);
+  }, [fetchUsers, fetchCourses, token]);
+
+  const handleCourseChange = (event, data) => {
+    setSelectedCourse(data.value);
   };
 
   const handleStudentChange = (event, data) => {
@@ -27,7 +33,24 @@ const AdminCourseRegisteration = ({
 
   const handleRegister = () => {
     if (selectedCourse && selectedStudent) {
-      registerStudentInCourse(token, selectedStudent, selectedCourse);
+      const courseNumber = selectedCourse;
+      const userData = [{ userID: selectedStudent }];
+
+      axios.post(`http://127.0.0.1:8000/courses/admin/${courseNumber}/`, userData, {
+        headers: {
+          Authorization: `Token ${token}`,
+        },
+      })
+      .then((response) => {
+        setSuccessMessage('Student registered successfully.');
+        setTimeout(() => {
+          setSuccessMessage('');
+          history.push('/home');
+        }, 2000);
+      })
+      .catch((error) => {
+        console.error('Registration error:', error);
+      });
     }
   };
 
@@ -38,22 +61,22 @@ const AdminCourseRegisteration = ({
       </Header>
       <Segment>
         <Form>
-        <Form.Field>
-        <label>Select Course</label>
-        <Dropdown
-          placeholder="Select Course"
-          fluid
-          search
-          selection
-          options={courses.map((course) => ({
-            key: course.courseID,
-            value: course.courseID,
-            text: course.courseName,
-          }))}
-          value={selectedCourse}
-          onChange={handleCourseChange}
-        />
-      </Form.Field>
+          <Form.Field>
+            <label>Select Course</label>
+            <Dropdown
+              placeholder="Select Course"
+              fluid
+              search
+              selection
+              options={courses.map((course) => ({
+                key: course.courseID,
+                value: course.courseID,
+                text: course.courseName,
+              }))}
+              value={selectedCourse}
+              onChange={handleCourseChange} 
+            />
+          </Form.Field>
           <Form.Field>
             <label>Select Student</label>
             <Dropdown
@@ -73,6 +96,7 @@ const AdminCourseRegisteration = ({
           <Button onClick={handleRegister} primary>
             Register Student
           </Button>
+          {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
         </Form>
       </Segment>
     </div>
@@ -81,19 +105,15 @@ const AdminCourseRegisteration = ({
 
 const mapStateToProps = state => {
   return {
-    loadingUsers: state.user.loading,
-    errorUsers: state.user.error,
     users: state.user.users,
     courses: state.course.courses,
     token: state.auth.token,
-    role: state.auth.role
   };
 };
 
 const mapDispatchToProps = {
   fetchUsers,
-  fetchAdminCourses,
-  registerStudentInCourse,
+  fetchCourses,
 };
 
 export default connect(
