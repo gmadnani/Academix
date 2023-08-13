@@ -158,3 +158,26 @@ export const authCheckState = () => {
     }
   };
 };
+
+export const authForgotPassword = (email) => {
+  return (dispatch) => {
+    axios
+      .post("http://127.0.0.1:8000/password-reset/", {
+        email: email,
+      })
+      .then((res) => {
+        // Dispatch a success message action here
+        dispatch(authForgotPasswordSuccess("Email sent successfully."));
+      })
+      .catch((err) => {
+        dispatch(authFail(err));
+      });
+  };
+};
+
+export const authForgotPasswordSuccess = (message) => {
+  return {
+    type: actionTypes.AUTH_FORGOT_PASSWORD_SUCCESS,
+    message: message,
+  };
+};

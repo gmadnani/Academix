@@ -1,13 +1,12 @@
 import React from "react";
-import { Button, Form, Grid, Header, Segment, Message } from "semantic-ui-react";
+import { Button, Form, Grid, Header, Segment } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { authLogin } from "../store/actions/auth";
-import { NavLink } from "react-router-dom";
+import { authForgotPassword } from "../store/actions/auth";
 
-class LoginForm extends React.Component {
+class ForgotPassword extends React.Component {
   state = {
-    username: "",
+    email: "",
     password: "",
   };
 
@@ -17,13 +16,13 @@ class LoginForm extends React.Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const { username, password } = this.state;
-    this.props.login(username, password);
+    const { email } = this.state;
+    this.props.forgotPassword(email);
   };
 
   render() {
     const { error, loading, token } = this.props;
-    const { username, password } = this.state;
+    const { email } = this.state;
     const formContainerStyle = {
       maxWidth: "700px",
       margin: "40px auto",
@@ -44,7 +43,7 @@ class LoginForm extends React.Component {
       >
         <Grid.Column style={{ maxWidth: 450 }}>
           <Header as="h2" color="teal" textAlign="center">
-            Log-in to your account
+            Enter Your email
           </Header>
           {error && <p>{this.props.error.message}</p>}
 
@@ -54,24 +53,13 @@ class LoginForm extends React.Component {
                 <Segment stacked>
                   <Form.Input
                     onChange={this.handleChange}
-                    value={username}
-                    name="username"
+                    value={email}
+                    name="email"
                     fluid
                     icon="user"
                     iconPosition="left"
-                    placeholder="Username"
+                    placeholder="Email"
                   />
-                  <Form.Input
-                    onChange={this.handleChange}
-                    fluid
-                    value={password}
-                    name="password"
-                    icon="lock"
-                    iconPosition="left"
-                    placeholder="Password"
-                    type="password"
-                  />
-
                   <Button
                     color="teal"
                     fluid
@@ -79,14 +67,11 @@ class LoginForm extends React.Component {
                     loading={loading}
                     disabled={loading}
                   >
-                    Login
+                    Forgot Password
                   </Button>
                 </Segment>
               </Form>
             </div>
-            <Message>
-              <NavLink to="/forgotPassword">Forgot Password</NavLink>
-            </Message>
           </React.Fragment>
         </Grid.Column>
       </Grid>
@@ -104,8 +89,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    login: (username, password) => dispatch(authLogin(username, password)),
+    forgotPassword: (email) => dispatch(authForgotPassword(email)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+export default connect(mapStateToProps, mapDispatchToProps)(ForgotPassword);

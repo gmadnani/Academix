@@ -8,6 +8,7 @@ const initialState = {
   role: null,
   registrationSuccess: false,
   userRoleLoading: false,
+  forgotPasswordMessage: null,
 };
 
 const authStart = (state, action) => {
@@ -83,6 +84,11 @@ const reducer = (state = initialState, action) => {
       return getUserRoleSuccess(state, action);
     case actionTypes.GET_USER_ROLE_FAIL:
       return getUserRoleFail(state, action);
+    case actionTypes.AUTH_FORGOT_PASSWORD_SUCCESS:
+    return {
+      ...state,
+      forgotPasswordMessage: action.message,
+    };
     default:
       return state;
   }

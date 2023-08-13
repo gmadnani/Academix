@@ -16,11 +16,13 @@ import CreateCourse from "./containers/CreateCourse";
 import Assignment from "./containers/Assignment";
 import AdminCourseRemove from "./containers/AdminCourseRemove";
 import AdminUserChange from "./containers/AdminUserChange";
+import ForgotPassword from "./containers/ForgotPassword";
 
 const BaseRouter = () => (
   <Hoc>
     <Route exact path="/" component={Login} />
     <Route path="/login" component={Login} />
+    <Route path="/forgotPassword" component={ForgotPassword} />
     <Route path="/signup" component={Signup} />
     <PrivateRoute path="/courseRemove" component={AdminCourseRemove}/>
     <PrivateRoute path="/changeUser" component={AdminUserChange}/>
