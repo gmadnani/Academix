@@ -37,13 +37,11 @@ First, clone this repository:
 2. Install required packages `npm install`
 5. Run front-end `npm start`
 
-Alternatively, you can use the version hosted on Heroku by navigating to: [Academix](placeholder)
-
-### Screenshots
+Alternatively, you can use the live version hosted on Heroku.
 
 ## URL
 
-The application is deployed here: [Academix](placeholder)
+The application is deployed here: [Academix](https://academix-frontend-01070665623f.herokuapp.com/)
 
 ## Build
 
@@ -51,7 +49,7 @@ The following technology stack was used:
 
 - Django
 - React.js
-- Deployed to Heroku
+- Heroku
 
 ## License
 
@@ -59,9 +57,9 @@ This project is licensed under MIT.
 
 ## Team
 
-- Girish Madnani [GitHub](placeholder)
-- Varun Nadgir [GitHub](placeholder)
-- Boyan Deng [GitHub](placeholder)   
-- K R Ajay Krishna Reddy [GitHub](placeholder)
-- Yang Xing [GitHub](placeholder)
-- Kesari Vijaychandra [GitHub](placeholder)
+- Girish Madnani 
+- Varun Nadgir 
+- Boyan Deng 
+- K R Ajay Krishna Reddy
+- Yang Xing
+- Kesari Vijaychandra
