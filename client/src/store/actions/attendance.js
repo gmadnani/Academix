@@ -5,7 +5,7 @@ export const fetchAttendances = (token, courseID) => {
   return (dispatch) => {
     dispatch(fetchAttendancesStart());
 
-    const url = `http://127.0.0.1:8000/attendance/${courseID}/`;
+    const url = `https://academix-server.onrender.com/attendance/${courseID}/`;
 
     const headers = {
       "Content-Type": "application/json",
@@ -53,7 +53,7 @@ export const createAttendance = (
 ) => {
   return (dispatch) => {
     dispatch(createAttendanceStart());
-    const url = `http://127.0.0.1:8000/attendance/${courseID}/`;
+    const url = `https://academix-server.onrender.com/attendance/${courseID}/`;
 
     const headers = {
       "Content-Type": "application/json",
@@ -98,7 +98,7 @@ export const fetchAttendanceStudentList = (token, attendanceID) => {
   return (dispatch) => {
     dispatch(fetchAttendanceStudentListStart());
 
-    const url = `http://127.0.0.1:8000/attendance/detail/${attendanceID}/`;
+    const url = `https://academix-server.onrender.com/attendance/detail/${attendanceID}/`;
 
     const headers = {
       "Content-Type": "application/json",
